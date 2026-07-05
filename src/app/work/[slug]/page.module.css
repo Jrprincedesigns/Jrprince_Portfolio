@@ -1,0 +1,133 @@
+.page {
+  padding-top: clamp(5rem, 12vh, 8rem);
+}
+
+.back {
+  color: var(--text-muted);
+  font-size: var(--step--1);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.back:hover {
+  color: var(--text);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+  padding-bottom: var(--space-xl);
+}
+
+.title {
+  margin-top: var(--space-sm);
+  font-size: var(--step-4);
+  font-weight: 660;
+  max-width: 20ch;
+}
+
+.role {
+  margin-top: var(--space-sm);
+  color: var(--text-muted);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.tag {
+  font-size: var(--step--1);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 12px;
+  color: var(--text-muted);
+}
+
+.cover {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent) 85%, #000 0%),
+    color-mix(in srgb, var(--accent) 40%, #000 20%)
+  );
+  box-shadow: var(--shadow-md);
+}
+
+.coverLabel {
+  color: #fff;
+  font-size: var(--step-4);
+  font-weight: 660;
+  opacity: 0.9;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: var(--space-lg);
+  padding-block: var(--space-2xl);
+  border-bottom: 1px solid var(--border);
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metricValue {
+  font-size: var(--step-3);
+  font-weight: 660;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.metricLabel {
+  font-size: var(--step--1);
+  color: var(--text-muted);
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  padding-block: var(--space-2xl);
+  max-width: 46rem;
+}
+
+.section {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.sectionHeading {
+  font-size: var(--step-2);
+  font-weight: 620;
+}
+
+.sectionBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  color: var(--text-muted);
+  font-size: var(--step-1);
+  line-height: 1.7;
+}
+
+.footerNav {
+  padding-block: var(--space-xl);
+  border-top: 1px solid var(--border);
+}
+
+.footerLink {
+  color: var(--accent);
+  font-weight: 550;
+}

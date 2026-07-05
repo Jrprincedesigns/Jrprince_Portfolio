@@ -2,19 +2,27 @@
   "name": "jrprince-portfolio",
   "version": "0.1.0",
   "private": true,
-  "description": "Custom code components for the jrprince Framer portfolio site",
+  "description": "Product design portfolio for jrprince — interaction & motion design, with a Gemini-powered Q&A assistant.",
   "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "framer": "^3.0.4",
+    "@google/genai": "^1.9.0",
     "framer-motion": "^12.38.0",
+    "next": "^15.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@types/node": "^22.10.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "eslint": "^9.17.0",
+    "eslint-config-next": "^15.3.0",
     "typescript": "^5.7.0"
   }
 }
