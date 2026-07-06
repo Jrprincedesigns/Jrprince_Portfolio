@@ -1,19 +1,24 @@
 /* =========================================================================
    Design tokens + base styles.
-   CSS Modules handle component-scoped styles; this file holds the global
-   reset, custom properties (your design system), and typography defaults.
+
+   Dark-first monochrome palette, modeled on the reference layout. CSS Modules
+   handle component styles; this file holds the reset, tokens, and the shared
+   two-column "section" rhythm. Restyle freely — tokens are the knobs.
    ========================================================================= */
 
 :root {
-  /* Color — light theme */
-  --bg: #f7f7f5;
-  --bg-elevated: #ffffff;
-  --surface: #ffffff;
-  --text: #16161a;
-  --text-muted: #6b6b73;
-  --border: #e6e6e2;
-  --accent: #6c5ce7;
-  --accent-contrast: #ffffff;
+  /* Color — dark, near-monochrome */
+  --bg: #0a0a0a;
+  --bg-elevated: #131313;
+  --surface: #171717;
+  --surface-2: #1e1e1e;
+  --text: #f4f4f4;
+  --text-muted: #8a8a8a;
+  --text-faint: #5c5c5c;
+  --border: #262626;
+  --border-strong: #333333;
+  --accent: #f4f4f4; /* monochrome by default; swap for a brand color */
+  --accent-contrast: #0a0a0a;
 
   /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
@@ -21,13 +26,14 @@
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 
   /* Fluid type scale */
+  --step--2: clamp(0.72rem, 0.69rem + 0.13vw, 0.8rem);
   --step--1: clamp(0.83rem, 0.78rem + 0.24vw, 0.95rem);
   --step-0: clamp(1rem, 0.93rem + 0.34vw, 1.19rem);
   --step-1: clamp(1.2rem, 1.08rem + 0.6vw, 1.55rem);
   --step-2: clamp(1.44rem, 1.24rem + 1vw, 2.1rem);
   --step-3: clamp(1.73rem, 1.4rem + 1.6vw, 2.9rem);
   --step-4: clamp(2.07rem, 1.55rem + 2.6vw, 4rem);
-  --step-5: clamp(2.49rem, 1.6rem + 4.4vw, 5.6rem);
+  --step-5: clamp(2.4rem, 1.5rem + 4.6vw, 5.4rem);
 
   /* Spacing */
   --space-xs: 0.5rem;
@@ -36,36 +42,25 @@
   --space-lg: 2rem;
   --space-xl: 3.5rem;
   --space-2xl: 6rem;
+  --space-3xl: 9rem;
 
   /* Layout */
   --container: 72rem;
-  --radius: 14px;
+  --radius-sm: 10px;
+  --radius: 16px;
   --radius-lg: 22px;
+  --radius-pill: 999px;
 
-  /* Motion — a shared vocabulary so interactions feel consistent */
+  /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --dur-fast: 0.18s;
   --dur-med: 0.4s;
   --dur-slow: 0.7s;
 
-  --shadow-sm: 0 1px 2px rgba(16, 16, 26, 0.06);
-  --shadow-md: 0 12px 30px rgba(16, 16, 26, 0.1);
-}
+  --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.5);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0d0d10;
-    --bg-elevated: #16161c;
-    --surface: #16161c;
-    --text: #f4f4f6;
-    --text-muted: #a0a0aa;
-    --border: #26262e;
-    --accent: #8b7cff;
-    --accent-contrast: #0d0d10;
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.5);
-  }
+  color-scheme: dark;
 }
 
 /* ---- Reset ---- */
@@ -118,9 +113,9 @@ button {
 h1,
 h2,
 h3 {
-  line-height: 1.08;
+  line-height: 1.05;
   letter-spacing: -0.02em;
-  font-weight: 650;
+  font-weight: 500;
 }
 
 :focus-visible {
@@ -129,7 +124,6 @@ h3 {
   border-radius: 4px;
 }
 
-/* Respect users who prefer reduced motion — critical for a motion-heavy site */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -146,13 +140,12 @@ h3 {
   width: 100%;
   max-width: var(--container);
   margin-inline: auto;
-  padding-inline: var(--space-md);
+  padding-inline: var(--space-lg);
 }
 
+/* Small uppercase section label used in the left column */
 .eyebrow {
   font-size: var(--step--1);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
   color: var(--text-muted);
-  font-weight: 550;
+  font-weight: 400;
 }

@@ -4,7 +4,9 @@ import "./globals.css";
 import { site } from "@/data/site";
 import Nav from "@/components/Nav/Nav";
 import Footer from "@/components/Footer/Footer";
-import ChatWidget from "@/components/ChatWidget/ChatWidget";
+// ChatWidget is set aside for now — the Contact section holds the chat shell.
+// We'll wire Gemini back in during the next pass.
+// import ChatWidget from "@/components/ChatWidget/ChatWidget";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -51,7 +53,6 @@ export default function RootLayout({
         <Nav />
         <main>{children}</main>
         <Footer />
-        <ChatWidget />
       </body>
     </html>
   );
