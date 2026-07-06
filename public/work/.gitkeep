@@ -1,0 +1,4 @@
+# Drop case-study images here, grouped by slug, e.g.:
+#   public/work/aperture/cover.jpg
+#   public/work/cadence/cover.jpg
+# Then reference them from src/data/caseStudies.ts and render with next/image.

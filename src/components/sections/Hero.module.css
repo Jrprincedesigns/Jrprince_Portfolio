@@ -1,0 +1,18 @@
+.hero {
+  padding-top: clamp(6rem, 18vh, 11rem);
+  padding-bottom: var(--space-xl);
+}
+
+.headline {
+  font-size: var(--step-5);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  max-width: 16ch;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.word {
+  display: inline-block;
+}
