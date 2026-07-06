@@ -1,4 +1,4 @@
-import Hero from "@/components/sections/Hero";
+import ScrollVideoHero from "@/components/sections/ScrollVideoHero";
 import Work from "@/components/sections/Work";
 import About from "@/components/sections/About";
 import Capabilities from "@/components/sections/Capabilities";
@@ -18,7 +18,7 @@ import ContactChat from "@/components/sections/ContactChat";
 export default function HomePage() {
   return (
     <>
-      <Hero />
+      <ScrollVideoHero />
       <Work />
       <About />
       <Capabilities />

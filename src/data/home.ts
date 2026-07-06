@@ -17,6 +17,19 @@ export interface WorkItem {
 
 export const heroHeadline = "Product Designer for Early-Stage Teams";
 
+/**
+ * Config for the pinned scroll-scrubbed hero. Frames live in
+ * public/frames/hero (see the README there to swap in real footage).
+ */
+export const scrollVideo = {
+  basePath: "/frames/hero",
+  frameCount: 90,
+  ext: "jpg",
+  pad: 3,
+  /** Scroll distance the pin occupies — taller = slower scrub. */
+  scrollHeight: "320vh",
+};
+
 export const work: WorkItem[] = [
   {
     title: "Project One",
