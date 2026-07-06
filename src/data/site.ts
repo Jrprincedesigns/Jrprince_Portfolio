@@ -16,12 +16,9 @@ export const site = {
   url: "https://jrprince.vercel.app",
   email: "hello@example.com",
   location: "Available worldwide · Remote",
-  socials: [
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/" },
-    { label: "Dribbble", href: "https://dribbble.com/" },
-    { label: "Read.cv", href: "https://read.cv/" },
-    { label: "Email", href: "mailto:hello@example.com" },
-  ],
+  // Add real social links here later, e.g.
+  // { label: "LinkedIn", href: "https://www.linkedin.com/in/you" }
+  socials: [] as { label: string; href: string }[],
   nav: [
     { label: "Work", href: "/#work" },
     { label: "About", href: "/about" },
