@@ -1,17 +1,27 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { site } from "@/data/site";
 import Nav from "@/components/Nav/Nav";
-import Footer from "@/components/Footer/Footer";
-// ChatWidget is set aside for now — the Contact section holds the chat shell.
-// We'll wire Gemini back in during the next pass.
-// import ChatWidget from "@/components/ChatWidget/ChatWidget";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+});
+
+/** Satoshi (self-hosted) — the site's body/UI typeface. */
+const satoshi = localFont({
+  variable: "--font-satoshi",
+  display: "swap",
+  src: [
+    { path: "../fonts/Satoshi-300.woff2", weight: "300", style: "normal" },
+    { path: "../fonts/Satoshi-400.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/Satoshi-500.woff2", weight: "500", style: "normal" },
+    { path: "../fonts/Satoshi-700.woff2", weight: "700", style: "normal" },
+    { path: "../fonts/Satoshi-900.woff2", weight: "900", style: "normal" },
+  ],
 });
 
 export const metadata: Metadata = {
@@ -36,10 +46,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f7f7f5" },
-    { media: "(prefers-color-scheme: dark)", color: "#0d0d10" },
-  ],
+  themeColor: "#0a0a0a",
 };
 
 export default function RootLayout({
@@ -48,11 +55,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${satoshi.variable} ${inter.variable}`}>
       <body>
         <Nav />
         <main>{children}</main>
-        <Footer />
       </body>
     </html>
   );

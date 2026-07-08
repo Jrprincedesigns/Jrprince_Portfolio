@@ -23,6 +23,12 @@ interface ScrollVideoProps {
   scrollHeight?: string;
   /** Overlay content (e.g. a headline) rendered over the video, pinned. */
   children?: React.ReactNode;
+  /** id for the section (e.g. anchor target). */
+  id?: string;
+  /** Fade the overlay out over the first third of the scrub. Default true. */
+  fadeOverlay?: boolean;
+  /** Replace the default overlay layout class (e.g. a full-bleed hero). */
+  overlayClassName?: string;
 }
 
 /**
@@ -41,6 +47,9 @@ export default function ScrollVideo({
   pad = 3,
   scrollHeight = "300vh",
   children,
+  id,
+  fadeOverlay = true,
+  overlayClassName,
 }: ScrollVideoProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -171,10 +180,14 @@ export default function ScrollVideo({
 
   const allLoaded = loaded >= frameCount;
   const pct = Math.round((loaded / frameCount) * 100);
+  // Reveal as soon as the first frame is decoded; draw() falls back to the
+  // nearest earlier frame while the rest stream in, so the scrub never blanks.
+  const firstReady = ready && loaded >= 1;
 
   return (
     <section
       ref={wrapperRef}
+      id={id}
       className={styles.wrapper}
       style={{ height: scrollHeight }}
       aria-label="Scroll-controlled intro animation"
@@ -184,21 +197,20 @@ export default function ScrollVideo({
 
         {children && (
           <motion.div
-            className={styles.overlay}
-            style={{ opacity: overlayOpacity, y: overlayY }}
+            className={overlayClassName ?? styles.overlay}
+            style={fadeOverlay ? { opacity: overlayOpacity, y: overlayY } : undefined}
           >
             {children}
           </motion.div>
         )}
 
-        {/* Loader: shown until all frames are decoded so the scrub never
-            reveals a missing frame. */}
+        {/* Loader: shown only until the first frame is decoded. */}
         <div
           className={styles.loader}
-          data-hidden={ready && allLoaded}
-          aria-hidden={ready && allLoaded}
+          data-hidden={firstReady}
+          aria-hidden={firstReady}
         >
-          <span className={styles.loaderText}>Loading {pct}%</span>
+          <span className={styles.loaderText}>Loading {allLoaded ? 100 : pct}%</span>
         </div>
       </div>
     </section>

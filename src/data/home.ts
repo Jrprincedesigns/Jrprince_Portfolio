@@ -1,81 +1,140 @@
 /**
- * Content for the single-page home shell. Placeholder copy that mirrors the
- * reference layout's structure — swap in your own words and assets.
- *
- * (This is separate from caseStudies.ts, which powers the /work detail pages
- * and the Gemini assistant. We'll reconnect those in a later pass.)
+ * Content for the single-page LENXPRINCE DESIGN home. Transcribed from the
+ * portfolio design (Figma). One object per section; components read from here.
  */
 
-export interface WorkItem {
-  title: string;
-  subtitle: string;
-  href: string;
-  /** Optional image; falls back to a tinted placeholder block. */
-  image?: string;
-  accent?: string;
-}
-
-export const heroHeadline = "Product Designer for Early-Stage Teams";
+/* ---------------------------------------------------------------- Hero --- */
+export const hero = {
+  eyebrow: "AI Product Designer",
+  intro:
+    "Every product starts with uncertainty. My role is to bring clarity " +
+    "through research, product strategy, experience design, and AI-driven " +
+    "thinking. I help teams move from early concepts to production-ready " +
+    "systems that balance business goals, technical realities, and " +
+    "exceptional user experiences.",
+  sideLabel: "/Selected Work",
+  portrait: "/img/portrait.jpg",
+};
 
 /**
- * Config for the pinned scroll-scrubbed hero. Frames live in
- * public/frames/hero (see the README there to swap in real footage).
+ * Scroll-scrubbed hero animation (Apple-style). Frames live in
+ * public/frames/hero (720×544, source-limited). The head-turn + sweeping glass
+ * bands scrub with scroll under the pinned hero composition.
  */
 export const scrollVideo = {
   basePath: "/frames/hero",
-  frameCount: 90,
+  frameCount: 122,
   ext: "jpg",
   pad: 3,
-  /** Scroll distance the pin occupies — taller = slower scrub. */
-  scrollHeight: "320vh",
+  /** Scroll distance the hero pins for — taller = slower scrub. */
+  scrollHeight: "280vh",
 };
 
-export const work: WorkItem[] = [
-  {
-    title: "Project One",
-    subtitle: "A one-line description of the product",
-    href: "/work/aperture-mobile-banking",
-    accent: "#6c5ce7",
-  },
-  {
-    title: "Project Two",
-    subtitle: "A one-line description of the product",
-    href: "/work/cadence-music-workspace",
-    accent: "#00b894",
-  },
-  {
-    title: "Project Three",
-    subtitle: "A one-line description of the product",
-    href: "/work/northwind-logistics-os",
-    accent: "#0984e3",
-  },
-];
-
-export const about = {
-  heading: "I help early-stage teams ship fast without compromising quality.",
+/* -------------------------------------------------------- Introduction --- */
+export const introduction = {
+  eyebrow: "Introduction",
+  /** Rendered as one block; `lead` shown in ink, the rest lighter. */
+  lead: "Growing up in N",
   body:
-    "Short intro paragraph. Say who you are, the kind of work you do, and the " +
-    "outcomes you drive for the teams you partner with. Keep it human and " +
-    "specific — this is the first thing people read about you.",
-  bullets: [
-    "Shape product strategy without drowning in docs.",
-    "Create high-fidelity, interactive prototypes to validate ideas.",
-    "Work directly with engineering to iterate fast.",
-    "Build and nurture design systems set up to scale.",
-  ],
+    "ew York taught me to appreciate different cultures, perspectives, and " +
+    "the stories people carry with them. Moving across the country taught me " +
+    "to embrace those differences rather than assume them away. That mindset " +
+    "shapes every product I design, helping me connect complex systems, " +
+    "business goals, and human needs into experiences that feel natural for " +
+    "everyone involved.",
 };
 
-export const capabilities = [
-  "Product Design",
-  "Interaction Design",
-  "Motion Design",
-  "Prototyping",
-  "Design Systems",
-  "Branding",
-  "Web Design",
-  "Strategy",
+/* --------------------------------------------------------- Case studies --- */
+export type CardTheme = "green" | "cream" | "black" | "navy";
+
+export interface CaseStudy {
+  slug: string;
+  title: string;
+  /** Optional highlighted tail of the title (used on the black card). */
+  titleHighlight?: string;
+  theme: CardTheme;
+  tags: string[];
+  description: string;
+  image: string;
+  href: string;
+}
+
+export const caseStudies: CaseStudy[] = [
+  {
+    slug: "real-estate-investing",
+    title: "Real Estate Investing Feel Simple",
+    theme: "green",
+    tags: ["Marketplace Design", "End 2 End Experience", "Design System"],
+    description:
+      "Designed the end-to-end investment experience, from onboarding through " +
+      "portfolio management, helping first-time investors navigate one of " +
+      "life's biggest financial decisions with confidence.",
+    image: "/img/cases/case-real-estate.png",
+    href: "#contact",
+  },
+  {
+    slug: "trust-at-scale",
+    title: "Designing for Trust at Scale",
+    theme: "cream",
+    tags: ["Operational UX", "Decision Support"],
+    description:
+      "Reimagined fraud monitoring and case resolution workflows, giving " +
+      "analysts faster access to the information they needed while reducing " +
+      "operational complexity.",
+    image: "/img/cases/case-trust.png",
+    href: "#contact",
+  },
+  {
+    slug: "secure-file-sharing",
+    title: "Rethinking",
+    titleHighlight: "Secure File Sharing",
+    theme: "black",
+    tags: ["Zero-to-One Product", "Platform Architecture"],
+    description:
+      "Designed a new approach to secure file distribution, combining DRM, " +
+      "payments, and streaming into a seamless product experience for " +
+      "creators and businesses.",
+    image: "/img/cases/case-secure.png",
+    href: "#contact",
+  },
+  {
+    slug: "kortshut-ai",
+    title: "Kortshut AI",
+    theme: "cream",
+    tags: ["Co-Founder", "AI Product Engineering"],
+    description:
+      "Co-founded and designed a macOS AI platform that unified multiple " +
+      "models, automations, and workflows into a single intelligent workspace.",
+    image: "/img/cases/case-kortshut.png",
+    href: "#contact",
+  },
+  {
+    slug: "digital-identity",
+    title: "Reimagining Digital Identity",
+    theme: "cream",
+    tags: ["AI Identity", "Conversation Design"],
+    description:
+      "Leading product strategy and experience design for an AI-powered " +
+      "profile platform that helps professionals tell their story through " +
+      "intelligent conversations.",
+    image: "/img/cases/case-identity.png",
+    href: "#contact",
+  },
+  {
+    slug: "healthcare-data",
+    title: "Making Healthcare Data Understandable",
+    theme: "navy",
+    tags: ["Information Design", "Healthcare Analytics"],
+    description:
+      "Designed dashboards and reporting systems that helped healthcare " +
+      "organizations turn complex financial and operational data into " +
+      "actionable decisions.",
+    image: "/img/cases/case-healthcare.png",
+    href: "#contact",
+  },
 ];
 
+/* ------------------------------------------------------------ Approach --- */
 export interface ApproachItem {
   n: string;
   title: string;
@@ -85,80 +144,61 @@ export interface ApproachItem {
 export const approach: ApproachItem[] = [
   {
     n: "01",
-    title: "Shared ownership.",
-    body: "Whether I work independently or integrate with your team, everyone comes along.",
+    title: "Listen",
+    body: "Every project starts by understanding people, not requirements.",
   },
   {
     n: "02",
-    title: "I work fast.",
-    body: "Quick iteration lets us zoom through explorations until something feels right.",
+    title: "Simplify.",
+    body: "I break complex systems into clear, approachable experiences.",
   },
   {
     n: "03",
-    title: "Show and tell.",
-    body: "I share work in progress often via screen recordings and voice-over.",
+    title: "Prototype",
+    body: "Working software teaches faster than perfect documentation.",
   },
   {
     n: "04",
-    title: "Bias for action.",
-    body: "I prefer tangible artifacts over lengthy documents that go ignored.",
+    title: "Align.",
+    body: "The best products emerge when engineering, design, and business move together.",
   },
   {
     n: "05",
-    title: "I work in systems.",
-    body: "I create reusable components, whether it's a feature or a full design system.",
+    title: "Scale",
+    body: "I design systems that continue creating value long after launch.",
   },
   {
     n: "06",
-    title: "Design is thinking.",
-    body: "I explore divergent solutions. The more the merrier.",
+    title: "Refine.",
+    body: "Great products aren't finished, they evolve with the people who use them.",
   },
 ];
 
-/** Client / logo row — text placeholders until you add real logo SVGs. */
-export const clients = [
-  "Client A",
-  "Client B",
-  "Client C",
-  "Client D",
-  "Client E",
-  "Client F",
-];
-
-export interface Testimonial {
-  quote: string;
-  author: string;
-  role: string;
+/* ------------------------------------------------------------- Clients --- */
+export interface Client {
+  name: string;
+  url: string;
+  href: string;
 }
 
-export const testimonials: Testimonial[] = [
-  {
-    quote:
-      "A placeholder testimonial. Replace with a real quote about what it was " +
-      "like to work with you — the impact, the process, the collaboration.",
-    author: "Name Surname",
-    role: "Title, Company",
-  },
-  {
-    quote:
-      "Another placeholder quote. Two or three sentences works best — specific " +
-      "and warm beats generic praise every time.",
-    author: "Name Surname",
-    role: "Title, Company",
-  },
-  {
-    quote:
-      "A third short quote. Keep a few here so the row scrolls nicely on both " +
-      "desktop and mobile.",
-    author: "Name Surname",
-    role: "Title, Company",
-  },
+export const clients: Client[] = [
+  { name: "Fidelity Charitable", url: "Fidelitycharitable.org", href: "https://www.fidelitycharitable.org" },
+  { name: "Kortshut AI", url: "Kortshut.ai", href: "https://kortshut.ai" },
+  { name: "Savrr Inc.", url: "Savrrapp.com", href: "https://savrrapp.com" },
+  { name: "Superfile", url: "Superfile.com", href: "https://superfile.com" },
+  { name: "Synctera", url: "Synctera.com", href: "https://synctera.com" },
+  { name: "Doorvest", url: "Doorvest.com", href: "https://doorvest.com" },
+  { name: "M13", url: "M13.co", href: "https://m13.co" },
+  { name: "Pareto Intel", url: "Paretointel.com", href: "https://paretointel.com" },
 ];
 
-/** Suggested prompts shown in the Contact chat shell. */
-export const contactSuggestions = [
-  "How fast can you start?",
-  "What kind of teams do you work with?",
-  "What's your availability?",
-  "What does a typical week look like?",
-];
+/* ------------------------------------------------------------- Contact --- */
+export const contact = {
+  greeting: "Hey! What would you like to know?",
+  suggestions: [
+    "How fast can you start?",
+    "What kind of teams do you work with?",
+    "What's your availability?",
+    "What does a typical week look like?",
+  ],
+};

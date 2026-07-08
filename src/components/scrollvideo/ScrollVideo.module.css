@@ -9,7 +9,7 @@
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  background: var(--bg);
+  background: var(--black);
 }
 
 .canvas {
@@ -42,7 +42,7 @@
   z-index: 3;
   display: grid;
   place-items: center;
-  background: var(--bg);
+  background: var(--black);
   transition: opacity var(--dur-slow) var(--ease-out),
     visibility var(--dur-slow) var(--ease-out);
 }

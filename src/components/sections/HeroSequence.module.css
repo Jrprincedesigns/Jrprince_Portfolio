@@ -1,0 +1,326 @@
+/* =============================================================
+   Pinned intro sequence: white → splash titles → curtains open →
+   portrait scrubs (head turn). One sticky stage driven by scroll.
+   ============================================================= */
+.wrapper {
+  position: relative;
+  height: 300vh;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  background: #fff;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.15) 18%, transparent 32%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, transparent 15%);
+}
+
+.comp {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  color: #fff;
+  pointer-events: none;
+}
+
+/* ---- White curtains ---- */
+.curtainTop,
+.curtainBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50.2%;
+  background: #fff;
+  z-index: 5;
+}
+.curtainTop {
+  top: 0;
+}
+.curtainBottom {
+  bottom: 0;
+}
+
+/* ---- Splash titles (black on white) ---- */
+.splash {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #0a0a0a;
+  pointer-events: none;
+  padding-inline: 1.5rem;
+  text-align: center;
+}
+
+.splashMark {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 0.9rem + 1.9vw, 2rem);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  animation: settle 0.9s var(--ease-out) both;
+}
+
+.splashSub {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: clamp(0.7rem, 0.66rem + 0.2vw, 0.82rem);
+  font-weight: 300;
+  color: #444;
+  animation: settle 0.9s var(--ease-out) 0.12s both;
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sLead {
+  font-weight: 700;
+  font-style: italic;
+}
+.sThin {
+  font-weight: 300;
+}
+.sReg {
+  font-size: 0.45em;
+  font-weight: 300;
+  vertical-align: super;
+}
+.sTail {
+  font-weight: 400;
+}
+.subLine {
+  width: 34px;
+  height: 1px;
+  background: #444;
+}
+
+.scrollCue {
+  position: absolute;
+  bottom: clamp(1.5rem, 4vh, 2.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 7;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+  pointer-events: none;
+}
+
+/* =============================================================
+   Static fallback (reduced motion)
+   ============================================================= */
+.staticHero {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  background: #2b2f38;
+  color: #fff;
+}
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.portrait {
+  object-fit: cover;
+  object-position: 60% 22%;
+}
+.staticComp {
+  position: relative;
+  z-index: 2;
+  min-height: 100svh;
+  color: #fff;
+}
+
+/* =============================================================
+   Hero composition (shared by both paths)
+   ============================================================= */
+.tagline {
+  position: absolute;
+  top: clamp(6.5rem, 12vw, 12rem);
+  right: clamp(1.5rem, 4vw, 3rem);
+  width: 12ch;
+  font-size: clamp(0.85rem, 0.75rem + 0.5vw, 1.15rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #0a0a0a;
+}
+
+.wordmark {
+  position: absolute;
+  top: clamp(7rem, 17vh, 12rem);
+  left: clamp(1.5rem, 4vw, 3rem);
+  margin: 0;
+  font-family: var(--font-display);
+  /* Scales with viewport but caps early so the wordmark never runs into the
+     right-hand tagline (which is anchored ~190px from the right edge). */
+  font-size: clamp(2.4rem, 8.6vw - 1rem, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  font-weight: 200;
+  white-space: nowrap;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.25);
+}
+.brandWord {
+  white-space: nowrap;
+}
+.lead {
+  font-weight: 500;
+  font-style: italic;
+}
+.mid {
+  font-weight: 200;
+}
+.tail {
+  font-weight: 500;
+  font-style: italic;
+}
+.crownLetter {
+  position: relative;
+  display: inline-block;
+}
+.crown {
+  position: absolute;
+  left: 50%;
+  top: -0.34em;
+  transform: translateX(-50%);
+  width: 0.62em;
+  height: auto;
+  color: #fff;
+}
+
+.sideLeft,
+.sideRight {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.92);
+}
+.sideLeft {
+  left: clamp(1.5rem, 4vw, 3rem);
+  top: 52%;
+  transform: translateY(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+}
+.sideRight {
+  right: clamp(1.5rem, 4vw, 3rem);
+  top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+}
+.sideLine {
+  width: 1px;
+  height: clamp(70px, 14vh, 140px);
+  background: rgba(255, 255, 255, 0.55);
+}
+.sideText {
+  white-space: nowrap;
+}
+.pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--live);
+  animation: pulse 2.4s var(--ease-out) infinite;
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(70, 224, 138, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(70, 224, 138, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(70, 224, 138, 0);
+  }
+}
+
+.introBlock {
+  position: absolute;
+  left: clamp(1.5rem, 4vw, 3rem);
+  bottom: clamp(1.75rem, 5vh, 3rem);
+  width: min(480px, calc(100vw - 3rem));
+}
+.introHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.introTitle {
+  font-size: clamp(0.95rem, 0.85rem + 0.4vw, 1.15rem);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.introRule {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.55);
+}
+.introBody {
+  font-size: clamp(0.78rem, 0.74rem + 0.15vw, 0.85rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 20px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 760px) {
+  .sideLeft,
+  .sideRight {
+    display: none;
+  }
+  .tagline {
+    top: clamp(5.5rem, 22vw, 8rem);
+    width: 9ch;
+    font-size: 1rem;
+  }
+  .wordmark {
+    top: auto;
+    bottom: 42%;
+    white-space: normal;
+    line-height: 1;
+  }
+  .introBlock {
+    width: calc(100vw - 3rem);
+  }
+}
