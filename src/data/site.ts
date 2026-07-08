@@ -19,9 +19,8 @@ export const site = {
   location: "Dallas, TX",
   availability: "Available to work",
   socials: [
-    { label: "X", short: "X", href: "https://x.com/" },
-    { label: "Threads", short: "✳", href: "https://threads.net/" },
-    { label: "LinkedIn", short: "in", href: "https://www.linkedin.com/" },
+    { label: "LinkedIn", short: "in", href: "https://www.linkedin.com/in/lennox-prince" },
+    { label: "TikTok", short: "TT", href: "https://www.tiktok.com/@theuxguy_jr" },
   ],
   nav: [
     { label: "About", href: "/#introduction" },
