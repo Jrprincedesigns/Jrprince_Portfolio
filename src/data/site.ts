@@ -14,7 +14,7 @@ export const site = {
     "complex products through research, product strategy, experience design, " +
     "and AI-driven thinking — moving teams from early concepts to " +
     "production-ready systems.",
-  url: "https://lenxprince.vercel.app",
+  url: "https://www.jrprince.design",
   email: "lennoxprincejr1@gmail.com",
   location: "Dallas, TX",
   availability: "Available to work",
