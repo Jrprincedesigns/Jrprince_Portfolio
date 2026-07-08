@@ -1,31 +1,29 @@
-import ScrollVideoHero from "@/components/sections/ScrollVideoHero";
-import Work from "@/components/sections/Work";
-import About from "@/components/sections/About";
-import Capabilities from "@/components/sections/Capabilities";
+import HeroSequence from "@/components/sections/HeroSequence";
+import IntroFill from "@/components/sections/IntroFill";
+import CaseStudies from "@/components/sections/CaseStudies";
 import Approach from "@/components/sections/Approach";
 import Clients from "@/components/sections/Clients";
-import Testimonials from "@/components/sections/Testimonials";
-import ContactChat from "@/components/sections/ContactChat";
+import Contact from "@/components/sections/Contact";
 
 /**
- * Single-page home, structured to mirror the reference site:
- * hero → work → about → capabilities → approach → clients → testimonials → contact.
+ * LENXPRINCE DESIGN — single-page home as one scroll-choreographed sequence:
+ * white splash → titles land → curtains open → portrait scrubs (head turn) →
+ * snap into Introduction (text fills to ink on scroll) → Case Studies →
+ * (approach · clients · contact).
  *
- * Each section is its own component under components/sections. Content lives in
- * src/data/home.ts. Case-study detail pages (/work/[slug]) and the Gemini chat
- * still exist in the repo; we'll reconnect them in a later pass.
+ * Snap points sit at each section boundary (proximity, key moments only).
  */
 export default function HomePage() {
   return (
     <>
-      <ScrollVideoHero />
-      <Work />
-      <About />
-      <Capabilities />
-      <Approach />
-      <Clients />
-      <Testimonials />
-      <ContactChat />
+      <HeroSequence />
+      <IntroFill />
+      <CaseStudies />
+      <div className="closing">
+        <Approach />
+        <Clients />
+        <Contact />
+      </div>
     </>
   );
 }

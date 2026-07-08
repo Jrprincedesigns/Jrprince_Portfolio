@@ -33,3 +33,9 @@ next-env.d.ts.timestamp
 .vscode/
 .idea/
 .cache/
+
+# local npm cache (build artifact, not source)
+.npm-cache/
+
+# non-npm lockfiles — this repo standardizes on npm (package-lock.json)
+bun.lock

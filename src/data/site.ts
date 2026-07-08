@@ -1,28 +1,32 @@
 /**
  * Global site configuration — the single source of truth for identity,
- * navigation, and contact links. Edit these values and everything updates.
+ * navigation, and contact links.
  */
 
 export const site = {
-  name: "Jonathan Prince",
-  shortName: "jrprince",
-  role: "Product Designer",
-  // A one-line positioning statement used in the hero and metadata.
-  tagline: "Product designer specializing in interaction & motion design.",
+  name: "Lennox Prince",
+  wordmark: { lead: "LENX", mid: "PRINCE", tail: "DESIGN." },
+  shortName: "LENXPRINCE",
+  role: "AI Product Designer",
+  tagline: "Designing Intelligence for Modern Products",
   description:
-    "I design digital products end to end — from systems thinking and " +
-    "interaction models to the motion that makes them feel alive.",
-  // Update this once you know your Vercel/custom domain.
-  url: "https://jrprince.vercel.app",
-  email: "hello@example.com",
-  location: "Available worldwide · Remote",
-  // Add real social links here later, e.g.
-  // { label: "LinkedIn", href: "https://www.linkedin.com/in/you" }
-  socials: [] as { label: string; href: string }[],
+    "Lennox Prince is an AI Product Designer in Dallas, TX. I bring clarity to " +
+    "complex products through research, product strategy, experience design, " +
+    "and AI-driven thinking — moving teams from early concepts to " +
+    "production-ready systems.",
+  url: "https://lenxprince.vercel.app",
+  email: "lennoxprincejr1@gmail.com",
+  location: "Dallas, TX",
+  availability: "Available to work",
+  socials: [
+    { label: "X", short: "X", href: "https://x.com/" },
+    { label: "Threads", short: "✳", href: "https://threads.net/" },
+    { label: "LinkedIn", short: "in", href: "https://www.linkedin.com/" },
+  ],
   nav: [
-    { label: "Work", href: "/#work" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "mailto:hello@example.com" },
+    { label: "About", href: "/#introduction" },
+    { label: "Case Studies", href: "/#case-studies" },
+    { label: "Contact", href: "/#contact" },
   ],
 } as const;
 

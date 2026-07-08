@@ -1,19 +1,69 @@
 .header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  padding-block: var(--space-lg);
+  position: fixed;
+  top: clamp(14px, 2.5vw, 40px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  max-width: calc(100vw - 2rem);
+}
+
+.pill {
+  position: relative;
+  height: 46px;
+  max-width: calc(100vw - 2rem);
+  border-radius: var(--radius-pill);
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+/* Darker fill for pages with light backgrounds (case studies). */
+.solid {
+  background: rgba(18, 18, 22, 0.6);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
 }
 
 .brand {
-  font-size: var(--step-0);
-  font-weight: 400;
-  color: var(--text);
-  letter-spacing: -0.01em;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: inline-flex;
+  align-items: center;
+  /* horizontal position (left) is driven by motion */
 }
 
-.brand:hover {
-  color: var(--text-muted);
+.logo {
+  width: auto;
+  height: 22px;
+  object-fit: contain;
+}
+
+.links {
+  position: absolute;
+  right: 24px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  list-style: none;
+  white-space: nowrap;
+}
+
+.link {
+  display: inline-block;
+  padding: 6px 2px;
+  font-size: var(--step--1);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.link:hover {
+  color: #fff;
 }
