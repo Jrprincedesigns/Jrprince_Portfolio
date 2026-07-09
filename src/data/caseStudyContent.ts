@@ -52,7 +52,8 @@ export type CaseBlock =
       images?: CaseImage[];
       labels?: string[];
     }
-  | { kind: "embed"; embed: string; caption?: string };
+  | { kind: "embed"; embed: string; caption?: string }
+  | { kind: "reveal"; name: string; caption?: string };
 
 /** Sticky-nav chapters (flagship studies); each id must match a block's id. */
 export interface CaseChapter {
@@ -625,9 +626,9 @@ const ambasdr: CaseStudyContent = {
   ],
   blocks: [
     {
-      kind: "media",
-      variant: "wide",
-      labels: ["The public Ambasdr profile beside the AI conversation interface"],
+      kind: "reveal",
+      name: "ambasdr-hero",
+      caption: "The public Ambasdr profile beside the AI conversation interface",
     },
     {
       kind: "section",
