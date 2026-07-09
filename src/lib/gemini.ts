@@ -1,5 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
-import { publishedCaseStudies } from "@/data/caseStudies";
+import { caseOrder, getCaseStudy } from "@/data/caseStudyContent";
+import { introduction, approach, clients } from "@/data/home";
 import { site } from "@/data/site";
 
 /**
@@ -24,44 +25,65 @@ export function getGemini(): GoogleGenAI {
   return client;
 }
 
+/** Compact, factual summary of every published case study. */
+function caseStudyDigest(): string {
+  return caseOrder
+    .map((slug) => {
+      const c = getCaseStudy(slug);
+      if (!c) return null;
+      const meta = c.meta.map((m) => `${m.label}: ${m.value}`).join(" · ");
+      const focus = c.focusAreas?.length
+        ? `Focus: ${c.focusAreas.join(", ")}`
+        : null;
+      return [
+        `## ${c.project} — ${c.title}`,
+        meta,
+        focus,
+        c.lead ? `Summary: ${c.lead}` : null,
+        `Link: /work/${c.slug}`,
+      ]
+        .filter(Boolean)
+        .join("\n");
+    })
+    .filter(Boolean)
+    .join("\n\n");
+}
+
 /**
  * Builds the system instruction that grounds the assistant in this portfolio.
- * It's assembled from the same data the site renders, so the assistant can
- * never drift from what's actually published.
+ * It's assembled from the same data the site renders — case studies, bio, the
+ * approach, and the client list — so the assistant can never drift from what's
+ * actually published.
  */
 export function buildSystemInstruction(): string {
-  const projects = publishedCaseStudies
-    .map((c) => {
-      const metrics = c.metrics
-        .map((m) => `${m.label}: ${m.value}`)
-        .join(", ");
-      return [
-        `## ${c.title} — ${c.subtitle}`,
-        `Client: ${c.client} · Year: ${c.year} · Role: ${c.role}`,
-        `Disciplines: ${c.disciplines.join(", ")}`,
-        `Summary: ${c.summary}`,
-        `Key metrics: ${metrics}`,
-        `Link: /work/${c.slug}`,
-      ].join("\n");
-    })
-    .join("\n\n");
+  const bio = `${introduction.lead}${introduction.body}`;
+  const approachText = approach
+    .map((a) => `${a.n} ${a.title.replace(/\.$/, "")} — ${a.body}`)
+    .join("\n");
+  const clientList = clients.map((c) => c.name).join(", ");
 
   return [
-    `You are the portfolio assistant for ${site.name}, a ${site.role}.`,
-    `Your job is to help visitors understand ${site.name}'s work, process, and experience.`,
+    `You are the portfolio assistant for ${site.name}, an ${site.role} based in ${site.location}.`,
+    `Your job is to help visitors understand ${site.name}'s work, process, and experience — and to help them get in touch.`,
     "",
     "Guidelines:",
     "- Be warm, concise, and specific. Aim for 2–4 sentences unless asked for detail.",
-    "- Only answer using the information below. If you don't know, say so and " +
-      "suggest the visitor reach out via the contact link.",
-    "- When relevant, point to a specific case study by name and its /work/ link.",
-    "- Never invent metrics, clients, or facts that aren't provided.",
+    "- Only answer using the information below. If you don't know, say so and point the visitor to the contact options.",
+    "- When a project is relevant, name it and cite its /work/ link.",
+    "- Never invent metrics, clients, employers, or facts that aren't provided here.",
+    `- Availability: ${site.availability}. For direct contact, share the email ${site.email}.`,
     "",
     `About ${site.name}: ${site.description}`,
-    `Location / availability: ${site.location}`,
-    `Contact: ${site.email}`,
+    "",
+    `Background: ${bio}`,
+    "",
+    "# How I work",
+    approachText,
+    "",
+    "# Selected clients",
+    clientList,
     "",
     "# Case studies",
-    projects,
+    caseStudyDigest(),
   ].join("\n");
 }
