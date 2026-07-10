@@ -39,16 +39,21 @@ export default function AmbasdrScrollVideo({ caption }: { caption?: string }) {
     const slide = slideRef.current;
     const video = videoRef.current;
     if (!slide || !video) return;
+    // React's `muted` prop doesn't reliably set the DOM property, and browsers
+    // only allow autoplay when the element is actually muted — set it directly.
+    video.muted = true;
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting && !startedRef.current) {
             startedRef.current = true;
-            video.play().catch(() => setRevealed(true)); // autoplay blocked
+            video.muted = true;
+            const p = video.play();
+            if (p) p.catch(() => setRevealed(true)); // autoplay truly blocked
           }
         }
       },
-      { threshold: 0.55 }
+      { threshold: 0.4 }
     );
     io.observe(slide);
     return () => io.disconnect();
