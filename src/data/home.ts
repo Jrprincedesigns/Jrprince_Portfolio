@@ -98,17 +98,6 @@ export const caseStudies: CaseStudy[] = [
     href: "#contact",
   },
   {
-    slug: "kortshut-ai",
-    title: "Kortshut AI",
-    theme: "cream",
-    tags: ["Co-Founder", "AI Product Engineering"],
-    description:
-      "Co-founded and designed a macOS AI platform that unified multiple " +
-      "models, automations, and workflows into a single intelligent workspace.",
-    image: "/img/cases/case-kortshut.png",
-    href: "#contact",
-  },
-  {
     slug: "digital-identity",
     title: "Reimagining Digital Identity",
     theme: "cream",
