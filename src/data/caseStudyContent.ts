@@ -71,6 +71,9 @@ export interface CaseStudyContent {
   meta: CaseMeta[];
   focusAreas?: string[];
   heroImage?: CaseImage;
+  /** Render the hero on a white field, scaled to 93% — for laptop/device
+   *  mockups that read too large edge-to-edge. Keeps the full-bleed footprint. */
+  heroFramed?: boolean;
   heroLabel?: string;
   /** When present, renders a sticky chapter rail + enables scroll reveal. */
   chapters?: CaseChapter[];
@@ -186,8 +189,8 @@ const doorvest: CaseStudyContent = {
       kind: "section",
       title: "“Doormatch” preference matching",
       body: [
-        "Instead of a separate swipe app, we put Like and Dislike buttons on each property card. It borrowed the familiarity of swiping without pulling people out of the browsing flow. When someone liked a home, we recorded its attributes: location, price, home type, and so on.",
-        "We deliberately avoided a standalone swipe experience. It would have rewarded novelty over real decisions and pulled people away from the actual investment. Those signals fed Doormatch, which surfaced homes likely to fit each person's criteria. It narrowed the field for them over time, without anyone filling out a preferences form.",
+        "Instead of a separate swipe app, I put Like and Dislike buttons on each property card. It borrowed the familiarity of swiping without pulling people out of the browsing flow. When someone liked a home, we recorded its attributes: location, price, home type, and so on.",
+        "I argued against a standalone swipe experience. It would have rewarded novelty over real decisions and pulled people away from the actual investment. Those signals fed Doormatch, which surfaced homes likely to fit each person's criteria. It narrowed the field for them over time, without anyone filling out a preferences form.",
         "It personalized the marketplace and gave the sales team a read on what each person wanted, without the constant back-and-forth.",
       ],
     },
@@ -263,9 +266,9 @@ const doorvest: CaseStudyContent = {
     {
       kind: "stats",
       items: [
-        { value: "+13.8%", label: "Visitor → active investor conversion" },
-        { value: "+40%", label: "Home reservations" },
-        { value: "~80%", label: "User engagement & retention" },
+        { value: "+13.8%", label: "Lift in visitor → active-investor conversion after launch" },
+        { value: "+40%", label: "Increase in home reservations vs. the prior funnel" },
+        { value: "~80%", label: "Active-investor engagement & retention" },
       ],
     },
     {
@@ -437,24 +440,19 @@ const superfile: CaseStudyContent = {
     },
     {
       kind: "section",
-      title: "My contribution",
+      title: "What shipped",
+      kicker: "A working pay-to-unlock flow, used end to end before it ever went public.",
       body: [
-        "Discovery, product definition, design systems, investor demos, user testing, engineering collaboration, and fundraising support. Every stage asked me to think across the whole thing, from the interface out to the pitch deck.",
-      ],
-    },
-    {
-      kind: "section",
-      title: "Execution, checks & learnings",
-      body: [
-        "I ran sprints with the product manager, prioritized in Jira, and documented flows, UI decisions, and constraints in Figma and Notion. Those docs were more than deliverables. On a security-sensitive feature, they kept everyone aligned, which mattered while Superfile was pivoting and changing features often.",
-        "The feature launched internally, and investors used it themselves, going through the full pay-to-unlock flow from their invite-only accounts.",
+        "The feature launched internally first. Investors ran the full pay-to-unlock flow themselves from invite-only accounts, paying to open a protected file without ever gaining ownership of it. The point of that internal launch was to put a working feature in front of the people funding the company, a live security model they could evaluate rather than a diagram.",
+        "Because the feature kept changing while the company pivoted, I documented every flow, state, and security boundary in Figma and Notion. On a security-sensitive surface those weren't deliverables. They were how design and engineering stayed aligned on what was technically impossible versus what we simply chose not to allow.",
       ],
     },
     {
       kind: "section",
       title: "Reflection",
       body: [
-        "In the end, Superfile was less about pixels and more about how the product was framed, who I built it with, and what it delivered. It taught me as much about product storytelling as product design.",
+        "The hardest part of this project was never the interface. It was holding one line steady, that a payment can unlock access without ever transferring ownership, across product, design, and engineering while the rest of the product kept moving underneath it.",
+        "It taught me that on infrastructure this abstract, the design work is as much about making the system legible to engineers, investors, and users as it is about the screens themselves.",
       ],
     },
     {
@@ -611,15 +609,13 @@ const ambasdr: CaseStudyContent = {
     { label: "Team", value: "3-person founding team" },
     { label: "Platforms", value: "Web · iOS · Android" },
   ],
-  // Curated chapter rail (16 section headings is too many); ids map to the
-  // slugified section titles the view generates.
+  // Curated chapter rail; ids map to the slugified section titles the view generates.
   chapters: [
     { id: "first-principles", label: "First principles" },
-    { id: "the-problem-space", label: "The problem space" },
     { id: "research-validation", label: "Research & validation" },
     { id: "designing-an-ai-that-represents-people", label: "Designing the AI" },
+    { id: "teaching-instead-of-uploading", label: "Teaching the AI" },
     { id: "knowledge-architecture", label: "Knowledge architecture" },
-    { id: "building-with-ai", label: "Building with AI" },
     { id: "outcome", label: "Outcome" },
     { id: "reflection", label: "Reflection" },
   ],
@@ -634,9 +630,9 @@ const ambasdr: CaseStudyContent = {
       title: "First principles",
       kicker: "Modern identity has outgrown the tools built to represent it.",
       body: [
-        "A person isn't just a job title, a resume, a portfolio, or a social profile anymore. Someone can be a designer, a founder, a photographer, an investor, a speaker, and a community builder all at once, and each of those usually lives in a different place.",
-        "LinkedIn holds one version. Instagram holds another. TikTok, a portfolio, a resume, GitHub, YouTube, Calendly, Shopify, podcasts, and PDFs each hold a fragment of the same person. There was never a shortage of information. The problem was that none of it connected.",
-        "Ambasdr pulls those fragments into one place you can actually talk to. It sits between a person and everyone trying to understand them.",
+        "A person isn't just a job title, a resume, or a single profile anymore. Someone can be a designer, a founder, a photographer, an investor, and a community builder all at once, and each of those usually lives in a different place.",
+        "LinkedIn favors work history, Instagram a visual identity, TikTok personality, a portfolio a few projects, GitHub code, Calendly your calendar. There was never a shortage of information. The problem was that every platform flattened someone into a narrow slice, and none of them explained how the slices fit together. A designer who's also a founder can't show both without looking unfocused. A founder misses inbound because there's no single place that tells the whole story.",
+        "The opportunity was never to replace those platforms. It was to build a layer above them: one place that pulls the fragments together and can actually be talked to. Ambasdr sits between a person and everyone trying to understand them.",
       ],
     },
     {
@@ -655,45 +651,9 @@ const ambasdr: CaseStudyContent = {
       ],
     },
     {
-      kind: "section",
-      title: "The shift",
-      kicker: "Individuals are becoming businesses.",
-      body: [
-        "The idea we started from wasn't that people needed another profile. It was that individuals increasingly run like businesses. They have a brand, offers, an audience, inbound interest, content, proof of work, and a story that needs explaining.",
-        "But the tools they had were built for static representation. A resume is static. A portfolio is selective. A Linktree is a list. A QR code hands over contact details but never explains the person behind them.",
-        "Your professional identity should carry context, be available anytime, and answer questions even when you're not there to answer them yourself.",
-      ],
-    },
-    {
       kind: "reveal",
       name: "ambasdr-scroll-video",
       caption: "From business card → QR code → link page → conversational identity layer",
-    },
-    {
-      kind: "section",
-      title: "The problem space",
-      kicker:
-        "Modern identity is fragmented across platforms that don't understand each other.",
-      body: [
-        "For people who do many things, the problem isn't too much information. It's that every platform flattens them into a narrow version of themselves. LinkedIn favors work history, Instagram a visual identity, TikTok personality, a portfolio a few curated projects, GitHub code, YouTube video, Calendly your calendar, commerce links your transactions.",
-        "None of them explain how the pieces fit together. A designer who's also a founder can't show both without looking unfocused. A candidate never knows what context got lost after a conversation. A founder misses inbound because there's no single place that tells the whole story.",
-        "The opportunity wasn't to replace those platforms. It was to build a layer above them.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: [
-        "Identity spread across platforms that don't talk to each other: LinkedIn, Instagram, TikTok, GitHub, portfolio, resume, YouTube, commerce, Calendly",
-      ],
-    },
-    {
-      kind: "section",
-      title: "What we chose not to build",
-      kicker: "The product got clearer once we defined what it was not.",
-      body: [
-        "We weren't building another LinkedIn, Linktree, chatbot, resume builder, portfolio template, or social network. People had already put real time into their presence on those platforms. Ambasdr wasn't there to erase that work. It was there to make it make sense.",
-      ],
     },
     {
       kind: "quote",
@@ -800,6 +760,10 @@ const ambasdr: CaseStudyContent = {
           title: "Mobile became the authoring tool",
           body: "Managing your Ambasdr should be as quick as sending a text. Mobile stopped being a companion app and became the fastest place to update information, manage resources, and tune how the AI represents you.",
         },
+        {
+          title: "Plan management stayed on the web",
+          body: "Free, Pro, and Premium tiers were kept on the web to sidestep App Store and Play Store payment cuts. It wasn't only a pricing call. It shaped where parts of the product could live.",
+        },
       ],
     },
     {
@@ -825,6 +789,7 @@ const ambasdr: CaseStudyContent = {
       body: [
         "The toughest problem was working out how all these documents relate, and how each should shape the AI behind the scenes. Ambasdr ties together profile data, files, links, resource context, instructions, tone, visitor questions, AI responses, conversation summaries, and signals about what's missing.",
         "A visitor asks a question. The AI answers if it has enough to go on. If it doesn't, that gap becomes feedback. The owner adds context, uploads a resource, or updates instructions, and the profile gets better the more it's used.",
+        "Those conversations run both ways. For the owner they become analytics, top questions, recurring topics, and prompts about what's missing, a read on how they're coming across and what their audience wants most.",
       ],
     },
     {
@@ -834,90 +799,10 @@ const ambasdr: CaseStudyContent = {
     },
     {
       kind: "section",
-      title: "Public profile & conversational identity",
-      kicker: "Balancing familiarity and intelligence.",
-      body: [
-        "A surprising thing from beta: people still wanted the familiar link-in-bio behavior. They liked connecting the platforms they already used, like Linktree-style links, commerce pages, YouTube, and socials, and Ambasdr wrapped context around each of those.",
-        "So the experience works on two levels: a familiar profile with links, identity, content, and proof, plus a conversational layer that helps visitors make sense of it all. People keep the presence they've built, and visitors get a better way to explore it.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: ["The public profile: header, links, resources, and the AI chat entry point"],
-    },
-    {
-      kind: "section",
-      title: "Mobile as the authoring experience",
-      kicker: "The fastest way to manage identity.",
-      body: [
-        "People update their professional story on the move. They meet someone, wrap a project, add a link, change a role, tweak a prompt. Making them go back to a desktop to do it felt way too slow.",
-        "So mobile became the main place to work, not a companion. It's where people manage resources, revise context, and tune how the AI represents them, about as quickly as sending a text.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "grid",
-      labels: ["Mobile dashboard & file management", "Link management & profile editing"],
-    },
-    {
-      kind: "section",
-      title: "Conversation intelligence",
-      kicker: "Visitor questions became product feedback.",
-      body: [
-        "Conversations aren't only for visitors. They're intelligence for the owner too. Every question reveals what people actually want to know. A repeated question is a signal. An unanswered one is a gap. Questions about collaboration, booking, hiring, press, or pricing are a read on intent.",
-        "That opened up conversation summaries, top questions, topic clusters, prompts about missing information, suggested resources, and nudges to improve the profile. All of it helps people see how they're coming across and what their audience wants most.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: ["Conversation analytics: top questions, topics, summaries, and suggested profile improvements"],
-    },
-    {
-      kind: "section",
-      title: "Pricing & business model",
-      kicker: "Utility without overcomplicating access.",
-      body: [
-        "Pricing had to stay approachable for individuals while being worth it for creators, professionals, and founders building a real personal brand. We explored Free, Pro, and Premium tiers with a trial, and kept plan management mostly on the web to sidestep App Store and Play Store payment rules. It wasn't only a pricing call. It shaped the product too.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: ["Pricing: Free, Pro, and Premium with a 7-day trial"],
-    },
-    {
-      kind: "section",
-      title: "Building with AI",
-      kicker: "The way Ambasdr was built changed how the product was built.",
-      body: [
-        "Ambasdr wasn't only an AI product. It was also designed and prototyped with AI: Figma, Figma Make, Claude Code, Codex, Cursor, Google Stitch, v0, React Native, and responsive-web prototyping.",
-        "That let a three-person team explore more prototypes, test more ideas, and move faster across platforms than a team that size usually can. The exact tools mattered less than the rhythm: prototype fast, validate the direction, turn patterns into real implementation, and keep learning.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: ["AI-assisted workflow: design → code → prototype → test → feedback → iterate"],
-    },
-    {
-      kind: "timeline",
-      label: "How the product evolved",
-      items: [
-        { label: "Hiring use case", sub: "Help people get hired" },
-        { label: "Professional profile", sub: "Represent the full picture" },
-        { label: "Conversational representation", sub: "Questions become the interface" },
-        { label: "AI identity layer", sub: "The layer between people & AI" },
-        { label: "Beta readiness", sub: "500 waitlist · 20 beta" },
-      ],
-    },
-    {
-      kind: "section",
       title: "Role & ownership",
       kicker: "From product design into founder-level product ownership.",
       body: [
-        "As a co-founder on a three-person team, the work spanned product vision, research, and strategy; information architecture and AI interaction design; onboarding, mobile, and web UX; design systems and prototyping; prompt and context design; pricing and roadmap; investor conversations, go-to-market, beta planning, and community.",
+        "As a co-founder on a three-person team, I owned product and AI UX end to end, from research and information architecture through onboarding, mobile, and prompt and context design, while sharing strategy, pricing, and go-to-market with my co-founders.",
         "On a team that small, design, business, and engineering decisions were tightly linked. The work was less about handing off screens and more about shaping the product with the team, continuously.",
       ],
     },
@@ -1188,6 +1073,7 @@ const pareto: CaseStudyContent = {
     h: 1012,
     alt: "Pareto Intelligence: the redesigned analytics portal on macOS",
   },
+  heroFramed: true,
   blocks: [
     {
       kind: "stats",
@@ -1267,7 +1153,7 @@ const pareto: CaseStudyContent = {
     {
       kind: "banner",
       eyebrow: "Reconciliation dashboards",
-      text: "Help teams catch discrepancies faster and more accurately, which fed directly into millions in recovered revenue.",
+      text: "Help teams catch discrepancies faster and more accurately, the reconciliation work that recovers millions for payers.",
     },
     {
       kind: "media",
@@ -1310,8 +1196,21 @@ const pareto: CaseStudyContent = {
       kind: "section",
       title: "Impact",
       body: [
-        "The redesigned portal and the design system measurably improved the analyst experience: a 25% drop in task-completion time, a 30% drop in error rates, and a 20% increase in new subscriptions. They also gave engineering a consistent foundation for every release that followed.",
+        "Measured against the old portal, the redesign was associated with a 25% drop in task-completion time and a 30% drop in error rates, the metrics closest to the interface itself, in testing with analysts. Over the two years that followed, the company also saw a 20% rise in new subscriptions; the redesign was one contributor among sales, pricing, and product changes rather than the sole cause.",
+        "Just as important operationally, the design system gave engineering a single, consistent foundation for every release that came after.",
       ],
+    },
+    {
+      kind: "section",
+      title: "Reflection",
+      body: [
+        "The lasting lesson wasn't about any one dashboard. It was that in enterprise analytics the interface is only as trustworthy as the system beneath it, and a design system is what makes that trust repeatable across products, teams, and years.",
+        "If I ran it again, I'd instrument the rollout from day one, so the story of what the redesign changed could be told in measured before-and-afters instead of reconstructed after the fact.",
+      ],
+    },
+    {
+      kind: "quote",
+      text: "The hardest part of enterprise UX isn't making one screen clear. It's making every screen agree with the next one.",
     },
   ],
 };
