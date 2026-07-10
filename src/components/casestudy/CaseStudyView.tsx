@@ -10,6 +10,7 @@ import type {
 } from "@/data/caseStudyContent";
 import ChapterNav from "./ChapterNav";
 import EmbedFrame from "./EmbedFrame";
+import AmbasdrHero from "./reveals/AmbasdrHero";
 import styles from "./CaseStudy.module.css";
 
 /** Stable id for a section heading so the chapter rail can anchor to it. */
@@ -156,6 +157,15 @@ export default function CaseStudyView({
             <div className={`${styles.block} ${styles.medium}`} key={i}>
               <EmbedFrame embed={block.embed} title={block.caption ?? "Interactive diagram"} />
               {block.caption && <p className={styles.caption}>{block.caption}</p>}
+            </div>
+          );
+        }
+        if (block.kind === "reveal") {
+          return (
+            <div className={`${styles.block} ${styles.wide}`} key={i}>
+              {block.name === "ambasdr-hero" && (
+                <AmbasdrHero caption={block.caption} />
+              )}
             </div>
           );
         }

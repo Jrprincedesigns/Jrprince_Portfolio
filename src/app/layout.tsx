@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Bebas_Neue } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { site } from "@/data/site";
@@ -8,6 +8,14 @@ import Nav from "@/components/Nav/Nav";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+/** Bebas Neue — condensed display face, used only in case-study mock art. */
+const bebas = Bebas_Neue({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-bebas",
   display: "swap",
 });
 
@@ -55,7 +63,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${satoshi.variable} ${inter.variable}`}>
+    <html lang="en" className={`${satoshi.variable} ${inter.variable} ${bebas.variable}`}>
       <body>
         <Nav />
         <main>{children}</main>
