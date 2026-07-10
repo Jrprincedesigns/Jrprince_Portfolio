@@ -11,6 +11,7 @@ import type {
 import ChapterNav from "./ChapterNav";
 import EmbedFrame from "./EmbedFrame";
 import AmbasdrHero from "./reveals/AmbasdrHero";
+import AmbasdrScrollVideo from "./reveals/AmbasdrScrollVideo";
 import styles from "./CaseStudy.module.css";
 
 /** Stable id for a section heading so the chapter rail can anchor to it. */
@@ -165,6 +166,9 @@ export default function CaseStudyView({
             <div className={`${styles.block} ${styles.wide}`} key={i}>
               {block.name === "ambasdr-hero" && (
                 <AmbasdrHero caption={block.caption} />
+              )}
+              {block.name === "ambasdr-scroll-video" && (
+                <AmbasdrScrollVideo caption={block.caption} />
               )}
             </div>
           );

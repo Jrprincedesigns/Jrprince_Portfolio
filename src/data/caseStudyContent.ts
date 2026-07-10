@@ -666,9 +666,9 @@ const ambasdr: CaseStudyContent = {
       ],
     },
     {
-      kind: "media",
-      variant: "wide",
-      labels: ["From business card → QR code → link page → conversational identity layer"],
+      kind: "reveal",
+      name: "ambasdr-scroll-video",
+      caption: "From business card → QR code → link page → conversational identity layer",
     },
     {
       kind: "section",
