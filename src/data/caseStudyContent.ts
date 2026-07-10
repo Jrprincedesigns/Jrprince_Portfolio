@@ -96,12 +96,12 @@ const doorvest: CaseStudyContent = {
   project: "Doorvest",
   title: "Turning a high-touch service into a scalable investment marketplace.",
   lead:
-    "As founding product designer at Doorvest, I owned the investor experience " +
-    "end to end — onboarding, marketplace discovery, portfolio management, and " +
-    "long-term ownership. The company was shifting from a high-touch, service-heavy " +
-    "model to a scalable, product-led marketplace, and my focus was helping people " +
-    "feel confident navigating something most had never done: investing in real " +
-    "estate, remotely.",
+    "As founding product designer at Doorvest, I owned the full investor " +
+    "experience: onboarding, marketplace discovery, portfolio management, and " +
+    "long-term ownership. The company was moving from a high-touch, service-heavy " +
+    "model to a product-led marketplace. My job was to help people feel confident " +
+    "doing something most had never done before: buying and managing a rental home " +
+    "in a city they'd never visit.",
   meta: [
     { label: "Role", value: "Founding Product Designer" },
     { label: "Industry", value: "Proptech · Fintech · B2C" },
@@ -113,8 +113,8 @@ const doorvest: CaseStudyContent = {
       kind: "section",
       title: "The problem space",
       body: [
-        "Remote real estate investing carries real operational and emotional weight. Most people didn't fully grasp cash flow, appreciation, reserve costs, or how tenant management actually worked — and they were being asked to commit capital to a home they would never physically visit.",
-        "Trust was the core challenge. Investors wanted visibility into renovations, underwriting logic, and projected returns before they'd move forward. But the existing funnel optimized for control, not momentum — every manual handoff added delay, uncertainty, and cognitive fatigue that directly suppressed conversion and repeat engagement.",
+        "Buying a rental property you'll never walk through is a lot to ask of someone. Most first-time investors didn't fully understand cash flow, appreciation, or reserve costs, and they had no real sense of how day-to-day tenant management worked. We were asking them to wire a large sum toward a house they'd only ever seen in photos.",
+        "Almost everything came back to confidence. Before committing, people wanted to see the renovation work, understand how a home was underwritten, and know what returns to expect. The existing funnel was built around control instead of momentum, so every manual handoff added another delay and another reason to hesitate. That hesitation showed up directly in drop-off and weak repeat activity.",
       ],
     },
     {
@@ -125,7 +125,7 @@ const doorvest: CaseStudyContent = {
           src: "/img/cases/doorvest/problem-space.png",
           w: 2018,
           h: 1486,
-          alt: "Framing the problem into design goals — educate without overwhelming, simplify while showing risk, help inexperienced users feel capable, and reduce dependency on manual communication",
+          alt: "Framing the problem into design goals: educate without overwhelming, simplify while still showing risk, help first-time investors feel capable, and lean less on manual communication",
         },
       ],
     },
@@ -133,8 +133,8 @@ const doorvest: CaseStudyContent = {
       kind: "section",
       title: "Live user research",
       body: [
-        "Digging into customer support conversations surfaced an overwhelming tone of unhappiness. Users were missing time-sensitive email notifications, and when they did engage, they were often shown homes that didn't match their stated preferences.",
-        "The friction wasn't a single broken screen — it was an experience stitched together from emails, spreadsheets, and sales coordination. People couldn't self-serve, so momentum stalled exactly where confidence needed to build.",
+        "Reading through support conversations, the frustration was hard to miss. People were missing time-sensitive email alerts, and when they did show up, they were often looking at homes that had nothing to do with what they'd asked for.",
+        "The problem wasn't one broken screen. The whole experience was held together by emails, spreadsheets, and sales calls, so people couldn't move on their own. Things stalled at exactly the moment they were starting to feel ready.",
       ],
     },
     {
@@ -145,7 +145,7 @@ const doorvest: CaseStudyContent = {
           src: "/img/cases/doorvest/user-research.png",
           w: 2018,
           h: 1486,
-          alt: "A live user-research session with the Head of Product and a customer — “I keep missing the emails Doorvest sends. I really wanted that house!”",
+          alt: "A live user-research session with the Head of Product and a customer: “I keep missing the emails Doorvest sends. I really wanted that house!”",
         },
       ],
     },
@@ -153,21 +153,21 @@ const doorvest: CaseStudyContent = {
       kind: "section",
       title: "Core product insight",
       body: [
-        "One pattern cut through everything: investors were not all using Doorvest the same way. Newer investors needed education and reassurance before they'd act. Experienced investors needed the opposite — faster access to the numbers and sharper filtering to move quickly.",
-        "That split reframed the work. The product couldn't be one linear funnel; it had to flex to the confidence and intent of whoever was using it at the time.",
+        "One pattern cut through everything: people weren't all using Doorvest the same way. Newer investors needed education and reassurance before they'd act. Experienced investors wanted the opposite: fast access to the numbers and sharper filters so they could move quickly.",
+        "That split changed how I approached the work. One linear funnel was never going to fit both. The product had to flex to how confident and how decisive each person was in the moment.",
       ],
     },
     {
       kind: "quote",
-      text: "Investors were not all using Doorvest the same way — some needed to be taught, and some needed to be trusted to move fast.",
+      text: "Investors weren't all using Doorvest the same way. Some needed to be taught. Others just needed to be trusted to move fast.",
     },
     {
       kind: "section",
       title: "Marketplace intelligence & behavioral modeling",
       kicker: "We made immediate marketplace access the default.",
       body: [
-        "The original experience relied on timed email property drops — a cadence that manufactured pressure while offering almost no visibility. I moved discovery and reservation directly into the product, so investors could browse and compare properties at their own pace instead of waiting for the next drop.",
-        "Each listing surfaced everything at a glance: property photos, financial projections, neighborhood data, and a clear Reserve Home action. The marketplace was designed to prioritize clarity and trust at the exact moments of financial commitment — removing the delay that had been suppressing conversion.",
+        "The original experience relied on timed email property drops. The cadence manufactured pressure while giving people almost nothing to actually look at. I moved discovery and reservation straight into the product, so investors could browse and compare homes at their own pace instead of waiting for the next email.",
+        "Each listing put everything in one place: photos, financial projections, neighborhood data, and a clear Reserve Home button. I focused the marketplace on the moments where money was on the line and cut the delays that had been quietly killing conversion.",
       ],
     },
     {
@@ -178,7 +178,7 @@ const doorvest: CaseStudyContent = {
           src: "/img/cases/doorvest/marketplace.png",
           w: 3840,
           h: 2160,
-          alt: "The Doorvest marketplace — investment portfolios above the browsable in-app home inventory",
+          alt: "The Doorvest marketplace: investment portfolios above the browsable in-app home inventory",
         },
       ],
     },
@@ -186,21 +186,21 @@ const doorvest: CaseStudyContent = {
       kind: "section",
       title: "“Doormatch” preference matching",
       body: [
-        "Rather than a separate swipe app, we implemented Like / Dislike buttons on each property card — subtly reminiscent of the swipe idea, but contained within the browsing experience. When a user liked a property, the system logged its attributes: location, price, home type, and more.",
-        "We deliberately avoided a standalone swipe experience to prevent novelty-driven behavior and keep users anchored in real investment context. This data fueled the Doormatch algorithm, which highlighted properties likely to fit the user's criteria — reducing analysis paralysis by progressively narrowing the decision space without requiring explicit configuration.",
-        "It personalized the marketplace and gave the sales team insight into what each user wanted, without constant back-and-forth.",
+        "Instead of a separate swipe app, we put Like and Dislike buttons on each property card. It borrowed the familiarity of swiping without pulling people out of the browsing flow. When someone liked a home, we recorded its attributes: location, price, home type, and so on.",
+        "We deliberately avoided a standalone swipe experience. It would have rewarded novelty over real decisions and pulled people away from the actual investment. Those signals fed Doormatch, which surfaced homes likely to fit each person's criteria. It narrowed the field for them over time, without anyone filling out a preferences form.",
+        "It personalized the marketplace and gave the sales team a read on what each person wanted, without the constant back-and-forth.",
       ],
     },
     {
       kind: "quote",
-      text: "Doormatch sped up the process of finding a “yes” property — an internal analysis showed a notable uptick in Letters of Intent after it launched. Even when users didn't immediately purchase, they browsed more when the options felt tailored to them.",
+      text: "Doormatch helped people find a “yes” faster. An internal analysis showed a noticeable uptick in Letters of Intent after it launched. Even when someone didn't buy right away, they browsed more once the options felt tailored to them.",
     },
     {
       kind: "section",
       title: "Streamlined purchase flow",
-      kicker: "The primary blocker wasn't intent — it was effort.",
+      kicker: "The blocker was never intent. It was effort.",
       body: [
-        "I redesigned the reservation flow down to just a few clicks, eliminating unnecessary fields and leaning on saved profile information. The interface delivered instant feedback, a clear confirmation screen, and an email follow-up — so committing felt fast and reassuring rather than daunting.",
+        "I cut the reservation flow down to a few clicks by removing unnecessary fields and reusing what we already knew from someone's profile. Instant feedback, a clear confirmation screen, and a follow-up email made committing feel quick and reassuring instead of daunting.",
       ],
     },
     {
@@ -219,8 +219,8 @@ const doorvest: CaseStudyContent = {
       kind: "section",
       title: "Dashboard evolution",
       body: [
-        "Reserving a home was only half the journey. Ownership itself had been fragmented across emails, spreadsheets, and manual communication — investors had no single place to understand what they actually owned or how it was performing.",
-        "I centralized the entire investment lifecycle into one dashboard: portfolio tracking, renovation visibility, lease access, and document retrieval. Owning through Doorvest became as clear and self-serve as buying through it.",
+        "Reserving a home was only half the journey. Ownership itself was scattered across emails, spreadsheets, and manual back-and-forth. Investors had no single place to see what they owned or how it was performing.",
+        "I pulled the whole ownership lifecycle into one dashboard: portfolio performance, renovation status, leases, and documents. Owning through Doorvest became as self-serve as buying through it.",
       ],
     },
     {
@@ -231,7 +231,7 @@ const doorvest: CaseStudyContent = {
           src: "/img/cases/doorvest/dashboard.png",
           w: 2422,
           h: 1540,
-          alt: "The centralized ownership dashboard on web and mobile — portfolio value, homes, distributions, recent activity, statements, and documents in one place",
+          alt: "The centralized ownership dashboard on web and mobile: portfolio value, homes, distributions, recent activity, statements, and documents in one place",
         },
       ],
     },
@@ -251,14 +251,14 @@ const doorvest: CaseStudyContent = {
       kind: "section",
       title: "Operational impact",
       body: [
-        "The platform reduced friction for users and internal teams alike. By centralizing discovery, evaluation, and reservation, it removed the manual coordination that had bottlenecked the sales team — and it created shared visibility between investor demand, acquisition strategy, and operational workflows.",
+        "The platform took friction out for investors and internal teams at once. Bringing discovery, evaluation, and reservation into one place removed the manual coordination that had bottlenecked the sales team. It also gave everyone a shared view across investor demand, acquisitions, and operations.",
       ],
     },
     {
       kind: "embed",
       embed: "doorvest-system-map",
       caption:
-        "The operational architecture the redesigned investor platform connected — every workflow, tool, and team, with the platform at the center. Hover any node to trace its role and connections.",
+        "How the redesigned platform connected the operation: every workflow, tool, and team, with the product at the center. Hover any node to trace its role and connections.",
     },
     {
       kind: "stats",
@@ -272,13 +272,13 @@ const doorvest: CaseStudyContent = {
       kind: "section",
       title: "Reflection",
       body: [
-        "The most important lesson was that financial products are emotional systems. People weren't only evaluating returns — they were deciding whether to trust a company with a life-changing amount of money, on a home they'd never set foot in.",
-        "Over four years, Doorvest evolved from a fragmented, operator-heavy service into a connected, scalable product — one that supports the full arc of investing: marketplace discovery, reservation, portfolio management, and the long tail of ownership.",
+        "My biggest takeaway was how emotional these decisions are. People weren't only weighing returns. They were deciding whether to hand a company a life-changing amount of money for a house they'd never set foot in.",
+        "Over four years, Doorvest grew from a fragmented, operator-heavy service into a product that carries someone through the whole arc of investing: finding a home, reserving it, managing a portfolio, and the long tail of ownership.",
       ],
     },
     {
       kind: "quote",
-      text: "The most important lesson was that financial products are emotional systems — you're designing for confidence as much as for returns.",
+      text: "With financial products, you're designing for confidence as much as for returns.",
     },
   ],
 };
@@ -289,11 +289,10 @@ const superfile: CaseStudyContent = {
   project: "Superfile",
   title: "Designing secure monetization for a zero-trust file platform.",
   lead:
-    "Superfile is a venture-backed cybersecurity startup building sovereign file " +
-    "control — files that stay secure and under the creator's control even after " +
-    "they're shared. I led design for its pay-to-unlock system: a way to sell " +
-    "access to a file without ever surrendering ownership, built on a zero-trust " +
-    "foundation across macOS and web.",
+    "Superfile is a venture-backed cybersecurity startup building files that stay " +
+    "under the creator's control even after they're shared. I led design for its " +
+    "pay-to-unlock feature: a way to sell access to a file without ever giving up " +
+    "ownership, built on a zero-trust foundation across macOS and web.",
   meta: [
     { label: "Role", value: "Founding Product Designer" },
     { label: "Industry", value: "Cybersecurity · Fintech · B2C" },
@@ -315,16 +314,16 @@ const superfile: CaseStudyContent = {
       kind: "section",
       title: "The problem space",
       body: [
-        "Traditional file sharing means losing control the instant someone downloads a copy — ownership, rights, and access are gone. For creators, real value isn't tied only to the file, but to its journey: who has it, how it's used, and whether it stays protected.",
-        "Superfile changes the model — upload, grant access, monitor usage, modify permissions, revoke access, maintain ownership. It flips ownership from a lost event into an adaptive, monitored, revocable system where the file stays an asset, not a liability. The challenge I owned was letting people sell access to those files without ever weakening security or trust.",
+        "With normal file sharing, you lose control the moment someone downloads a copy. Ownership, rights, and access are gone. For creators, the value isn't only in the file itself. It's in what happens to it afterward: who has it, how it's used, and whether it stays protected.",
+        "Superfile changes that. You upload a file, grant access, watch how it's used, adjust permissions, and revoke access whenever you want, all while keeping ownership. A file stays an asset instead of becoming a liability the moment it leaves your hands. My job was to let people sell access to those files without weakening any of that.",
       ],
     },
     {
       kind: "section",
       title: "Building a new mental model",
       body: [
-        "To shift digital ownership, we designed around permission states and resilient access control. Instead of files being infinitely replicable, the system tracks provenance, authenticates viewers, and adapts permissions dynamically.",
-        "Ownership context loops from the creator through the file; permissions are then layered and states enforced for every viewer — much like enterprise SaaS documentation, but for creative rights.",
+        "Changing how ownership works meant designing around permissions and durable access control. Rather than treating a file as infinitely copyable, Superfile tracks where it came from, verifies who's opening it, and adjusts what each viewer can do.",
+        "Control flows from the creator into the file, and each viewer gets their own permissions. It works a little like enterprise access controls, but applied to creative rights.",
       ],
     },
     {
@@ -335,7 +334,7 @@ const superfile: CaseStudyContent = {
           src: "/img/cases/superfile/capabilities.png",
           w: 1500,
           h: 1368,
-          alt: "Superfile's file-native capabilities — trackable, unhackable, and take-backable files",
+          alt: "Superfile's file-native capabilities: trackable, unhackable, and take-backable files",
         },
       ],
     },
@@ -343,24 +342,24 @@ const superfile: CaseStudyContent = {
       kind: "section",
       title: "The product ecosystem",
       body: [
-        "The Superfile ecosystem spans a macOS app, web platform, secure viewers, payments, permissioning, ownership verification, accounts, and tracking. Together these systems enforce digital rights and enable creative monetization.",
-        "The system map lays out roles, relationships, and routes of value across the platform — making the complexity navigable for every audience, from engineers to investors.",
+        "Superfile spans a macOS app, a web platform, secure viewers, payments, permissioning, ownership verification, accounts, and usage tracking. Together they enforce digital rights and let creators actually make money from their work.",
+        "The map below lays out how the pieces relate and where value moves between them, so the whole thing stays legible whether you're an engineer or an investor.",
       ],
     },
     {
       kind: "media",
       variant: "wide",
       labels: [
-        "The Superfile product ecosystem map — macOS app, web, secure viewers, payments, permissioning, ownership verification, and tracking",
+        "The Superfile product ecosystem: macOS app, web, secure viewers, payments, permissioning, ownership verification, and tracking",
       ],
     },
     {
       kind: "section",
       title: "Context: why this mattered",
-      kicker: "Payment wasn't meant to replace security — it was meant to sit on top of it.",
+      kicker: "Payment had to sit on top of security, never replace it.",
       body: [
-        "The push for monetization came directly from leadership and investors, with a focus on the ownership of files. The audience wasn't just creators — it was owners of digital assets who want control, protection, and the ability to sell access without giving up ownership.",
-        "That framing immediately ruled out traditional paywall patterns. If access could be copied, bypassed, or granted prematurely, the product would undermine the very idea of ownership it claimed to protect.",
+        "The push to monetize came straight from leadership and investors, centered on file ownership. The audience went beyond creators. It included anyone with digital assets who wanted to sell access while keeping control and protection intact.",
+        "That ruled out ordinary paywall patterns right away. If access could be copied, bypassed, or handed over too early, the product would undercut the exact thing it promised to protect.",
       ],
     },
     {
@@ -370,11 +369,11 @@ const superfile: CaseStudyContent = {
     {
       kind: "section",
       title: "Building with Stripe",
-      kicker: "I owned this work end-to-end across product strategy, UX, and engineering execution.",
+      kicker: "I owned this end to end, across product strategy, UX, and engineering.",
       body: [
-        "Stripe was used intentionally as the transaction layer rather than reinventing payments in house. The work wasn't simply integrating a checkout form — it was defining how an external payment provider could safely trigger access inside a security-first system. I led the design and implementation strategy for how Stripe events connected to Superfile's access model.",
-        "Payments were treated as a prerequisite for access, not proof of ownership. A successful transaction didn't unlock a file by default — it only allowed the system to release access after payment confirmation was validated and matched against the correct file and recipient. This let Superfile support retries, failures, and revocation without exposing sensitive states or granting premature access.",
-        "The system map became a shared contract between design and engineering, defining ownership boundaries and distinguishing which states were technically impossible versus simply undesired.",
+        "We used Stripe as the payment layer instead of building our own. The real work wasn't dropping in a checkout form. It was figuring out how an outside payment provider could safely unlock access inside a security-first product. I led how Stripe's events connected to Superfile's access model, in both design and implementation.",
+        "A payment was a prerequisite for access, not proof of ownership. A successful charge didn't unlock a file on its own. Access was only released after the payment was confirmed and matched to the right file and the right recipient. That gave us room to handle retries, failures, and revocation without ever exposing a sensitive state or granting access too early.",
+        "The map became a shared contract between design and engineering. It drew the boundaries of who owned what, and separated the states that were technically impossible from the ones we simply didn't want.",
       ],
     },
     {
@@ -385,44 +384,44 @@ const superfile: CaseStudyContent = {
           src: "/img/cases/superfile/system-map.png",
           w: 1800,
           h: 1392,
-          alt: "Pay-to-unlock system map — how Stripe events safely trigger access without granting ownership",
+          alt: "Pay-to-unlock map: how Stripe events safely trigger access without granting ownership",
         },
       ],
     },
     {
       kind: "section",
       title: "A controlled payment surface",
-      kicker: "Monetization had to exist inside the product without weakening its zero-trust foundation.",
+      kicker: "Monetization had to live inside the product without weakening its security.",
       body: [
-        "Rather than relying on Stripe's default checkout, I designed a custom pay-card component that lived natively inside the Superfile experience. This let us control how payment intent was expressed and validated, while ensuring transactions could never directly grant ownership or bypass the security model.",
+        "Instead of Stripe's default checkout, I designed a custom pay card that lived natively inside Superfile. It let us control exactly how a payment was expressed and validated, and made sure a transaction could never hand over ownership or slip past the security model.",
       ],
     },
     {
       kind: "section",
       title: "Component architecture",
       body: [
-        "The pay-to-unlock surface is a layered component structure that separates payment intent from access authority, so monetization never weakens Superfile's security model. Each layer increases system authority while intentionally reducing user-controlled outcomes — from primitive inputs like card number and cardholder name, up through the transaction-intent layer, to the container that finally grants access.",
+        "The pay-to-unlock surface is built in layers that separate the intent to pay from the authority to grant access. As you move up the stack, the product takes on more of the decision and the user controls less of the outcome: from basic inputs like card number and cardholder name, through the transaction-intent layer, up to the container that finally releases access.",
       ],
     },
     {
       kind: "media",
       variant: "panel",
       labels: [
-        "Component architecture — primitive inputs → transaction-intent layer → the pay-to-unlock container that releases access",
+        "How the pay card is layered: basic inputs → transaction-intent layer → the container that releases access",
       ],
     },
     {
       kind: "section",
       title: "Cross-platform decisions & trade-offs",
       body: [
-        "A major decision was whether to implement platform-specific payment logic for macOS versus web. Native implementations felt appealing but introduced long-term risk of divergence in payment behavior, webhook handling, and security assumptions. I proposed embedding a lightweight web view inside the macOS app so both platforms reused the same Stripe checkout flow and backend logic — reducing the surface area for bugs and security drift.",
+        "One big call was whether to build separate payment logic for macOS and web. Going fully native on each was tempting, but over time the two would drift apart in how they handled payments, webhooks, and security. I proposed embedding a lightweight web view inside the macOS app so both platforms ran the same Stripe flow and the same backend logic. That left fewer places for bugs or security gaps to creep in.",
       ],
     },
     {
       kind: "section",
       title: "Investor storytelling",
       body: [
-        "Complex technology only matters if people understand it. Before, investors saw technical diagrams and processes; after, they grasped the narrative — problem, ownership, monetization, control, market opportunity. Visual storytelling became a core tool for bridging technical depth and business value.",
+        "Complex technology only matters if people get it. Early on, investors were handed technical diagrams. Later, they followed a story instead: the problem, ownership, how it makes money, control, and the market. Showing it visually turned out to be the bridge between technical depth and business value.",
       ],
     },
     {
@@ -440,27 +439,27 @@ const superfile: CaseStudyContent = {
       kind: "section",
       title: "My contribution",
       body: [
-        "Discovery, product definition, architecture, design systems, investor demos, user testing, engineering collaboration, and fundraising support — every phase required systems thinking, from inside the interface to the pitch deck.",
+        "Discovery, product definition, design systems, investor demos, user testing, engineering collaboration, and fundraising support. Every stage asked me to think across the whole thing, from the interface out to the pitch deck.",
       ],
     },
     {
       kind: "section",
       title: "Execution, checks & learnings",
       body: [
-        "Throughout the project I ran structured sprints alongside the product manager, prioritized work in Jira, and documented system flows, UI decisions, and constraints in Figma and Notion. These artifacts weren't just deliverables — they were safeguards against misalignment in a security-sensitive feature, crucial while Superfile pivoted and changed features often.",
-        "The product launched internally and was tested and used by investors, who successfully experienced the pay-to-unlock feature while logged into their invite-only Superfile accounts.",
+        "I ran sprints with the product manager, prioritized in Jira, and documented flows, UI decisions, and constraints in Figma and Notion. Those docs were more than deliverables. On a security-sensitive feature, they kept everyone aligned, which mattered while Superfile was pivoting and changing features often.",
+        "The feature launched internally, and investors used it themselves, going through the full pay-to-unlock flow from their invite-only accounts.",
       ],
     },
     {
       kind: "section",
       title: "Reflection",
       body: [
-        "Superfile's journey was less about pixels and more about frameworks, relationships, and outcomes — a lesson in product narrative as much as product design.",
+        "In the end, Superfile was less about pixels and more about how the product was framed, who I built it with, and what it delivered. It taught me as much about product storytelling as product design.",
       ],
     },
     {
       kind: "quote",
-      text: "The challenge was never designing secure file sharing. It was designing confidence, control, and trust in a digital environment where ownership often feels temporary.",
+      text: "The hard part was never secure file sharing. It was designing for confidence and control in a place where ownership usually feels temporary.",
     },
   ],
 };
@@ -471,8 +470,8 @@ const synctera: CaseStudyContent = {
   project: "Synctera",
   title: "Redesigning fraud operations for trust at scale.",
   lead:
-    "Where I redesigned fraud operations — helping operatives reduce wrongful " +
-    "transaction blocks by 20% and aligning banks and fintechs on a unified " +
+    "I redesigned fraud operations at Synctera, helping analysts cut wrongful " +
+    "transaction blocks by 20% and getting banks and fintechs onto one shared " +
     "platform.",
   meta: [
     { label: "Role", value: "Lead Product Designer" },
@@ -484,27 +483,27 @@ const synctera: CaseStudyContent = {
     src: "/img/cases/synctera/hero-cases.png",
     w: 1800,
     h: 1280,
-    alt: "Synctera fraud operations — the redesigned Cases dashboard",
+    alt: "Synctera fraud operations: the redesigned Cases dashboard",
   },
   blocks: [
     {
       kind: "section",
       title: "About Synctera",
       body: [
-        "Synctera provides the infrastructure that enables banks and fintechs to launch and operate regulated financial products. Within this ecosystem, fraud operations teams review alerts, investigate high-risk activity, and make decisions that directly impact customers, partner banks, and regulatory posture.",
-        "As the platform scaled, fraud operations became increasingly complex. Analysts managed growing alert volume across KYC, transaction monitoring, and compliance workflows while coordinating with multiple external partners. Decisions were time-sensitive, auditable, and difficult to reverse.",
-        "The challenge wasn't simply moving faster. It was maintaining confidence that decisions reflected the current reality of an investigation — especially when work was blocked, incomplete, or dependent on others.",
+        "Synctera is the infrastructure banks and fintechs use to launch and run regulated financial products. Inside that world, fraud teams review alerts, investigate risky activity, and make calls that affect customers, partner banks, and the company's standing with regulators.",
+        "As the company grew, fraud work got harder. Analysts were handling more alerts across KYC, transaction monitoring, and compliance while coordinating with several outside partners. Every decision was time-sensitive, auditable, and hard to walk back.",
+        "The goal wasn't just speed. It was trusting that a case reflected what was actually true right now, especially when the work was blocked, half-finished, or waiting on someone else.",
       ],
     },
     {
       kind: "section",
       title: "What was Broken",
       kicker:
-        "Despite multiple tools and alerts, analysts lacked a reliable way to understand case state, priority, and ownership — leading to premature closure, blocked work, and invisible risk.",
+        "With plenty of tools and alerts, analysts still couldn't reliably tell a case's status, priority, or owner. The result was premature closures, stuck work, and risk no one could see.",
       body: [
-        "Case state didn't reflect reality. Cases had no clear sense of where they were in the investigation lifecycle. In several workflows, the only way to move a case forward was to mark it complete even when work was still ongoing — so in-progress investigations could appear resolved, while stalled work became invisible.",
-        "Ownership was unclear. There was no reliable signal showing who was actively working a case or whether progress was blocked. Multiple analysts could unknowingly work the same investigation, duplicating effort and creating conflicting decisions.",
-        "Progress moved outside the system. Blocked cases were resolved through Slack messages, emails, or phone calls. If documentation arrived by email and wasn't uploaded, cases stalled silently — none of it reflected back into the system of record.",
+        "A case's status didn't match reality. There was no clear sense of where a case sat in its lifecycle. In some workflows the only way to advance a case was to mark it complete, even when work was still going. So active investigations looked resolved, and stalled ones disappeared.",
+        "Ownership was murky. Nothing reliably showed who was working a case or whether it was blocked. Two analysts could pick up the same investigation without realizing it, duplicating work and reaching conflicting decisions.",
+        "A lot of the real work happened off-platform. Blocked cases got sorted out over Slack, email, or a phone call. If a document came in by email and never got uploaded, the case quietly stalled, and none of it made it back into the record.",
       ],
     },
     {
@@ -515,7 +514,7 @@ const synctera: CaseStudyContent = {
           src: "/img/cases/synctera/case-model.png",
           w: 2400,
           h: 606,
-          alt: "Case-state model — the system reflects the current truth of work, even when blocked",
+          alt: "Case-state model: the record stays true to the work, even when a case is blocked",
         },
       ],
     },
@@ -525,7 +524,7 @@ const synctera: CaseStudyContent = {
       kicker:
         "The system must always reflect the current truth of work, even when progress is blocked.",
       body: [
-        "To address the pain points, I reframed fraud case management around a single principle — the system must always reflect the current truth of work — and rebuilt the experience around three moves: consolidating fragmented tooling, reducing coordination noise, and rebuilding case visibility at scale.",
+        "I anchored the redesign to one principle: the record should always reflect the current truth of the work. From there I focused on three moves: pulling the scattered tools together, cutting the coordination noise, and making case visibility hold up as volume grew.",
       ],
     },
     {
@@ -545,27 +544,27 @@ const synctera: CaseStudyContent = {
       title: "Consolidate Fragmented Tooling",
       kicker: "Creating a single source of truth without replacing core tools.",
       body: [
-        "Fraud investigations used to force analysts to jump between products like Hawk AI, Onfido, and Dotfile, piecing together identity checks, risk signals, and decisions across multiple tools. I mapped how those systems were actually being used and redesigned the workflow into a single internal experience that kept the investigation anchored in one place.",
-        "Instead of replacing existing tools, I created a simple in-context way for analysts to open third-party systems when needed, then return to the case to capture findings and add notes without losing progress. This reduced back-and-forth, removed manual reconciliation, and gave teams a clearer, more reliable view of what was happening in each case.",
+        "Investigations used to make analysts bounce between Hawk AI, Onfido, and Dotfile, stitching together identity checks, risk signals, and decisions as they went. I mapped how those tools were actually used, then rebuilt the workflow into one internal experience that kept the whole investigation in a single place.",
+        "Rather than replace those tools, I gave analysts a simple way to open them in context, then come right back to the case to record findings and notes without losing their place. That cut the back-and-forth, removed manual reconciliation, and gave everyone a more reliable picture of each case.",
       ],
     },
     {
       kind: "section",
       title: "Reduced Coordination Noise",
       body: [
-        "Analysts needed timely updates without constant interruption. Rather than broadcasting notifications, I designed alerts to activate only when intent was explicit — such as mentions or active watching.",
-        "For teams that relied heavily on Slack, case notifications were connected directly to shared channels, anchoring coordination back to the system of record while preserving focus.",
+        "Analysts needed to stay informed without being interrupted constantly. So instead of broadcasting every notification, alerts only fired on a clear signal, like a mention or a case someone was actively watching.",
+        "For teams that lived in Slack, case notifications flowed into shared channels, pulling coordination back to the record without pulling people out of their work.",
       ],
     },
     {
       kind: "section",
       title: "Rebuilt Case Visibility at Scale",
       kicker:
-        "The dashboard made priority, ownership, and workload immediately legible — without requiring analysts to infer urgency from tables or tribal knowledge.",
+        "The dashboard made priority, ownership, and workload obvious at a glance, so analysts didn't have to guess urgency from a table or from memory.",
       body: [
-        "Before the redesign, urgency was inferred socially. Cases older than a few days were assumed to be urgent, and workload lived in analysts' heads rather than the system.",
-        "The redesigned dashboard encoded priority directly into the interface. Cases were ranked using priority signals and manager assignment, letting analysts focus on the highest-risk work without manual sorting.",
-        "At a glance, it answered three questions — what needs attention now, who is working on what, and where work is getting stuck — replacing tribal knowledge with shared situational awareness.",
+        "Before the redesign, urgency was a social guess. Anything more than a few days old was assumed urgent, and people carried their workload in their heads instead of the tool.",
+        "The new dashboard put priority right into the interface. Cases were ranked by risk signals and manager assignment, so analysts could go straight to the highest-risk work instead of sorting it themselves.",
+        "At a glance it answered three questions: what needs attention now, who's working on what, and where things are stuck. That replaced tribal knowledge with a picture everyone shared.",
       ],
     },
     {
@@ -580,18 +579,18 @@ const synctera: CaseStudyContent = {
       kind: "section",
       title: "Impact & Validation",
       body: [
-        "Impact was validated by tracking how cases moved through the system before and after launch — focusing on time spent in active investigation and the reduction in stalled or prematurely closed cases. Partnering closely with Operations and conducting post-launch analyst interviews confirmed that improvements reflected real workflow change, even as overall case volume increased.",
+        "I measured impact by watching how cases moved before and after launch, mainly the time spent in active investigation and the drop in stalled or prematurely closed cases. Working closely with Operations and interviewing analysts afterward confirmed the gains were real changes in how people worked, even as case volume climbed.",
       ],
     },
     {
       kind: "section",
       title: "What I'd Protect Going Forward",
       kicker:
-        "The dashboard functioned as a workload stabilizer for fraud operations — not a reporting surface.",
+        "The dashboard was a workload stabilizer for the fraud team, not a reporting screen.",
       body: [
-        "If another designer took over this system, I'd caution against casual changes to the dashboard. It wasn't just a place to view tasks; it became the primary mechanism through which analysts understood their workload, progress, and capacity.",
-        "By making assignment, priority, and active work visible at both the individual and team level, it helped analysts plan their day, set expectations, and avoid the constant feeling of falling behind. This visibility didn't just improve throughput — it reduced burnout by replacing uncertainty with clarity.",
-        "At a team level, shared visibility let work be redistributed before pressure became unsustainable. The dashboard shaped behavior, morale, and trust — so any future changes should be validated against real operational behavior and evaluated for their impact on workload balance and team health.",
+        "If another designer picked this up, I'd tell them to be careful with the dashboard. It wasn't only a task list. It was how analysts understood their workload, their progress, and how much they could take on.",
+        "By showing assignment, priority, and active work at both the personal and team level, it helped analysts plan their day, set expectations, and shake the feeling of always being behind. It didn't just move more cases. It eased burnout by trading uncertainty for a clear picture.",
+        "Across the team, that shared view let work move around before pressure boiled over. The dashboard shaped how people behaved, how they felt, and how much they trusted the tool. Any future change should be tested against real operational behavior and judged by what it does to workload balance and team health.",
       ],
     },
   ],
@@ -603,9 +602,9 @@ const ambasdr: CaseStudyContent = {
   project: "Ambasdr",
   title: "Designing the identity layer between people and AI.",
   lead:
-    "An AI-powered identity layer for modern professionals, creators, and " +
-    "founders — one contextual, conversational place that explains who someone " +
-    "is, what they do, and why it matters, even when they're not in the room.",
+    "An AI-powered identity layer for professionals, creators, and founders. One " +
+    "place that explains who someone is, what they do, and why it matters, and can " +
+    "answer for them even when they're not in the room.",
   meta: [
     { label: "Role", value: "Co-founder · Product & AI UX" },
     { label: "Timeline", value: "~1 year, concept → beta" },
@@ -635,9 +634,9 @@ const ambasdr: CaseStudyContent = {
       title: "First principles",
       kicker: "Modern identity has outgrown the tools built to represent it.",
       body: [
-        "A person is no longer just a job title, a resume, a portfolio, or a social profile. The same person might be a designer, founder, photographer, investor, speaker, consultant, and community builder — and each part of that identity usually lives somewhere different.",
-        "LinkedIn owns one version. Instagram owns another. TikTok, a portfolio, a resume, GitHub, YouTube, Calendly, Shopify, podcasts, and PDFs all hold fragments of the same person. The problem was never a lack of information — it was that the information had no connective tissue.",
-        "Ambasdr is an AI-powered identity layer that brings those fragments together into one contextual, conversational experience — the layer between people and AI.",
+        "A person isn't just a job title, a resume, a portfolio, or a social profile anymore. Someone can be a designer, a founder, a photographer, an investor, a speaker, and a community builder all at once, and each of those usually lives in a different place.",
+        "LinkedIn holds one version. Instagram holds another. TikTok, a portfolio, a resume, GitHub, YouTube, Calendly, Shopify, podcasts, and PDFs each hold a fragment of the same person. There was never a shortage of information. The problem was that none of it connected.",
+        "Ambasdr pulls those fragments into one place you can actually talk to. It sits between a person and everyone trying to understand them.",
       ],
     },
     {
@@ -660,9 +659,9 @@ const ambasdr: CaseStudyContent = {
       title: "The shift",
       kicker: "Individuals are becoming businesses.",
       body: [
-        "The founding insight wasn't that people needed another profile — it was that individuals increasingly operate like businesses. They have brands, offers, audiences, inbound opportunities, content, proof of work, and context to explain.",
-        "But the tools available to them were built around static representation. A resume is static. A portfolio is selective. A Linktree is a list. A QR code transfers contact details but never explains the person behind them.",
-        "Professional identity should be contextual, always available, and able to answer questions even when the person isn't in the room.",
+        "The idea we started from wasn't that people needed another profile. It was that individuals increasingly run like businesses. They have a brand, offers, an audience, inbound interest, content, proof of work, and a story that needs explaining.",
+        "But the tools they had were built for static representation. A resume is static. A portfolio is selective. A Linktree is a list. A QR code hands over contact details but never explains the person behind them.",
+        "Your professional identity should carry context, be available anytime, and answer questions even when you're not there to answer them yourself.",
       ],
     },
     {
@@ -676,16 +675,16 @@ const ambasdr: CaseStudyContent = {
       kicker:
         "Modern identity is fragmented across platforms that don't understand each other.",
       body: [
-        "For multidisciplinary people, the challenge isn't too much information — it's that each platform forces a narrow version of who they are. LinkedIn favors work history, Instagram visual identity, TikTok personality, a portfolio curated case studies, GitHub code, YouTube video, Calendly scheduling, commerce links transactions.",
-        "None of them explain how the pieces relate. A designer who is also a founder struggles to show both without seeming unfocused; a candidate never knows where context was lost after a conversation; a founder misses inbound because no single destination explains the full picture.",
-        "The opportunity wasn't to replace those platforms. It was to create a layer above them.",
+        "For people who do many things, the problem isn't too much information. It's that every platform flattens them into a narrow version of themselves. LinkedIn favors work history, Instagram a visual identity, TikTok personality, a portfolio a few curated projects, GitHub code, YouTube video, Calendly your calendar, commerce links your transactions.",
+        "None of them explain how the pieces fit together. A designer who's also a founder can't show both without looking unfocused. A candidate never knows what context got lost after a conversation. A founder misses inbound because there's no single place that tells the whole story.",
+        "The opportunity wasn't to replace those platforms. It was to build a layer above them.",
       ],
     },
     {
       kind: "media",
       variant: "wide",
       labels: [
-        "Identity distributed across platforms that don't understand each other — LinkedIn, Instagram, TikTok, GitHub, portfolio, resume, YouTube, commerce, Calendly",
+        "Identity spread across platforms that don't talk to each other: LinkedIn, Instagram, TikTok, GitHub, portfolio, resume, YouTube, commerce, Calendly",
       ],
     },
     {
@@ -693,7 +692,7 @@ const ambasdr: CaseStudyContent = {
       title: "What we chose not to build",
       kicker: "The product got clearer once we defined what it was not.",
       body: [
-        "We weren't building another LinkedIn, another Linktree, another chatbot, another resume builder, another portfolio template, or another social network. People had already invested real time shaping their presence across those platforms — Ambasdr wasn't meant to erase that work. It was meant to make it understandable.",
+        "We weren't building another LinkedIn, Linktree, chatbot, resume builder, portfolio template, or social network. People had already put real time into their presence on those platforms. Ambasdr wasn't there to erase that work. It was there to make it make sense.",
       ],
     },
     {
@@ -705,8 +704,8 @@ const ambasdr: CaseStudyContent = {
       title: "Research & validation",
       kicker: "Direction was shaped through 450+ conversations.",
       body: [
-        "Ambasdr was informed by recruiters, creators, professionals, influencers, hiring managers, VCs, beta testers, and waitlist users — not one narrow persona. Across all of them, the same pattern kept surfacing: people weren't struggling to present information, they were struggling because their information was scattered across too many systems.",
-        "Many had multiple resumes, portfolios, audiences, and identities at once. Those identities weren't separate in real life, but existing tools forced them to become separate online. People needed a way to be understood without flattening themselves into one title.",
+        "The direction came out of conversations with recruiters, creators, professionals, influencers, hiring managers, VCs, beta testers, and waitlist users, not one narrow persona. The same pattern showed up across all of them: people weren't struggling to present information, they were struggling because it was scattered across too many places.",
+        "Plenty of them juggled several resumes, portfolios, and audiences at once. Those sides of a person aren't separate in real life, but the tools made them separate online. People wanted to be understood without shrinking down to a single title.",
       ],
     },
     {
@@ -715,11 +714,11 @@ const ambasdr: CaseStudyContent = {
       items: [
         {
           title: "Multidisciplinary people couldn't show how their work connected",
-          body: "They weren't confused about what they'd done — they were frustrated by how hard it was to show why it belonged together. That shaped the product around context, not categories.",
+          body: "They knew what they'd done. What frustrated them was how hard it was to show why it all belonged together. That pushed the product toward context instead of categories.",
         },
         {
           title: "Everyone wanted an assistant, not just a profile",
-          body: "Independent work creates overhead: introductions, repeated questions, the right link, follow-ups. People wanted something that could represent them when they were unavailable.",
+          body: "Independent work comes with overhead: intros, the same questions again and again, digging up the right link, following up. People wanted something that could stand in for them when they weren't around.",
         },
         {
           title: "The hiring use case was too narrow",
@@ -733,19 +732,19 @@ const ambasdr: CaseStudyContent = {
       items: [
         {
           title: "Hiring tool → identity platform",
-          body: "People wanted to represent themselves across networking, collaboration, creative work, and business — not only employment.",
+          body: "People wanted to represent themselves across networking, collaboration, creative work, and business, not just employment.",
         },
         {
           title: "Static profile → conversational interface",
-          body: "A better profile still made visitors interpret everything themselves. Conversation became the primary discovery model.",
+          body: "A nicer profile still left visitors to interpret everything on their own. Conversation became the main way people discovered someone.",
         },
         {
           title: "File upload → AI teaching",
-          body: "Files without context produce shallow representation. Onboarding became a system where users explain why resources matter.",
+          body: "Files without context make for a shallow picture. Onboarding turned into a place where users explain why each resource matters.",
         },
         {
           title: "Voice as core → voice as enhancement",
-          body: "Users were interested in voice, but structured profile interaction was more immediately useful. Voice became an expression of personality, not the only interaction.",
+          body: "People were into voice, but a structured profile was more useful day to day. Voice became a way to show personality, not the whole interaction.",
         },
       ],
     },
@@ -755,15 +754,15 @@ const ambasdr: CaseStudyContent = {
       items: [
         {
           title: "Representation over generation",
-          body: "The AI shouldn't generate plausible answers — it should faithfully represent the person behind the profile. If it doesn't know, it admits uncertainty.",
+          body: "The AI shouldn't make up a plausible answer. It should represent the real person behind the profile, and admit when it doesn't know.",
         },
         {
           title: "Context is more valuable than content",
-          body: "A file explains what someone did; it rarely explains what mattered. The product evolved from file upload into knowledge teaching.",
+          body: "A file shows what someone did. It rarely shows what mattered. That's why the product grew from uploading files into teaching the AI what they mean.",
         },
         {
           title: "Conversation is discovery",
-          body: "People learn about each other through questions. Questions became the interface — a profile that behaves less like a brochure and more like a conversation.",
+          body: "People get to know each other by asking questions. So questions became the interface. The profile acts less like a brochure and more like a conversation.",
         },
         {
           title: "Users remain the source of truth",
@@ -774,16 +773,16 @@ const ambasdr: CaseStudyContent = {
     {
       kind: "section",
       title: "Designing an AI that represents people",
-      kicker: "The challenge wasn't answering questions — it was speaking on someone's behalf.",
+      kicker: "The hard part wasn't answering questions. It was speaking for someone.",
       body: [
-        "Most AI interfaces answer prompts. Ambasdr introduced a more sensitive problem: the AI had to represent a real person, which changed the definition of trust. Visitors needed to trust the answers were useful; owners needed to trust the AI wasn't misrepresenting them; and the product had to make clear that the user remained the source of truth.",
-        "Every major feature connects back to four questions: Can the AI accurately represent me? Can I control what it knows? Can visitors trust the answers? Can I continuously improve how I'm represented?",
+        "Most AI interfaces just answer prompts. Ambasdr had a touchier job: it was speaking for a real person, which raised the stakes on trust. Visitors had to trust the answers were useful. Owners had to trust the AI wasn't putting words in their mouth. And the product had to make clear the person always had the final say.",
+        "Every major feature traces back to four questions: Can the AI represent me accurately? Can I control what it knows? Can visitors trust the answers? Can I keep improving how I come across?",
       ],
     },
     {
       kind: "media",
       variant: "wide",
-      labels: ["Trust model — owner control, knowledge sources, AI response, visitor question, feedback loop"],
+      labels: ["The trust model: owner control, knowledge sources, AI response, visitor question, and feedback loop"],
     },
     {
       kind: "cards",
@@ -791,32 +790,32 @@ const ambasdr: CaseStudyContent = {
       items: [
         {
           title: "The AI should admit uncertainty",
-          body: "In most AI products an unanswered question feels like failure; for Ambasdr, an inaccurate answer was far worse. If it doesn't know, it doesn't say it — and guides the owner to improve their profile instead.",
+          body: "In most AI products, an unanswered question feels like failure. For Ambasdr, a wrong answer was much worse. When it doesn't know, it says so, and nudges the owner to fill the gap in their profile.",
         },
         {
           title: "Every file needed context",
-          body: "Upload isn't the moment of intelligence. A project might show leadership, taste, technical depth, or community influence — without context the AI can summarize content but can't represent meaning. Resources carry labels, intent, and relationship to identity.",
+          body: "Uploading isn't where the intelligence happens. One project might show leadership, taste, technical depth, or community pull, but without context the AI can summarize a file without grasping what it means. So each resource carries a label, an intent, and a link to the person's identity.",
         },
         {
           title: "Mobile became the authoring tool",
-          body: "Users should manage their Ambasdr as quickly as sending a text. Mobile stopped being a companion and became the fastest place to update information, manage resources, and refine how the AI represents them.",
+          body: "Managing your Ambasdr should be as quick as sending a text. Mobile stopped being a companion app and became the fastest place to update information, manage resources, and tune how the AI represents you.",
         },
       ],
     },
     {
       kind: "section",
       title: "Teaching instead of uploading",
-      kicker: "Onboarding became a knowledge-transfer system.",
+      kicker: "Onboarding turned into a way to teach the AI, not just fill out a form.",
       body: [
-        "Across roughly 15 onboarding versions, tested with a community of 50–100 people, the team realized a profile-setup flow wasn't enough. Ambasdr wasn't collecting information — it was learning how to represent someone.",
-        "So onboarding had to answer deeper questions: what is this person trying to be known for, what topics should the AI understand, which resources matter most and why, what should it avoid saying, what tone should it use, and what should visitors be encouraged to ask. This is why Teach Your Ambasdr became one of the most important parts of the product.",
+        "Across roughly 15 versions of onboarding, tested with a community of 50 to 100 people, it became clear a setup flow wasn't enough. Ambasdr wasn't collecting information. It was learning how to represent someone.",
+        "So onboarding had to get at deeper questions: what does this person want to be known for, what topics should the AI understand, which resources matter most and why, what should it avoid saying, what tone should it strike, and what should visitors be prompted to ask. That's why Teach Your Ambasdr became one of the most important parts of the product.",
       ],
     },
     {
       kind: "media",
       variant: "wide",
       labels: [
-        "Onboarding flow — Purpose → Profile → Resources → Context → Teach Your Ambasdr → Preview → Publish → Pricing",
+        "Onboarding flow: Purpose → Profile → Resources → Context → Teach Your Ambasdr → Preview → Publish → Pricing",
       ],
     },
     {
@@ -824,36 +823,36 @@ const ambasdr: CaseStudyContent = {
       title: "Knowledge architecture",
       kicker: "A living system, not a static page.",
       body: [
-        "The hardest product problem was understanding how documents relate and how they should influence the AI in the background. Ambasdr connects profile data, files, links, resource context, system instructions, tone, visitor questions, AI responses, conversation summaries, and missing-information signals.",
-        "A visitor asks a question; the AI answers if it has enough information; if it doesn't, the gap becomes useful feedback. The owner adds context, uploads resources, or updates instructions — and the profile improves through use.",
+        "The toughest problem was working out how all these documents relate, and how each should shape the AI behind the scenes. Ambasdr ties together profile data, files, links, resource context, instructions, tone, visitor questions, AI responses, conversation summaries, and signals about what's missing.",
+        "A visitor asks a question. The AI answers if it has enough to go on. If it doesn't, that gap becomes feedback. The owner adds context, uploads a resource, or updates instructions, and the profile gets better the more it's used.",
       ],
     },
     {
       kind: "media",
       variant: "wide",
-      labels: ["Knowledge architecture — resources + context + instructions + visitor questions + conversation insights"],
+      labels: ["How knowledge comes together: resources, context, instructions, visitor questions, and conversation insights"],
     },
     {
       kind: "section",
       title: "Public profile & conversational identity",
       kicker: "Balancing familiarity and intelligence.",
       body: [
-        "A surprising beta insight: users still valued familiar link-based behavior. They liked connecting existing platforms — Linktree-style links, commerce pages, YouTube, socials — and Ambasdr added context around those destinations.",
-        "So the experience has two layers: a familiar profile surface with links, identity, content, and proof; and a conversational AI layer that helps visitors understand what those things mean. Users preserve their existing presence while visitors get a better way to navigate it.",
+        "A surprising thing from beta: people still wanted the familiar link-in-bio behavior. They liked connecting the platforms they already used, like Linktree-style links, commerce pages, YouTube, and socials, and Ambasdr wrapped context around each of those.",
+        "So the experience works on two levels: a familiar profile with links, identity, content, and proof, plus a conversational layer that helps visitors make sense of it all. People keep the presence they've built, and visitors get a better way to explore it.",
       ],
     },
     {
       kind: "media",
       variant: "wide",
-      labels: ["Public profile — header, links, resources, and the AI chat entry point"],
+      labels: ["The public profile: header, links, resources, and the AI chat entry point"],
     },
     {
       kind: "section",
       title: "Mobile as the authoring experience",
       kicker: "The fastest way to manage identity.",
       body: [
-        "People update their professional story in motion — they meet someone, finish a project, add a link, change a role, adjust a prompt. Requiring a desktop return made the product feel too slow for the behavior we wanted to support.",
-        "So mobile became more than a companion app. It became the place where users manage resources, revise context, and refine how the AI represents them — as quick as sending a text.",
+        "People update their professional story on the move. They meet someone, wrap a project, add a link, change a role, tweak a prompt. Making them go back to a desktop to do it felt way too slow.",
+        "So mobile became the main place to work, not a companion. It's where people manage resources, revise context, and tune how the AI represents them, about as quickly as sending a text.",
       ],
     },
     {
@@ -866,41 +865,41 @@ const ambasdr: CaseStudyContent = {
       title: "Conversation intelligence",
       kicker: "Visitor questions became product feedback.",
       body: [
-        "Conversations aren't only a visitor experience — they're owner intelligence. When visitors ask questions, they reveal what people want to know. Repeated questions are a signal; unanswered ones are a knowledge gap; questions about collaboration, booking, hiring, press, or pricing are intent data.",
-        "That opened the door to conversation summaries, top questions, topic clustering, missing-information prompts, suggested resources, and profile-improvement loops — helping users understand how they're perceived and what their audience needs most.",
+        "Conversations aren't only for visitors. They're intelligence for the owner too. Every question reveals what people actually want to know. A repeated question is a signal. An unanswered one is a gap. Questions about collaboration, booking, hiring, press, or pricing are a read on intent.",
+        "That opened up conversation summaries, top questions, topic clusters, prompts about missing information, suggested resources, and nudges to improve the profile. All of it helps people see how they're coming across and what their audience wants most.",
       ],
     },
     {
       kind: "media",
       variant: "wide",
-      labels: ["Conversation analytics — top questions, topics, summaries, and suggested profile improvements"],
+      labels: ["Conversation analytics: top questions, topics, summaries, and suggested profile improvements"],
     },
     {
       kind: "section",
       title: "Pricing & business model",
       kicker: "Utility without overcomplicating access.",
       body: [
-        "Pricing had to be accessible for individuals yet valuable for creators, professionals, and founders building serious personal brands. The team explored Free, Pro, and Premium tiers with a trial — keeping plan management primarily web-based to avoid App Store and Play Store payment constraints. It wasn't only a pricing decision; it was a product-architecture decision.",
+        "Pricing had to stay approachable for individuals while being worth it for creators, professionals, and founders building a real personal brand. We explored Free, Pro, and Premium tiers with a trial, and kept plan management mostly on the web to sidestep App Store and Play Store payment rules. It wasn't only a pricing call. It shaped the product too.",
       ],
     },
     {
       kind: "media",
       variant: "wide",
-      labels: ["Pricing — Free · Pro · Premium with a 7-day trial"],
+      labels: ["Pricing: Free, Pro, and Premium with a 7-day trial"],
     },
     {
       kind: "section",
       title: "Building with AI",
       kicker: "The way Ambasdr was built changed how the product was built.",
       body: [
-        "Ambasdr wasn't only an AI product — it was designed and prototyped through an AI-assisted workflow: Figma, Figma Make, Claude Code, Codex, Cursor, Google Stitch, v0, React Native, and responsive-web prototyping.",
-        "That let a three-person founding team explore more prototypes, test more ideas, and move faster across platforms than usual. The exact count mattered less than the operating model: prototype quickly, validate direction, translate patterns into implementation, and keep learning.",
+        "Ambasdr wasn't only an AI product. It was also designed and prototyped with AI: Figma, Figma Make, Claude Code, Codex, Cursor, Google Stitch, v0, React Native, and responsive-web prototyping.",
+        "That let a three-person team explore more prototypes, test more ideas, and move faster across platforms than a team that size usually can. The exact tools mattered less than the rhythm: prototype fast, validate the direction, turn patterns into real implementation, and keep learning.",
       ],
     },
     {
       kind: "media",
       variant: "wide",
-      labels: ["AI-assisted workflow — design → code → prototype → test → feedback → iterate"],
+      labels: ["AI-assisted workflow: design → code → prototype → test → feedback → iterate"],
     },
     {
       kind: "timeline",
@@ -919,16 +918,16 @@ const ambasdr: CaseStudyContent = {
       kicker: "From product design into founder-level product ownership.",
       body: [
         "As a co-founder on a three-person team, the work spanned product vision, research, and strategy; information architecture and AI interaction design; onboarding, mobile, and web UX; design systems and prototyping; prompt and context design; pricing and roadmap; investor conversations, go-to-market, beta planning, and community.",
-        "With a team that small, design, business, and engineering constraints were deeply connected. The work was less about handing off screens and more about continuously shaping the product with the team.",
+        "On a team that small, design, business, and engineering decisions were tightly linked. The work was less about handing off screens and more about shaping the product with the team, continuously.",
       ],
     },
     {
       kind: "section",
       title: "Outcome",
-      kicker: "Approaching launch with a validated waitlist and an evolving system.",
+      kicker: "Approaching launch with a validated waitlist and a product still evolving.",
       body: [
-        "After roughly a year, Ambasdr grew from an early hiring hypothesis into a broader platform for professional and creative representation: 500 on the waitlist, ~20 beta users, 450+ research conversations, 15 onboarding iterations, a tested community of 50–100, and a cross-platform product spanning web, iOS, and Android.",
-        "The direction is sharper now. Ambasdr isn't just helping people create a profile — it's helping them create a living representation of who they are, what they do, and why it matters.",
+        "After about a year, Ambasdr grew from an early hiring hypothesis into a broader platform for professional and creative representation: 500 on the waitlist, around 20 beta users, 450+ research conversations, 15 onboarding iterations, a test community of 50 to 100 people, and a product spanning web, iOS, and Android.",
+        "The direction is sharper now. Ambasdr isn't about making another profile. It's about giving people a living representation of who they are, what they do, and why it matters.",
       ],
     },
     {
@@ -939,8 +938,8 @@ const ambasdr: CaseStudyContent = {
       kind: "section",
       title: "Reflection",
       body: [
-        "The hardest part of Ambasdr wasn't making the AI respond. It was making sure the response felt accurate, controlled, and representative of the person behind it. AI products are usually discussed in terms of speed and automation — but when AI speaks on behalf of a person, the deeper issue is trust.",
-        "If Ambasdr succeeds ten years from now, we won't know we won because everyone uses AI. We'll know because people feel they can be their full professional, creative, and entrepreneurial selves in one place — without being trapped inside the limits of LinkedIn, Linktree, resumes, portfolios, or scattered links with no context.",
+        "The hardest part of Ambasdr wasn't getting the AI to respond. It was making sure each response felt accurate, controlled, and true to the person behind it. AI usually gets talked about in terms of speed and automation. But once it's speaking for someone, the real question is trust.",
+        "If Ambasdr works ten years from now, the proof won't be that everyone uses AI. It'll be that people can show up as their full professional, creative, and entrepreneurial selves in one place, instead of being boxed in by LinkedIn, Linktree, resumes, portfolios, or a pile of context-free links.",
       ],
     },
   ],
@@ -952,9 +951,9 @@ const kortshut: CaseStudyContent = {
   project: "Kortshut",
   title: "Designing a context-first operating system.",
   lead:
-    "An ongoing exploration into AI-native workflows — and what computing looks " +
-    "like when context matters more than applications. This documents how the " +
-    "thinking evolves, not a finished product.",
+    "An ongoing exploration of AI-native workflows, and what computing looks like " +
+    "when context matters more than the apps you're in. This is a record of how " +
+    "the thinking is evolving, not a finished product.",
   meta: [
     { label: "Role", value: "Co-Founder & Product Designer" },
     { label: "Timeline", value: "2025 – Present" },
@@ -986,11 +985,11 @@ const kortshut: CaseStudyContent = {
       kind: "section",
       id: "shift",
       title: "The shift",
-      kicker: "LLMs didn't eliminate work — they shifted where work happens.",
+      kicker: "LLMs didn't remove the work. They moved where it happens.",
       body: [
-        "The bottleneck was no longer writing. It became assembling enough context for AI to produce meaningful results.",
-        "Every design review, engineering task, research session, or strategy doc followed the same pattern: capture information, screenshot, copy text, switch apps, reconstruct context, prompt an AI, return to work — and repeat.",
-        "The models improved rapidly. The workflow did not. Kortshut began as an exploration into reducing that friction.",
+        "The bottleneck was no longer writing. It became assembling enough context for the AI to produce something useful.",
+        "Every design review, engineering task, research session, and strategy doc followed the same loop: grab some information, screenshot, copy text, switch apps, rebuild the context, prompt an AI, go back to work, and do it again.",
+        "The models got better fast. The workflow didn't. Kortshut started as an attempt to cut that friction.",
       ],
     },
     {
@@ -1004,8 +1003,8 @@ const kortshut: CaseStudyContent = {
       title: "Observation",
       kicker: "Computers organize work around files and applications. People organize work around context.",
       body: [
-        "A designer isn't thinking about Figma — they're thinking about redesigning onboarding. A developer isn't thinking about Finder — they're thinking about solving a bug using notes, screenshots, logs, and previous discussions.",
-        "Current operating systems understand where files live. They don't understand why they belong together. That observation became the foundation for every subsequent product decision.",
+        "A designer isn't thinking about Figma. They're thinking about redesigning onboarding. A developer isn't thinking about Finder. They're thinking about fixing a bug, using notes, screenshots, logs, and earlier discussions.",
+        "Today's operating systems know where files live. They don't know why those files belong together. That gap became the basis for every product decision that followed.",
       ],
     },
     {
@@ -1019,7 +1018,7 @@ const kortshut: CaseStudyContent = {
       title: "Early hypothesis",
       kicker: "“If we make AI easier to access, people will work faster.”",
       body: [
-        "Early concepts focused on faster prompting, keyboard shortcuts, AI launchers, and clipboard improvements. They improved speed — but failed to address the larger issue.",
+        "Early concepts chased faster prompting, keyboard shortcuts, AI launchers, and a better clipboard. They made things quicker, but missed the bigger problem.",
         "The real bottleneck wasn't opening AI. It was rebuilding context before every conversation.",
       ],
     },
@@ -1027,7 +1026,7 @@ const kortshut: CaseStudyContent = {
       kind: "section",
       id: "research",
       title: "Research & continuous discovery",
-      kicker: "Kortshut evolved through continuous observation and dogfooding — not a fixed philosophy.",
+      kicker: "Kortshut evolved through steady observation and dogfooding, not a fixed philosophy.",
       body: [
         "The same patterns kept surfacing: screenshots became temporary memory; clipboard contents disappeared despite remaining valuable; users repeatedly rebuilt the same prompt context; AI quality depended more on context than prompt wording; and keyboard shortcuts only mattered when attached to repeatable workflows.",
         "That shifted the product away from “AI utilities” toward workflow orchestration.",
@@ -1048,7 +1047,7 @@ const kortshut: CaseStudyContent = {
       kind: "section",
       title: "Why context, not prompts",
       body: [
-        "Early versions emphasized prompts. Research suggested users cared far less about prompts than outcomes. The better question became: how quickly can someone gather everything AI needs without breaking their flow? This principle continues to shape the roadmap.",
+        "Early versions leaned on prompts. What we saw was that people cared far less about prompts than about outcomes. The better question turned out to be: how fast can someone gather everything the AI needs without breaking their flow? That still guides the roadmap.",
       ],
     },
     {
@@ -1057,21 +1056,21 @@ const kortshut: CaseStudyContent = {
       title: "Exploration 01 — Persistent context",
       kicker: "What if copied information wasn't disposable, but persistent working memory?",
       body: [
-        "Instead of viewing the clipboard as transient, we explored it as persistent working memory. Historical clipboard items, screenshots, and captured references became reusable pieces of context rather than temporary artifacts.",
-        "The goal wasn't to remember what had been copied. It was to recover thinking.",
+        "Instead of treating the clipboard as throwaway, we explored it as working memory that sticks around. Past clipboard items, screenshots, and saved references became reusable pieces of context rather than temporary scraps.",
+        "The goal wasn't to remember what had been copied. It was to recover the thinking behind it.",
       ],
     },
     {
       kind: "media",
       variant: "wide",
-      labels: ["Clipboard architecture — copied content as persistent, searchable working memory"],
+      labels: ["The clipboard as persistent, searchable working memory"],
     },
     {
       kind: "section",
       title: "Exploration 02 — Workflow shortcuts",
-      kicker: "Keyboard shortcuts were never the destination — they became vehicles for repeatable workflows.",
+      kicker: "Keyboard shortcuts were never the point. They were a way into repeatable workflows.",
       body: [
-        "The design challenge shifted from reducing clicks to preserving cognitive flow.",
+        "The real design challenge shifted from cutting clicks to protecting focus.",
       ],
     },
     {
@@ -1089,7 +1088,7 @@ const kortshut: CaseStudyContent = {
     {
       kind: "media",
       variant: "wide",
-      labels: ["Keyboard-driven workflow — a shortcut that assembles context and returns AI in place"],
+      labels: ["One shortcut that assembles context and brings the AI in place"],
     },
     {
       kind: "decisionLog",
@@ -1113,20 +1112,20 @@ const kortshut: CaseStudyContent = {
       kind: "section",
       title: "What we chose not to build",
       body: [
-        "Kortshut intentionally avoids becoming another chatbot, another launcher, another note-taking app, or another prompt marketplace. Those categories already exist. The opportunity lies in connecting them through context.",
+        "Kortshut deliberately avoids becoming another chatbot, launcher, note-taking app, or prompt marketplace. Those already exist. The opening is in connecting them through context.",
       ],
     },
     {
       kind: "section",
       title: "Designed while adopting AI",
       body: [
-        "Kortshut was designed while actively adopting AI throughout the process. Claude Code, Cursor, Codex, Google Stitch, and Figma AI accelerated prototyping, implementation, and experimentation — shortening the feedback loop between hypothesis and validation, rather than replacing design thinking.",
+        "Kortshut was designed while leaning on AI throughout. Claude Code, Cursor, Codex, Google Stitch, and Figma AI sped up prototyping, implementation, and experimentation. They shortened the loop between a hypothesis and a real test, without replacing the design thinking.",
       ],
     },
     {
       kind: "media",
       variant: "wide",
-      labels: ["AI-assisted product development — hypothesis → prototype → validate → iterate"],
+      labels: ["AI-assisted product development: hypothesis → prototype → validate → iterate"],
     },
     {
       kind: "evolution",
@@ -1146,7 +1145,7 @@ const kortshut: CaseStudyContent = {
       label: "Open questions",
       items: [
         "Should context be assembled manually, or inferred automatically?",
-        "Is the clipboard the right primitive — or is context itself the primitive?",
+        "Is the clipboard the right primitive, or is context itself the primitive?",
         "When does automation become invisible enough to feel natural?",
         "How should AI balance initiative with user control?",
       ],
@@ -1155,7 +1154,7 @@ const kortshut: CaseStudyContent = {
       kind: "banner",
       id: "reflection",
       eyebrow: "Reflection",
-      text: "Designing AI products is rarely about designing better AI. It's about designing better systems for people to capture, preserve, retrieve, and reuse context.",
+      text: "Designing AI products is rarely about designing better AI. It's about designing better ways for people to capture, keep, find, and reuse context.",
     },
     {
       kind: "section",
@@ -1174,8 +1173,9 @@ const pareto: CaseStudyContent = {
   project: "Pareto Intelligence",
   title: "Bringing clarity to enterprise healthcare analytics.",
   lead:
-    "Transformed Pareto Intelligence's data platform into a user-centered " +
-    "product through a full portal redesign and a scalable design system.",
+    "I turned Pareto Intelligence's data platform into something built around its " +
+    "users, through a full portal redesign and the company's first real design " +
+    "system.",
   meta: [
     { label: "Role", value: "Lead UX Designer" },
     { label: "Industry", value: "Healthcare analytics · Enterprise" },
@@ -1186,7 +1186,7 @@ const pareto: CaseStudyContent = {
     src: "/img/cases/pareto/hero-dashboard.png",
     w: 1800,
     h: 1012,
-    alt: "Pareto Intelligence — the redesigned analytics portal on macOS",
+    alt: "Pareto Intelligence: the redesigned analytics portal on macOS",
   },
   blocks: [
     {
@@ -1201,26 +1201,26 @@ const pareto: CaseStudyContent = {
       kind: "section",
       title: "About Pareto",
       body: [
-        "Pareto Intelligence builds data-driven products for some of the largest healthcare payers in the U.S. — including Cigna, Blue Cross Blue Shield, and Humana — helping organizations reconcile millions in financial discrepancies, analyze complex claims data, and improve operational performance.",
-        "When I joined, the underlying analytics were strong, but the UX foundation was fragmented: dashboards lacked consistency, workflows were unclear, and dense datasets made it hard for analysts to quickly interpret and act on insights. My role was to bring structure, clarity, and usability to an ecosystem of enterprise tools navigating large volumes of sensitive financial and clinical data.",
+        "Pareto Intelligence builds data products for some of the largest healthcare payers in the U.S., including Cigna, Blue Cross Blue Shield, and Humana. Its tools help these organizations reconcile millions in financial discrepancies, dig into complex claims data, and run more efficiently.",
+        "When I joined, the analytics underneath were strong, but the experience on top was a patchwork. Dashboards didn't match each other, workflows were confusing, and dense datasets made it hard for analysts to read a screen and act on it. My job was to bring order and usability to a set of enterprise tools handling huge volumes of sensitive financial and clinical data.",
       ],
     },
     {
       kind: "section",
       title: "The Challenge",
       body: [
-        "The organization lacked a unified design system, so teams built components in isolation and the same UI elements behaved differently across products. Inconsistencies in color, spacing, typography, and interaction created significant design and engineering debt, slowed onboarding, increased the risk of error in financial workflows, and raised long-term maintenance costs.",
-        "At the same time, the platform needed to support dense healthcare data — claims, diagnoses, risk scoring, audits, payments, RAF charts, and compliance triggers — but weak information architecture made it difficult to identify anomalies, prioritize remediation, and compare trends. The experience leaned heavily on Tableau dashboards that were functional but not scalable, lacking clear hierarchy, efficient cross-filtering, and support for user-specific workflows.",
-        "The company planned a migration to Looker and needed a UX lead to architect that transition — while also addressing a broader problem: fragmented product experiences where navigation, filtering, and insight patterns varied by tool, forcing analysts to constantly re-learn how to work across the system.",
+        "There was no shared design system, so teams built components on their own and the same UI element behaved differently from one product to the next. The mismatches in color, spacing, type, and interaction piled up design and engineering debt, slowed onboarding, made errors more likely in financial workflows, and pushed maintenance costs up over time.",
+        "At the same time, the platform had to handle dense healthcare data: claims, diagnoses, risk scoring, audits, payments, RAF charts, and compliance triggers. But the underlying structure was weak, so it was hard to spot anomalies, decide what to fix first, or compare trends. Everything leaned on Tableau dashboards that worked but didn't scale, with no clear hierarchy, clumsy cross-filtering, and little support for how specific people worked.",
+        "The company was moving to Looker and needed a UX lead to shape that transition. There was a bigger problem underneath it too: navigation, filtering, and insight patterns changed from tool to tool, so analysts had to keep relearning how to work as they moved between products.",
       ],
     },
     {
       kind: "section",
       title: "Research & Insights",
-      kicker: "Users weren't asking for more data — they wanted clarity and confidence in what they were seeing.",
+      kicker: "Users weren't asking for more data. They wanted to trust what they were already looking at.",
       body: [
-        "I led a comprehensive UX audit — heuristic evaluations, cognitive-load and task-time analysis, error reviews with subject-matter experts, accessibility checks, and cross-product coherence audits. It surfaced recurring issues: poor insight prioritization, inconsistent filtering, overbuilt data tables, excessive clicks to reach critical details, buried metrics, and visual noise that obscured trends. In parallel, I ran interviews and contextual inquiries with analysts, claims auditors, actuarial teams, operations leaders, executives, and compliance partners.",
-        "Using that, I restructured the IA around a clear narrative flow — insight → context → action → audit — standardized filtering, simplified navigation, and introduced reusable data grouping and priority-based layouts for high-value metrics. I designed and built Pareto's first design system, then led the UX vision for migrating dozens of Tableau dashboards into Looker: rebuilding complex visuals with standardized logic, clearer drill paths, global visualization rules, improved comparison views, and better performance at scale — validated through interactive Figma prototypes tested with analysts across teams.",
+        "I ran a thorough UX audit: heuristic evaluations, cognitive-load and task-time analysis, error reviews with subject-matter experts, accessibility checks, and a look at how consistent the products were with each other. The same issues kept coming up: insights weren't prioritized, filtering was inconsistent, data tables were overbuilt, it took too many clicks to reach the important details, key metrics were buried, and visual noise hid the trends. Alongside that, I interviewed and shadowed analysts, claims auditors, actuarial teams, operations leaders, executives, and compliance partners.",
+        "From there, I restructured the information around a simple flow: insight, then context, then action, then audit. I standardized filtering, simplified navigation, and added reusable data groupings and priority-based layouts for the metrics that mattered most. I designed and built Pareto's first design system, then led the vision for moving dozens of Tableau dashboards into Looker: rebuilding the visuals with consistent logic, clearer drill paths, shared charting rules, better comparison views, and stronger performance under load. I validated it with interactive Figma prototypes tested with analysts across teams.",
       ],
     },
     {
@@ -1231,17 +1231,17 @@ const pareto: CaseStudyContent = {
           src: "/img/cases/pareto/research-board.png",
           w: 940,
           h: 1217,
-          alt: "Design Jam — auditing every dashboard's charts, downloads, and insight naming across markets",
+          alt: "Design Jam: auditing every dashboard's charts, downloads, and insight naming across markets",
         },
       ],
     },
     {
       kind: "section",
       title: "System Design & Architecture",
-      kicker: "The biggest breakthrough came from a scalable design system built for enterprise healthcare analytics.",
+      kicker: "The real breakthrough was a design system that could scale across enterprise healthcare analytics.",
       body: [
-        "I built a unified design system adopted across the entire product ecosystem — standardizing typography hierarchy; color coding for statuses, risk states, and data confidence; and reusable dashboard components like cards, KPIs, comparison tables, and filters. It also defined navigation patterns, padding, grids, composition rules, and interactive behaviors including hover, expand, drilldown, sort, and compare.",
-        "The framework solved our biggest internal bottlenecks: faster, clearer specs for engineering, consistent layouts for analysts, predictability for leadership in new-feature development, and designs that were easier to maintain and scale. It became the visual and functional foundation for every product update over the following two years.",
+        "I built a single design system that every product adopted. It standardized the type hierarchy; color coding for statuses, risk states, and data confidence; and reusable dashboard pieces like cards, KPIs, comparison tables, and filters. It also set navigation patterns, spacing, grids, composition rules, and interaction behaviors like hover, expand, drilldown, sort, and compare.",
+        "It cleared our worst internal bottlenecks: quicker, clearer specs for engineering, consistent layouts for analysts, and more predictable timelines for leadership on new features. It was easier to maintain too, and it became the foundation for every product update over the next two years.",
       ],
     },
     {
@@ -1252,7 +1252,7 @@ const pareto: CaseStudyContent = {
           src: "/img/cases/pareto/design-system.png",
           w: 1600,
           h: 1435,
-          alt: "Pareto's design system — typography, color scales, components, buttons, and badges",
+          alt: "Pareto's design system: typography, color scales, components, buttons, and badges",
         },
       ],
     },
@@ -1261,19 +1261,19 @@ const pareto: CaseStudyContent = {
       title: "Dashboard Redesigns",
       kicker: "From cluttered screens to intuitive analytics.",
       body: [
-        "I redesigned several key dashboards to transform fragmented data into actionable insights. The redesigned dashboards weren't just prettier — they were measurably faster, clearer, and more aligned with the way analysts think, enabling smarter, more efficient business decisions.",
+        "I redesigned several of the key dashboards so scattered data turned into something people could act on. They didn't just look better. They were measurably faster to use, easier to read, and closer to how analysts actually think, which led to sharper decisions.",
       ],
     },
     {
       kind: "banner",
       eyebrow: "Reconciliation dashboards",
-      text: "Improve the accuracy and speed with which teams identify discrepancies — leading directly to millions in recovered revenue.",
+      text: "Help teams catch discrepancies faster and more accurately, which fed directly into millions in recovered revenue.",
     },
     {
       kind: "media",
       variant: "wide",
       labels: [
-        "The redesigned reconciliation dashboard — discrepancies and recovered-revenue signals surfaced at a glance",
+        "The redesigned reconciliation dashboard, with discrepancies and recovered-revenue signals surfaced at a glance",
       ],
     },
     {
@@ -1310,7 +1310,7 @@ const pareto: CaseStudyContent = {
       kind: "section",
       title: "Impact",
       body: [
-        "The redesigned portal and design system measurably improved the analyst experience — a 25% reduction in task-completion time, a 30% drop in user error rates, and a 20% increase in new subscriptions — while giving engineering a consistent foundation for every release that followed.",
+        "The redesigned portal and the design system measurably improved the analyst experience: a 25% drop in task-completion time, a 30% drop in error rates, and a 20% increase in new subscriptions. They also gave engineering a consistent foundation for every release that followed.",
       ],
     },
   ],
