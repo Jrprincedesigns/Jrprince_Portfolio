@@ -135,7 +135,7 @@ const doorvest: CaseStudyContent = {
       kind: "section",
       title: "Live user research",
       body: [
-        "Reading through support conversations, the frustration was hard to miss. People were missing time-sensitive email alerts, and when they did show up, they were often looking at homes that had nothing to do with what they'd asked for.",
+        "Between support threads and session data, how long people stayed and where they dropped off, the frustration was hard to miss. People were missing time-sensitive email alerts, and when they did show up, they were often looking at homes that had nothing to do with what they'd asked for.",
         "The problem wasn't one broken screen. The whole experience was held together by emails, spreadsheets, and sales calls, so people couldn't move on their own. Things stalled at exactly the moment they were starting to feel ready.",
       ],
     },
@@ -254,6 +254,7 @@ const doorvest: CaseStudyContent = {
       title: "Operational impact",
       body: [
         "The platform took friction out for investors and internal teams at once. Bringing discovery, evaluation, and reservation into one place removed the manual coordination that had bottlenecked the sales team. It also gave everyone a shared view across investor demand, acquisitions, and operations.",
+        "The clearest signal was engagement. Before, plenty of people finished onboarding without ever creating an account and drifted off. Once discovery and reservation lived in the product, they had a reason to stay and keep browsing. That shift, a design and product call the Head of Product and I made together and defended to the CEO and CTO, is where the lift in engagement and retention came from.",
       ],
     },
     {
@@ -267,7 +268,7 @@ const doorvest: CaseStudyContent = {
       items: [
         { value: "+13.8%", label: "Lift in visitor → active-investor conversion after launch" },
         { value: "+40%", label: "Increase in home reservations vs. the prior funnel" },
-        { value: "~80%", label: "Active-investor engagement & retention" },
+        { value: "~80%", label: "User engagement & retention after the in-app marketplace launched" },
       ],
     },
     {
@@ -442,7 +443,7 @@ const superfile: CaseStudyContent = {
       title: "What shipped",
       kicker: "A working pay-to-unlock flow, used end to end before it ever went public.",
       body: [
-        "The feature launched internally first. Investors ran the full pay-to-unlock flow themselves from invite-only accounts, paying to open a protected file without ever gaining ownership of it. The point of that internal launch was to put a working feature in front of the people funding the company, a live security model they could evaluate rather than a diagram.",
+        "The feature launched internally first. Investors ran the full pay-to-unlock flow themselves from invite-only accounts, paying to open a protected file without ever gaining ownership of it. Putting a working security model in their hands, one they completed real tasks in rather than read about in a diagram, moved the company's fundraising conversations forward. It was validation from the people funding the work, though not yet from creators in the wild; getting it in front of real sellers was the planned next step.",
         "Because the feature kept changing while the company pivoted, I documented every flow, state, and security boundary in Figma and Notion. On a security-sensitive surface those weren't deliverables. They were how design and engineering stayed aligned on what was technically impossible versus what we simply chose not to allow.",
       ],
     },
@@ -525,6 +526,15 @@ const synctera: CaseStudyContent = {
       ],
     },
     {
+      kind: "section",
+      title: "The harder problem: adoption",
+      kicker: "The risk wasn't the interface. It was whether a trained team would trust a new way of working.",
+      body: [
+        "Analysts were fluent in Hawk AI, Onfido, and Dotfile and trained on specific patterns. Pulling everything into one flow, on a tight timeline, made some of them wary that consolidation would complicate their work rather than simplify it. They were open to working better, but nervous about a system they hadn't used and didn't yet fully understand.",
+        "So the goal wasn't only a cleaner workflow. It was a change that felt like less risk to the people doing the work, which is exactly what shaped how I approached consolidation next.",
+      ],
+    },
+    {
       kind: "media",
       variant: "wide",
       images: [
@@ -567,9 +577,9 @@ const synctera: CaseStudyContent = {
     {
       kind: "stats",
       items: [
-        { value: "20%", label: "Reduction in wrongful transaction blocks" },
-        { value: "3", label: "External tools unified into one in-context flow" },
-        { value: "1", label: "System of record for every case decision" },
+        { value: "20%", label: "Fewer wrongful transaction blocks (before vs. after launch)" },
+        { value: "3→1", label: "Fragmented tools unified into one in-context flow" },
+        { value: "1", label: "Source of truth for every case decision" },
       ],
     },
     {
@@ -882,7 +892,7 @@ const pareto: CaseStudyContent = {
       title: "Research & Insights",
       kicker: "Users weren't asking for more data. They wanted to trust what they were already looking at.",
       body: [
-        "I ran a thorough UX audit: heuristic evaluations, cognitive-load and task-time analysis, error reviews with subject-matter experts, accessibility checks, and a look at how consistent the products were with each other. The same issues kept coming up: insights weren't prioritized, filtering was inconsistent, data tables were overbuilt, it took too many clicks to reach the important details, key metrics were buried, and visual noise hid the trends. Alongside that, I interviewed and shadowed analysts, claims auditors, actuarial teams, operations leaders, executives, and compliance partners.",
+        "I audited the portal end to end, pairing heuristic and task-time analysis with interviews and shadowing across analysts, claims auditors, actuarial teams, and compliance partners. The same issues surfaced everywhere: insights weren't prioritized, filtering was inconsistent, tables were overbuilt, too many clicks stood between analysts and the detail they needed, and visual noise buried the metrics that mattered.",
         "From there, I restructured the information around a simple flow: insight, then context, then action, then audit. I standardized filtering, simplified navigation, and added reusable data groupings and priority-based layouts for the metrics that mattered most. I designed and built Pareto's first design system, then led the vision for moving dozens of Tableau dashboards into Looker: rebuilding the visuals with consistent logic, clearer drill paths, shared charting rules, better comparison views, and stronger performance under load. I validated it with interactive Figma prototypes tested with analysts across teams.",
       ],
     },
@@ -971,9 +981,17 @@ const pareto: CaseStudyContent = {
     },
     {
       kind: "section",
+      title: "The migration reality",
+      kicker: "Moving to Looker was less a redesign than a careful transplant.",
+      body: [
+        "Two things made this harder than a visual refresh. Legacy data didn't map cleanly from Tableau to Looker, so reaching parity took careful reconciliation before anything could be made better. And analysts fluent in the old dashboards had to adopt new patterns, so the work had to earn trust, not just ship. The design system and prototype testing carried much of that weight, keeping the transition legible and giving people something concrete to react to before it went live.",
+      ],
+    },
+    {
+      kind: "section",
       title: "Impact",
       body: [
-        "Measured against the old portal, the redesign was associated with a 25% drop in task-completion time and a 30% drop in error rates, the metrics closest to the interface itself, in testing with analysts. Over the two years that followed, the company also saw a 20% rise in new subscriptions; the redesign was one contributor among sales, pricing, and product changes rather than the sole cause.",
+        "Measured in usability testing and product analytics, the redesign cut task-completion time by 25% and error rates by 30%. New subscriptions rose 20% over the two years that followed; design was one contributor there, alongside sales, pricing, and product changes, not the sole cause.",
         "Just as important operationally, the design system gave engineering a single, consistent foundation for every release that came after.",
       ],
     },
@@ -982,7 +1000,7 @@ const pareto: CaseStudyContent = {
       title: "Reflection",
       body: [
         "The lasting lesson wasn't about any one dashboard. It was that in enterprise analytics the interface is only as trustworthy as the system beneath it, and a design system is what makes that trust repeatable across products, teams, and years.",
-        "If I ran it again, I'd instrument the rollout from day one, so the story of what the redesign changed could be told in measured before-and-afters instead of reconstructed after the fact.",
+        "If I ran it again, I'd bring analysts into the migration earlier. The redesign landed, but adoption is its own design problem, and the people living in the old dashboards needed more runway to trust the new ones.",
       ],
     },
     {
