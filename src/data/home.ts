@@ -172,7 +172,6 @@ export interface Client {
 
 export const clients: Client[] = [
   { name: "Fidelity Charitable", url: "Fidelitycharitable.org", href: "https://www.fidelitycharitable.org" },
-  { name: "Kortshut AI", url: "Kortshut.ai", href: "https://kortshut.ai" },
   { name: "Savrr Inc.", url: "Savrrapp.com", href: "https://savrrapp.com" },
   { name: "Superfile", url: "Superfile.com", href: "https://superfile.com" },
   { name: "Synctera", url: "Synctera.com", href: "https://synctera.com" },
