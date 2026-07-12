@@ -95,8 +95,12 @@
   grid-template-columns: repeat(4, 1fr);
 }
 .metaItem {
-  padding: 20px 0 22px;
+  padding: 20px 0 22px clamp(16px, 1.6vw, 24px);
   border-right: 1px solid var(--cs-rule);
+}
+/* First cell stays flush-left so it lines up with the title/lead above. */
+.metaItem:first-child {
+  padding-left: 0;
 }
 .metaItem:last-child {
   border-right: 0;
@@ -144,6 +148,21 @@
 .heroBleed .shot {
   border-radius: 0;
   box-shadow: none;
+}
+
+/* Framed hero: scale the composition down on a white field while keeping the
+   band's full-bleed footprint. The container's aspect-ratio is set inline from
+   the image's own dimensions, so width and height both stay put and the freed
+   space becomes white on all four sides. */
+.heroFramed {
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.heroFramed .shot {
+  width: 93%;
+  height: auto;
 }
 
 /* Two-up grid */
@@ -721,6 +740,10 @@
   .metaItem {
     border-bottom: 1px solid var(--cs-rule);
     padding-right: 12px;
+  }
+  /* Two columns now: zero the left-column cells so each row aligns to the edge. */
+  .metaItem:nth-child(odd) {
+    padding-left: 0;
   }
   .metaItem:nth-child(2) {
     border-right: 0;
