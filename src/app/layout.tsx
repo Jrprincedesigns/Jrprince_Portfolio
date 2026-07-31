@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Bebas_Neue } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { site } from "@/data/site";
 import Nav from "@/components/Nav/Nav";
 
@@ -67,6 +68,7 @@ export default function RootLayout({
       <body>
         <Nav />
         <main>{children}</main>
+        <Analytics />
       </body>
     </html>
   );
