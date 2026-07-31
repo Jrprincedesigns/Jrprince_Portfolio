@@ -102,7 +102,16 @@ export default function CaseStudyView({
       </section>
 
       {showHeroMedia && (
-        <div className={`${styles.block} ${styles.heroBleed}`}>
+        <div
+          className={`${styles.block} ${styles.heroBleed} ${
+            study.heroFramed ? styles.heroFramed : ""
+          }`}
+          style={
+            study.heroFramed && study.heroImage
+              ? { aspectRatio: `${study.heroImage.w} / ${study.heroImage.h}` }
+              : undefined
+          }
+        >
           {study.heroImage ? (
             <Shot img={study.heroImage} bleed />
           ) : (

@@ -71,6 +71,9 @@ export interface CaseStudyContent {
   meta: CaseMeta[];
   focusAreas?: string[];
   heroImage?: CaseImage;
+  /** Render the hero on a white field, scaled to 93% — for laptop/device
+   *  mockups that read too large edge-to-edge. Keeps the full-bleed footprint. */
+  heroFramed?: boolean;
   heroLabel?: string;
   /** When present, renders a sticky chapter rail + enables scroll reveal. */
   chapters?: CaseChapter[];
@@ -85,7 +88,6 @@ const BRAND: Record<string, string> = {
   "real-estate-investing": "Doorvest",
   "trust-at-scale": "Synctera",
   "secure-file-sharing": "Superfile",
-  "kortshut-ai": "Kortshut AI",
   "digital-identity": "Ambasdr",
   "healthcare-data": "Pareto Intel",
 };
@@ -133,7 +135,7 @@ const doorvest: CaseStudyContent = {
       kind: "section",
       title: "Live user research",
       body: [
-        "Reading through support conversations, the frustration was hard to miss. People were missing time-sensitive email alerts, and when they did show up, they were often looking at homes that had nothing to do with what they'd asked for.",
+        "Between support threads and session data, how long people stayed and where they dropped off, the frustration was hard to miss. People were missing time-sensitive email alerts, and when they did show up, they were often looking at homes that had nothing to do with what they'd asked for.",
         "The problem wasn't one broken screen. The whole experience was held together by emails, spreadsheets, and sales calls, so people couldn't move on their own. Things stalled at exactly the moment they were starting to feel ready.",
       ],
     },
@@ -186,8 +188,8 @@ const doorvest: CaseStudyContent = {
       kind: "section",
       title: "“Doormatch” preference matching",
       body: [
-        "Instead of a separate swipe app, we put Like and Dislike buttons on each property card. It borrowed the familiarity of swiping without pulling people out of the browsing flow. When someone liked a home, we recorded its attributes: location, price, home type, and so on.",
-        "We deliberately avoided a standalone swipe experience. It would have rewarded novelty over real decisions and pulled people away from the actual investment. Those signals fed Doormatch, which surfaced homes likely to fit each person's criteria. It narrowed the field for them over time, without anyone filling out a preferences form.",
+        "Instead of a separate swipe app, I put Like and Dislike buttons on each property card. It borrowed the familiarity of swiping without pulling people out of the browsing flow. When someone liked a home, we recorded its attributes: location, price, home type, and so on.",
+        "I argued against a standalone swipe experience. It would have rewarded novelty over real decisions and pulled people away from the actual investment. Those signals fed Doormatch, which surfaced homes likely to fit each person's criteria. It narrowed the field for them over time, without anyone filling out a preferences form.",
         "It personalized the marketplace and gave the sales team a read on what each person wanted, without the constant back-and-forth.",
       ],
     },
@@ -252,6 +254,7 @@ const doorvest: CaseStudyContent = {
       title: "Operational impact",
       body: [
         "The platform took friction out for investors and internal teams at once. Bringing discovery, evaluation, and reservation into one place removed the manual coordination that had bottlenecked the sales team. It also gave everyone a shared view across investor demand, acquisitions, and operations.",
+        "The clearest signal was engagement. Before, plenty of people finished onboarding without ever creating an account and drifted off. Once discovery and reservation lived in the product, they had a reason to stay and keep browsing. That shift, a design and product call the Head of Product and I made together and defended to the CEO and CTO, is where the lift in engagement and retention came from.",
       ],
     },
     {
@@ -263,9 +266,9 @@ const doorvest: CaseStudyContent = {
     {
       kind: "stats",
       items: [
-        { value: "+13.8%", label: "Visitor → active investor conversion" },
-        { value: "+40%", label: "Home reservations" },
-        { value: "~80%", label: "User engagement & retention" },
+        { value: "+13.8%", label: "Lift in visitor → active-investor conversion after launch" },
+        { value: "+40%", label: "Increase in home reservations vs. the prior funnel" },
+        { value: "~80%", label: "User engagement & retention after the in-app marketplace launched" },
       ],
     },
     {
@@ -437,24 +440,19 @@ const superfile: CaseStudyContent = {
     },
     {
       kind: "section",
-      title: "My contribution",
+      title: "What shipped",
+      kicker: "A working pay-to-unlock flow, used end to end before it ever went public.",
       body: [
-        "Discovery, product definition, design systems, investor demos, user testing, engineering collaboration, and fundraising support. Every stage asked me to think across the whole thing, from the interface out to the pitch deck.",
-      ],
-    },
-    {
-      kind: "section",
-      title: "Execution, checks & learnings",
-      body: [
-        "I ran sprints with the product manager, prioritized in Jira, and documented flows, UI decisions, and constraints in Figma and Notion. Those docs were more than deliverables. On a security-sensitive feature, they kept everyone aligned, which mattered while Superfile was pivoting and changing features often.",
-        "The feature launched internally, and investors used it themselves, going through the full pay-to-unlock flow from their invite-only accounts.",
+        "The feature launched internally first. Investors ran the full pay-to-unlock flow themselves from invite-only accounts, paying to open a protected file without ever gaining ownership of it. Putting a working security model in their hands, one they completed real tasks in rather than read about in a diagram, moved the company's fundraising conversations forward. It was validation from the people funding the work, though not yet from creators in the wild; getting it in front of real sellers was the planned next step.",
+        "Because the feature kept changing while the company pivoted, I documented every flow, state, and security boundary in Figma and Notion. On a security-sensitive surface those weren't deliverables. They were how design and engineering stayed aligned on what was technically impossible versus what we simply chose not to allow.",
       ],
     },
     {
       kind: "section",
       title: "Reflection",
       body: [
-        "In the end, Superfile was less about pixels and more about how the product was framed, who I built it with, and what it delivered. It taught me as much about product storytelling as product design.",
+        "The hardest part of this project was never the interface. It was holding one line steady, that a payment can unlock access without ever transferring ownership, across product, design, and engineering while the rest of the product kept moving underneath it.",
+        "It taught me that on infrastructure this abstract, the design work is as much about making the system legible to engineers, investors, and users as it is about the screens themselves.",
       ],
     },
     {
@@ -528,6 +526,15 @@ const synctera: CaseStudyContent = {
       ],
     },
     {
+      kind: "section",
+      title: "The harder problem: adoption",
+      kicker: "The risk wasn't the interface. It was whether a trained team would trust a new way of working.",
+      body: [
+        "Analysts were fluent in Hawk AI, Onfido, and Dotfile and trained on specific patterns. Pulling everything into one flow, on a tight timeline, made some of them wary that consolidation would complicate their work rather than simplify it. They were open to working better, but nervous about a system they hadn't used and didn't yet fully understand.",
+        "So the goal wasn't only a cleaner workflow. It was a change that felt like less risk to the people doing the work, which is exactly what shaped how I approached consolidation next.",
+      ],
+    },
+    {
       kind: "media",
       variant: "wide",
       images: [
@@ -570,9 +577,9 @@ const synctera: CaseStudyContent = {
     {
       kind: "stats",
       items: [
-        { value: "20%", label: "Reduction in wrongful transaction blocks" },
-        { value: "3", label: "External tools unified into one in-context flow" },
-        { value: "1", label: "System of record for every case decision" },
+        { value: "20%", label: "Fewer wrongful transaction blocks (before vs. after launch)" },
+        { value: "3→1", label: "Fragmented tools unified into one in-context flow" },
+        { value: "1", label: "Source of truth for every case decision" },
       ],
     },
     {
@@ -611,15 +618,13 @@ const ambasdr: CaseStudyContent = {
     { label: "Team", value: "3-person founding team" },
     { label: "Platforms", value: "Web · iOS · Android" },
   ],
-  // Curated chapter rail (16 section headings is too many); ids map to the
-  // slugified section titles the view generates.
+  // Curated chapter rail; ids map to the slugified section titles the view generates.
   chapters: [
     { id: "first-principles", label: "First principles" },
-    { id: "the-problem-space", label: "The problem space" },
     { id: "research-validation", label: "Research & validation" },
     { id: "designing-an-ai-that-represents-people", label: "Designing the AI" },
+    { id: "teaching-instead-of-uploading", label: "Teaching the AI" },
     { id: "knowledge-architecture", label: "Knowledge architecture" },
-    { id: "building-with-ai", label: "Building with AI" },
     { id: "outcome", label: "Outcome" },
     { id: "reflection", label: "Reflection" },
   ],
@@ -634,9 +639,9 @@ const ambasdr: CaseStudyContent = {
       title: "First principles",
       kicker: "Modern identity has outgrown the tools built to represent it.",
       body: [
-        "A person isn't just a job title, a resume, a portfolio, or a social profile anymore. Someone can be a designer, a founder, a photographer, an investor, a speaker, and a community builder all at once, and each of those usually lives in a different place.",
-        "LinkedIn holds one version. Instagram holds another. TikTok, a portfolio, a resume, GitHub, YouTube, Calendly, Shopify, podcasts, and PDFs each hold a fragment of the same person. There was never a shortage of information. The problem was that none of it connected.",
-        "Ambasdr pulls those fragments into one place you can actually talk to. It sits between a person and everyone trying to understand them.",
+        "A person isn't just a job title, a resume, or a single profile anymore. Someone can be a designer, a founder, a photographer, an investor, and a community builder all at once, and each of those usually lives in a different place.",
+        "LinkedIn favors work history, Instagram a visual identity, TikTok personality, a portfolio a few projects, GitHub code, Calendly your calendar. There was never a shortage of information. The problem was that every platform flattened someone into a narrow slice, and none of them explained how the slices fit together. A designer who's also a founder can't show both without looking unfocused. A founder misses inbound because there's no single place that tells the whole story.",
+        "The opportunity was never to replace those platforms. It was to build a layer above them: one place that pulls the fragments together and can actually be talked to. Ambasdr sits between a person and everyone trying to understand them.",
       ],
     },
     {
@@ -655,45 +660,9 @@ const ambasdr: CaseStudyContent = {
       ],
     },
     {
-      kind: "section",
-      title: "The shift",
-      kicker: "Individuals are becoming businesses.",
-      body: [
-        "The idea we started from wasn't that people needed another profile. It was that individuals increasingly run like businesses. They have a brand, offers, an audience, inbound interest, content, proof of work, and a story that needs explaining.",
-        "But the tools they had were built for static representation. A resume is static. A portfolio is selective. A Linktree is a list. A QR code hands over contact details but never explains the person behind them.",
-        "Your professional identity should carry context, be available anytime, and answer questions even when you're not there to answer them yourself.",
-      ],
-    },
-    {
       kind: "reveal",
       name: "ambasdr-scroll-video",
       caption: "From business card → QR code → link page → conversational identity layer",
-    },
-    {
-      kind: "section",
-      title: "The problem space",
-      kicker:
-        "Modern identity is fragmented across platforms that don't understand each other.",
-      body: [
-        "For people who do many things, the problem isn't too much information. It's that every platform flattens them into a narrow version of themselves. LinkedIn favors work history, Instagram a visual identity, TikTok personality, a portfolio a few curated projects, GitHub code, YouTube video, Calendly your calendar, commerce links your transactions.",
-        "None of them explain how the pieces fit together. A designer who's also a founder can't show both without looking unfocused. A candidate never knows what context got lost after a conversation. A founder misses inbound because there's no single place that tells the whole story.",
-        "The opportunity wasn't to replace those platforms. It was to build a layer above them.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: [
-        "Identity spread across platforms that don't talk to each other: LinkedIn, Instagram, TikTok, GitHub, portfolio, resume, YouTube, commerce, Calendly",
-      ],
-    },
-    {
-      kind: "section",
-      title: "What we chose not to build",
-      kicker: "The product got clearer once we defined what it was not.",
-      body: [
-        "We weren't building another LinkedIn, Linktree, chatbot, resume builder, portfolio template, or social network. People had already put real time into their presence on those platforms. Ambasdr wasn't there to erase that work. It was there to make it make sense.",
-      ],
     },
     {
       kind: "quote",
@@ -800,6 +769,10 @@ const ambasdr: CaseStudyContent = {
           title: "Mobile became the authoring tool",
           body: "Managing your Ambasdr should be as quick as sending a text. Mobile stopped being a companion app and became the fastest place to update information, manage resources, and tune how the AI represents you.",
         },
+        {
+          title: "Plan management stayed on the web",
+          body: "Free, Pro, and Premium tiers were kept on the web to sidestep App Store and Play Store payment cuts. It wasn't only a pricing call. It shaped where parts of the product could live.",
+        },
       ],
     },
     {
@@ -825,6 +798,7 @@ const ambasdr: CaseStudyContent = {
       body: [
         "The toughest problem was working out how all these documents relate, and how each should shape the AI behind the scenes. Ambasdr ties together profile data, files, links, resource context, instructions, tone, visitor questions, AI responses, conversation summaries, and signals about what's missing.",
         "A visitor asks a question. The AI answers if it has enough to go on. If it doesn't, that gap becomes feedback. The owner adds context, uploads a resource, or updates instructions, and the profile gets better the more it's used.",
+        "Those conversations run both ways. For the owner they become analytics, top questions, recurring topics, and prompts about what's missing, a read on how they're coming across and what their audience wants most.",
       ],
     },
     {
@@ -834,90 +808,10 @@ const ambasdr: CaseStudyContent = {
     },
     {
       kind: "section",
-      title: "Public profile & conversational identity",
-      kicker: "Balancing familiarity and intelligence.",
-      body: [
-        "A surprising thing from beta: people still wanted the familiar link-in-bio behavior. They liked connecting the platforms they already used, like Linktree-style links, commerce pages, YouTube, and socials, and Ambasdr wrapped context around each of those.",
-        "So the experience works on two levels: a familiar profile with links, identity, content, and proof, plus a conversational layer that helps visitors make sense of it all. People keep the presence they've built, and visitors get a better way to explore it.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: ["The public profile: header, links, resources, and the AI chat entry point"],
-    },
-    {
-      kind: "section",
-      title: "Mobile as the authoring experience",
-      kicker: "The fastest way to manage identity.",
-      body: [
-        "People update their professional story on the move. They meet someone, wrap a project, add a link, change a role, tweak a prompt. Making them go back to a desktop to do it felt way too slow.",
-        "So mobile became the main place to work, not a companion. It's where people manage resources, revise context, and tune how the AI represents them, about as quickly as sending a text.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "grid",
-      labels: ["Mobile dashboard & file management", "Link management & profile editing"],
-    },
-    {
-      kind: "section",
-      title: "Conversation intelligence",
-      kicker: "Visitor questions became product feedback.",
-      body: [
-        "Conversations aren't only for visitors. They're intelligence for the owner too. Every question reveals what people actually want to know. A repeated question is a signal. An unanswered one is a gap. Questions about collaboration, booking, hiring, press, or pricing are a read on intent.",
-        "That opened up conversation summaries, top questions, topic clusters, prompts about missing information, suggested resources, and nudges to improve the profile. All of it helps people see how they're coming across and what their audience wants most.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: ["Conversation analytics: top questions, topics, summaries, and suggested profile improvements"],
-    },
-    {
-      kind: "section",
-      title: "Pricing & business model",
-      kicker: "Utility without overcomplicating access.",
-      body: [
-        "Pricing had to stay approachable for individuals while being worth it for creators, professionals, and founders building a real personal brand. We explored Free, Pro, and Premium tiers with a trial, and kept plan management mostly on the web to sidestep App Store and Play Store payment rules. It wasn't only a pricing call. It shaped the product too.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: ["Pricing: Free, Pro, and Premium with a 7-day trial"],
-    },
-    {
-      kind: "section",
-      title: "Building with AI",
-      kicker: "The way Ambasdr was built changed how the product was built.",
-      body: [
-        "Ambasdr wasn't only an AI product. It was also designed and prototyped with AI: Figma, Figma Make, Claude Code, Codex, Cursor, Google Stitch, v0, React Native, and responsive-web prototyping.",
-        "That let a three-person team explore more prototypes, test more ideas, and move faster across platforms than a team that size usually can. The exact tools mattered less than the rhythm: prototype fast, validate the direction, turn patterns into real implementation, and keep learning.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: ["AI-assisted workflow: design → code → prototype → test → feedback → iterate"],
-    },
-    {
-      kind: "timeline",
-      label: "How the product evolved",
-      items: [
-        { label: "Hiring use case", sub: "Help people get hired" },
-        { label: "Professional profile", sub: "Represent the full picture" },
-        { label: "Conversational representation", sub: "Questions become the interface" },
-        { label: "AI identity layer", sub: "The layer between people & AI" },
-        { label: "Beta readiness", sub: "500 waitlist · 20 beta" },
-      ],
-    },
-    {
-      kind: "section",
       title: "Role & ownership",
       kicker: "From product design into founder-level product ownership.",
       body: [
-        "As a co-founder on a three-person team, the work spanned product vision, research, and strategy; information architecture and AI interaction design; onboarding, mobile, and web UX; design systems and prototyping; prompt and context design; pricing and roadmap; investor conversations, go-to-market, beta planning, and community.",
+        "As a co-founder on a three-person team, I owned product and AI UX end to end, from research and information architecture through onboarding, mobile, and prompt and context design, while sharing strategy, pricing, and go-to-market with my co-founders.",
         "On a team that small, design, business, and engineering decisions were tightly linked. The work was less about handing off screens and more about shaping the product with the team, continuously.",
       ],
     },
@@ -945,228 +839,6 @@ const ambasdr: CaseStudyContent = {
   ],
 };
 
-/* -------------------------------------------------------- Kortshut (full) --- */
-const kortshut: CaseStudyContent = {
-  slug: "kortshut-ai",
-  project: "Kortshut",
-  title: "Designing a context-first operating system.",
-  lead:
-    "An ongoing exploration of AI-native workflows, and what computing looks like " +
-    "when context matters more than the apps you're in. This is a record of how " +
-    "the thinking is evolving, not a finished product.",
-  meta: [
-    { label: "Role", value: "Co-Founder & Product Designer" },
-    { label: "Timeline", value: "2025 – Present" },
-    { label: "Team", value: "3 founders · Product · Eng · AI" },
-    { label: "Platform", value: "macOS" },
-  ],
-  focusAreas: [
-    "Product Strategy",
-    "AI Workflow Design",
-    "macOS Product Design",
-    "Information Architecture",
-    "Human–AI Interaction",
-    "Design Systems",
-    "AI-Assisted Development",
-  ],
-  chapters: [
-    { id: "shift", label: "The Shift" },
-    { id: "observation", label: "Observation" },
-    { id: "hypothesis", label: "Hypothesis" },
-    { id: "research", label: "Research" },
-    { id: "explorations", label: "Explorations" },
-    { id: "decisions", label: "Decisions" },
-    { id: "questions", label: "Open Questions" },
-    { id: "reflection", label: "Reflection" },
-  ],
-  blocks: [
-    { kind: "media", variant: "wide", labels: ["Kortshut running on macOS"] },
-    {
-      kind: "section",
-      id: "shift",
-      title: "The shift",
-      kicker: "LLMs didn't remove the work. They moved where it happens.",
-      body: [
-        "The bottleneck was no longer writing. It became assembling enough context for the AI to produce something useful.",
-        "Every design review, engineering task, research session, and strategy doc followed the same loop: grab some information, screenshot, copy text, switch apps, rebuild the context, prompt an AI, go back to work, and do it again.",
-        "The models got better fast. The workflow didn't. Kortshut started as an attempt to cut that friction.",
-      ],
-    },
-    {
-      kind: "banner",
-      eyebrow: "The question",
-      text: "What happens when computers understand context instead of applications?",
-    },
-    {
-      kind: "section",
-      id: "observation",
-      title: "Observation",
-      kicker: "Computers organize work around files and applications. People organize work around context.",
-      body: [
-        "A designer isn't thinking about Figma. They're thinking about redesigning onboarding. A developer isn't thinking about Finder. They're thinking about fixing a bug, using notes, screenshots, logs, and earlier discussions.",
-        "Today's operating systems know where files live. They don't know why those files belong together. That gap became the basis for every product decision that followed.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: ["Fragmented context across Figma, browser, Claude, Cursor, screenshots, clipboard, and notes"],
-    },
-    {
-      kind: "section",
-      id: "hypothesis",
-      title: "Early hypothesis",
-      kicker: "“If we make AI easier to access, people will work faster.”",
-      body: [
-        "Early concepts chased faster prompting, keyboard shortcuts, AI launchers, and a better clipboard. They made things quicker, but missed the bigger problem.",
-        "The real bottleneck wasn't opening AI. It was rebuilding context before every conversation.",
-      ],
-    },
-    {
-      kind: "section",
-      id: "research",
-      title: "Research & continuous discovery",
-      kicker: "Kortshut evolved through steady observation and dogfooding, not a fixed philosophy.",
-      body: [
-        "The same patterns kept surfacing: screenshots became temporary memory; clipboard contents disappeared despite remaining valuable; users repeatedly rebuilt the same prompt context; AI quality depended more on context than prompt wording; and keyboard shortcuts only mattered when attached to repeatable workflows.",
-        "That shifted the product away from “AI utilities” toward workflow orchestration.",
-      ],
-    },
-    {
-      kind: "stats",
-      items: [
-        { value: "~1yr", label: "Of product exploration" },
-        { value: "~15", label: "Workflow & onboarding iterations" },
-        { value: "20", label: "Active beta users" },
-        { value: "3", label: "Person founding team" },
-        { value: "100s", label: "Design explorations across Figma, Claude Code, Cursor, Codex & Stitch" },
-      ],
-    },
-    { kind: "banner", eyebrow: "Emerging principle", text: "Context is more valuable than prompts." },
-    {
-      kind: "section",
-      title: "Why context, not prompts",
-      body: [
-        "Early versions leaned on prompts. What we saw was that people cared far less about prompts than about outcomes. The better question turned out to be: how fast can someone gather everything the AI needs without breaking their flow? That still guides the roadmap.",
-      ],
-    },
-    {
-      kind: "section",
-      id: "explorations",
-      title: "Exploration 01 — Persistent context",
-      kicker: "What if copied information wasn't disposable, but persistent working memory?",
-      body: [
-        "Instead of treating the clipboard as throwaway, we explored it as working memory that sticks around. Past clipboard items, screenshots, and saved references became reusable pieces of context rather than temporary scraps.",
-        "The goal wasn't to remember what had been copied. It was to recover the thinking behind it.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: ["The clipboard as persistent, searchable working memory"],
-    },
-    {
-      kind: "section",
-      title: "Exploration 02 — Workflow shortcuts",
-      kicker: "Keyboard shortcuts were never the point. They were a way into repeatable workflows.",
-      body: [
-        "The real design challenge shifted from cutting clicks to protecting focus.",
-      ],
-    },
-    {
-      kind: "evolution",
-      label: "The workflow, compressed",
-      beforeLabel: "Traditional workflow",
-      afterLabel: "Explored workflow",
-      rows: [
-        { before: "Capture, copy, screenshot", after: "One shortcut" },
-        { before: "Switch apps, open AI", after: "Context assembles automatically" },
-        { before: "Paste, rebuild the prompt", after: "AI responds in place" },
-        { before: "Return, repeat", after: "Keep working" },
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: ["One shortcut that assembles context and brings the AI in place"],
-    },
-    {
-      kind: "decisionLog",
-      id: "decisions",
-      title: "We stopped designing around prompts.",
-      rows: [
-        { label: "Initial belief", text: "Prompts were the primary unit of interaction." },
-        { label: "Observation", text: "Users repeated workflows more consistently than prompts." },
-        { label: "Current direction", text: "Design around reusable workflows that naturally contain prompting." },
-      ],
-    },
-    {
-      kind: "decisionLog",
-      title: "The clipboard became working memory.",
-      rows: [
-        { label: "The shift", text: "Copied content stopped being transient and became searchable, referenceable, and context-aware." },
-        { label: "Status", text: "This remains an active area of product exploration." },
-      ],
-    },
-    {
-      kind: "section",
-      title: "What we chose not to build",
-      body: [
-        "Kortshut deliberately avoids becoming another chatbot, launcher, note-taking app, or prompt marketplace. Those already exist. The opening is in connecting them through context.",
-      ],
-    },
-    {
-      kind: "section",
-      title: "Designed while adopting AI",
-      body: [
-        "Kortshut was designed while leaning on AI throughout. Claude Code, Cursor, Codex, Google Stitch, and Figma AI sped up prototyping, implementation, and experimentation. They shortened the loop between a hypothesis and a real test, without replacing the design thinking.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      labels: ["AI-assisted product development: hypothesis → prototype → validate → iterate"],
-    },
-    {
-      kind: "evolution",
-      label: "How my thinking changed",
-      beforeLabel: "Earlier thinking",
-      afterLabel: "Current thinking",
-      rows: [
-        { before: "AI needs faster access.", after: "AI needs better context." },
-        { before: "Prompts are the product.", after: "Workflows are the product." },
-        { before: "Clipboard history adds utility.", after: "Persistent context enables better decisions." },
-        { before: "Keyboard shortcuts save time.", after: "Embedded workflows preserve focus." },
-      ],
-    },
-    {
-      kind: "questions",
-      id: "questions",
-      label: "Open questions",
-      items: [
-        "Should context be assembled manually, or inferred automatically?",
-        "Is the clipboard the right primitive, or is context itself the primitive?",
-        "When does automation become invisible enough to feel natural?",
-        "How should AI balance initiative with user control?",
-      ],
-    },
-    {
-      kind: "banner",
-      id: "reflection",
-      eyebrow: "Reflection",
-      text: "Designing AI products is rarely about designing better AI. It's about designing better ways for people to capture, keep, find, and reuse context.",
-    },
-    {
-      kind: "section",
-      title: "An active exploration",
-      body: [
-        "Kortshut remains an active exploration into that problem. Rather than documenting a finished product, this case study documents an evolving way of thinking about human–computer interaction in an AI-native world.",
-        "The product remains alive. The thinking continues.",
-      ],
-    },
-  ],
-};
-
 /* -------------------------------------------------------- Pareto (full) --- */
 const pareto: CaseStudyContent = {
   slug: "healthcare-data",
@@ -1188,6 +860,7 @@ const pareto: CaseStudyContent = {
     h: 1012,
     alt: "Pareto Intelligence: the redesigned analytics portal on macOS",
   },
+  heroFramed: true,
   blocks: [
     {
       kind: "stats",
@@ -1219,7 +892,7 @@ const pareto: CaseStudyContent = {
       title: "Research & Insights",
       kicker: "Users weren't asking for more data. They wanted to trust what they were already looking at.",
       body: [
-        "I ran a thorough UX audit: heuristic evaluations, cognitive-load and task-time analysis, error reviews with subject-matter experts, accessibility checks, and a look at how consistent the products were with each other. The same issues kept coming up: insights weren't prioritized, filtering was inconsistent, data tables were overbuilt, it took too many clicks to reach the important details, key metrics were buried, and visual noise hid the trends. Alongside that, I interviewed and shadowed analysts, claims auditors, actuarial teams, operations leaders, executives, and compliance partners.",
+        "I audited the portal end to end, pairing heuristic and task-time analysis with interviews and shadowing across analysts, claims auditors, actuarial teams, and compliance partners. The same issues surfaced everywhere: insights weren't prioritized, filtering was inconsistent, tables were overbuilt, too many clicks stood between analysts and the detail they needed, and visual noise buried the metrics that mattered.",
         "From there, I restructured the information around a simple flow: insight, then context, then action, then audit. I standardized filtering, simplified navigation, and added reusable data groupings and priority-based layouts for the metrics that mattered most. I designed and built Pareto's first design system, then led the vision for moving dozens of Tableau dashboards into Looker: rebuilding the visuals with consistent logic, clearer drill paths, shared charting rules, better comparison views, and stronger performance under load. I validated it with interactive Figma prototypes tested with analysts across teams.",
       ],
     },
@@ -1267,7 +940,7 @@ const pareto: CaseStudyContent = {
     {
       kind: "banner",
       eyebrow: "Reconciliation dashboards",
-      text: "Help teams catch discrepancies faster and more accurately, which fed directly into millions in recovered revenue.",
+      text: "Help teams catch discrepancies faster and more accurately, the reconciliation work that recovers millions for payers.",
     },
     {
       kind: "media",
@@ -1308,10 +981,31 @@ const pareto: CaseStudyContent = {
     },
     {
       kind: "section",
+      title: "The migration reality",
+      kicker: "Moving to Looker was less a redesign than a careful transplant.",
+      body: [
+        "Two things made this harder than a visual refresh. Legacy data didn't map cleanly from Tableau to Looker, so reaching parity took careful reconciliation before anything could be made better. And analysts fluent in the old dashboards had to adopt new patterns, so the work had to earn trust, not just ship. The design system and prototype testing carried much of that weight, keeping the transition legible and giving people something concrete to react to before it went live.",
+      ],
+    },
+    {
+      kind: "section",
       title: "Impact",
       body: [
-        "The redesigned portal and the design system measurably improved the analyst experience: a 25% drop in task-completion time, a 30% drop in error rates, and a 20% increase in new subscriptions. They also gave engineering a consistent foundation for every release that followed.",
+        "Measured in usability testing and product analytics, the redesign cut task-completion time by 25% and error rates by 30%. New subscriptions rose 20% over the two years that followed; design was one contributor there, alongside sales, pricing, and product changes, not the sole cause.",
+        "Just as important operationally, the design system gave engineering a single, consistent foundation for every release that came after.",
       ],
+    },
+    {
+      kind: "section",
+      title: "Reflection",
+      body: [
+        "The lasting lesson wasn't about any one dashboard. It was that in enterprise analytics the interface is only as trustworthy as the system beneath it, and a design system is what makes that trust repeatable across products, teams, and years.",
+        "If I ran it again, I'd bring analysts into the migration earlier. The redesign landed, but adoption is its own design problem, and the people living in the old dashboards needed more runway to trust the new ones.",
+      ],
+    },
+    {
+      kind: "quote",
+      text: "The hardest part of enterprise UX isn't making one screen clear. It's making every screen agree with the next one.",
     },
   ],
 };
@@ -1321,7 +1015,6 @@ const FULL: Record<string, CaseStudyContent> = {
   "secure-file-sharing": superfile,
   "trust-at-scale": synctera,
   "digital-identity": ambasdr,
-  "kortshut-ai": kortshut,
   "healthcare-data": pareto,
 };
 
