@@ -1,7 +1,6 @@
 /**
  * Full content for the case-study detail pages (/work/[slug]).
  *
- * Separate from `data/caseStudies.ts` (which powers the Gemini assistant).
  * Order + card copy come from `home.ts`. Doorvest is the real published
  * case study (jrprince.design/work/doorvests-marketplace); the rest are drafts
  * from the card copy until their write-ups land (`draft: true`).
