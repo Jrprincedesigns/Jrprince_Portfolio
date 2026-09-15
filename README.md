@@ -107,10 +107,28 @@ The digest carries what a recruiter actually did:
   than a meaningless class name.
 - **Clicks on visuals that do nothing** — someone trying to enlarge a mockup.
   High-signal for a portfolio.
+- **Contact and outbound clicks**, in order, timed, and attributed to the page
+  that earned them: *Email — 4m12s in, from real-estate-investing*. A session
+  with a contact click is headed ✉️ Reached out, so the phone notification
+  alone tells you someone wants to talk.
 - **Entry and exit path**, click count, screen size.
 
-A session is tagged 🔥 Deep read, 🎯 Engaged session, 💨 Quick bounce or
-👋 Session ended, so the notification preview alone tells you whether to look.
+CTAs are classified by delegation, so a new `mailto:` or social link anywhere
+on the site is tracked the moment it ships — nothing to register. Anything that
+isn't a link (the chat composer is a `<button>`) carries `data-cta="..."`;
+that's the only hook to add when you build a new CTA.
+
+A session is tagged ✉️ Reached out, 🔥 Deep read, 🎯 Engaged session,
+💨 Quick bounce or 👋 Session ended, so the notification preview alone tells
+you whether to look.
+
+One visit sends one digest. Clicking an internal link is treated as
+continuation rather than departure (the nav uses plain anchors, so those are
+full page loads), and the session is rebuilt from `sessionStorage` on the next
+page. A visitor who tabs away and comes back to do something new gets a
+follow-up marked *(cont.)* rather than losing the later activity — capped at
+three per session, and only ever sent when a new page, click or contact click
+actually happened.
 
 ### Microsoft Clarity
 

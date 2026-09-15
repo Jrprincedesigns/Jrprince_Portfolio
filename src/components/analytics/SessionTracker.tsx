@@ -2,7 +2,16 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { KEYS, isMuted, locationLabel, readUtm, resolveReturning, safeGet, safeSet } from "@/lib/clientSession";
+import {
+  KEYS,
+  classifyCta,
+  isMuted,
+  locationLabel,
+  readUtm,
+  resolveReturning,
+  safeGet,
+  safeSet,
+} from "@/lib/clientSession";
 
 /**
  * Accumulates one visitor session and flushes a digest to Slack on departure.
@@ -31,6 +40,15 @@ const INTERACTIVE_SELECTOR = 'a, button, input, select, textarea, summary, label
 const MAX_PAGES = 25;
 const MAX_CHAPTERS = 60;
 const MAX_HOTSPOTS = 10;
+const MAX_CONVERSIONS = 12;
+/**
+ * A session can report more than once. `visibilitychange` is the only reliable
+ * departure signal on mobile, but it also fires when someone simply switches
+ * tabs — so latching after the first flush would silently drop everything they
+ * did on returning, including the contact click that matters most. Instead,
+ * re-send only when something material changed, and cap the total.
+ */
+const MAX_DIGESTS = 3;
 
 interface PageEntry {
   path: string;
@@ -45,6 +63,15 @@ interface ChapterEntry {
   engagedMs: number;
 }
 
+interface ConversionEntry {
+  /** "Email", "LinkedIn", "Chat message", "Outbound · doorvest.com". */
+  label: string;
+  /** Page they converted from — the study that earned the click. */
+  path: string;
+  /** Milliseconds into the session, so the digest can say what came first. */
+  atMs: number;
+}
+
 interface SessionState {
   startedAt: number;
   entryPath: string;
@@ -57,6 +84,7 @@ interface SessionState {
   chapters: ChapterEntry[];
   rage: Record<string, number>;
   deadVisual: Record<string, number>;
+  conversions: ConversionEntry[];
 }
 
 function loadState(): SessionState | null {
@@ -86,6 +114,7 @@ function freshState(params: URLSearchParams): SessionState {
     chapters: [],
     rage: {},
     deadVisual: {},
+    conversions: [],
   };
 }
 
@@ -142,6 +171,8 @@ export default function SessionTracker() {
     saveState(stateRef.current);
 
     const clickPositions: { x: number; y: number; t: number }[] = [];
+    /** When a same-origin link was last clicked. */
+    let internalNavAt = 0;
 
     const onClick = (event: MouseEvent) => {
       const state = stateRef.current;
@@ -152,6 +183,33 @@ export default function SessionTracker() {
 
       // Decorative overlays sit above the content and swallow clicks, so look
       // down the stack for the visual the visitor was actually aiming at.
+      // Nav uses plain anchors, so an internal link is a full page load. That
+      // fires pagehide, but the visitor has not left — the next page picks the
+      // session back up from sessionStorage, so it must not flush a digest.
+      const anchor = target?.closest("a[href]");
+      const href = anchor?.getAttribute("href") ?? "";
+      if (href && !href.startsWith("#")) {
+        try {
+          if (new URL(href, window.location.href).origin === window.location.origin) {
+            internalNavAt = Date.now();
+          }
+        } catch {
+          /* malformed href — treat as external */
+        }
+      }
+
+      // Contact and outbound clicks. Recorded before anything else, because an
+      // outbound link can navigate away mid-handler.
+      const cta = classifyCta(target);
+      if (cta && state.conversions.length < MAX_CONVERSIONS) {
+        state.conversions.push({
+          label: cta,
+          path: window.location.pathname,
+          atMs: Date.now() - state.startedAt,
+        });
+        saveState(state);
+      }
+
       const stack = document.elementsFromPoint(event.clientX, event.clientY);
       const visual = stack.find((el) => el.matches(VISUAL_SELECTOR)) ?? null;
       const interactive = stack.find((el) => el.matches(INTERACTIVE_SELECTOR)) ?? null;
@@ -186,12 +244,23 @@ export default function SessionTracker() {
     const flush = () => {
       const state = stateRef.current;
       if (!state) return;
-      if (safeGet(window.sessionStorage, KEYS.digestSent) === "1") return;
       // Nothing worth reporting from an instant bounce.
       if (Date.now() - state.startedAt < 3000) return;
-      safeSet(window.sessionStorage, KEYS.digestSent, "1");
+      // Mid-flight internal navigation: the next page continues this session.
+      if (Date.now() - internalNavAt < 2000) return;
+
+      // Discrete actions only — elapsed time and scrolling alone are not worth
+      // a second message, but a new page, click or contact click are.
+      const signature = [state.pages.length, state.clicks, state.conversions.length].join(":");
+      if (safeGet(window.sessionStorage, KEYS.digestSent) === signature) return;
+
+      const sent = Number(safeGet(window.sessionStorage, KEYS.digestCount) ?? "0");
+      if (sent >= MAX_DIGESTS) return;
+      safeSet(window.sessionStorage, KEYS.digestSent, signature);
+      safeSet(window.sessionStorage, KEYS.digestCount, String(sent + 1));
 
       const payload = {
+        continued: sent > 0,
         durationMs: Date.now() - state.startedAt,
         entryPath: state.entryPath,
         exitPath: window.location.pathname,
@@ -204,6 +273,7 @@ export default function SessionTracker() {
         chapters: state.chapters.slice(0, MAX_CHAPTERS),
         rage: state.rage,
         deadVisual: state.deadVisual,
+        conversions: state.conversions.slice(0, MAX_CONVERSIONS),
       };
 
       try {

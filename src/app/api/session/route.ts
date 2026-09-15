@@ -18,6 +18,7 @@ export const dynamic = "force-dynamic";
 const MAX_PAGES = 25;
 const MAX_CHAPTERS = 60;
 const MAX_HOTSPOTS = 10;
+const MAX_CONVERSIONS = 12;
 /** Longer than any plausible read; guards against a clock-skewed payload. */
 const MAX_DURATION_MS = 6 * 60 * 60 * 1000;
 
@@ -78,6 +79,20 @@ export async function POST(req: NextRequest) {
     };
   });
 
+  const rawConversions = Array.isArray(body.conversions)
+    ? body.conversions.slice(0, MAX_CONVERSIONS)
+    : [];
+  const conversions = rawConversions
+    .map((c) => {
+      const entry = (c ?? {}) as Record<string, unknown>;
+      return {
+        label: str(entry.label, 40),
+        path: str(entry.path, 300),
+        atMs: num(entry.atMs, MAX_DURATION_MS),
+      };
+    })
+    .filter((c) => c.label);
+
   const rawUtm = (body.utm ?? {}) as Record<string, unknown>;
   const utm: Record<string, string> = {};
   for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]) {
@@ -98,6 +113,8 @@ export async function POST(req: NextRequest) {
     chapters,
     rage: hotspots(body.rage),
     deadVisual: hotspots(body.deadVisual),
+    conversions,
+    continued: body.continued === true,
     geo: {
       city: decodeURIComponent(req.headers.get("x-vercel-ip-city") ?? ""),
       region: req.headers.get("x-vercel-ip-country-region") ?? "",

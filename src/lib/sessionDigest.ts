@@ -6,6 +6,9 @@
 import { site } from "@/data/site";
 import { describeReferrer, formatLocation, type VisitInfo } from "@/lib/visitor";
 
+/** CTAs that mean the visitor actually tried to reach you. */
+const CONTACT_CTAS = ["Email", "Phone", "Chat message"];
+
 export interface PageEntry {
   path: string;
   title: string;
@@ -17,6 +20,12 @@ export interface ChapterEntry {
   path: string;
   label: string;
   engagedMs: number;
+}
+
+export interface ConversionEntry {
+  label: string;
+  path: string;
+  atMs: number;
 }
 
 export interface SessionSummary {
@@ -32,6 +41,9 @@ export interface SessionSummary {
   chapters: ChapterEntry[];
   rage: Record<string, number>;
   deadVisual: Record<string, number>;
+  conversions: ConversionEntry[];
+  /** True when an earlier digest already covered part of this session. */
+  continued: boolean;
   geo: Pick<VisitInfo, "city" | "region" | "country">;
   device: Pick<VisitInfo, "browser" | "os" | "device">;
 }
@@ -86,6 +98,10 @@ function topEntries(map: Record<string, number>, limit = 3): [string, number][] 
  * runs minutes, not seconds.
  */
 function engagementLabel(summary: SessionSummary): { emoji: string; label: string } {
+  if (summary.conversions.some((c) => CONTACT_CTAS.includes(c.label))) {
+    return { emoji: "✉️", label: "Reached out" };
+  }
+
   const studies = summary.pages.filter((p) => isCaseStudy(p.path));
   const deepRead = studies.some((p) => p.maxScroll >= 70 && p.engagedMs >= 60_000);
   // Depth counts even in a short session: someone who scrolled most of a case
@@ -103,7 +119,9 @@ function engagementLabel(summary: SessionSummary): { emoji: string; label: strin
 
 export function buildDigestMessage(summary: SessionSummary) {
   const base = site.url.replace(/\/$/, "");
-  const { emoji, label } = engagementLabel(summary);
+  const engagement = engagementLabel(summary);
+  const emoji = engagement.emoji;
+  const label = summary.continued ? `${engagement.label} (cont.)` : engagement.label;
   const location = formatLocation({ ...summary.geo } as VisitInfo);
   const source = describeReferrer(summary.referrer);
   const duration = formatDuration(summary.durationMs);
@@ -170,6 +188,19 @@ export function buildDigestMessage(summary: SessionSummary) {
     }
   }
 
+  // What they did about it — the block worth reading first.
+  if (summary.conversions.length) {
+    const lines = summary.conversions.map((c) => {
+      const from = isCaseStudy(c.path) ? ` from ${c.path.replace("/work/", "")}` : "";
+      return `• *${c.label}* — ${formatDuration(c.atMs)} in${from}`;
+    });
+    blocks.push({ type: "divider" });
+    blocks.push({
+      type: "section",
+      text: { type: "mrkdwn", text: `*Clicked through*\n${lines.join("\n")}` },
+    });
+  }
+
   // Friction signals.
   const rage = topEntries(summary.rage);
   const dead = topEntries(summary.deadVisual);
@@ -214,9 +245,13 @@ export function buildDigestMessage(summary: SessionSummary) {
     ],
   });
 
-  const headline = studies.length
-    ? `${prettyPath(studies[0])} ${studies[0].maxScroll}%`
-    : summary.exitPath;
+  const converted = summary.conversions.map((c) => c.label).join(", ");
+  const headline = [
+    converted,
+    studies.length ? `${prettyPath(studies[0])} ${studies[0].maxScroll}%` : summary.exitPath,
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   return {
     text: `${emoji} ${label} — ${duration} · ${headline} · ${location} via ${source}`,

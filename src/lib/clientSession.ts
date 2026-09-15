@@ -14,8 +14,10 @@ export const KEYS = {
   returning: "jrp:seen-before",
   /** This browser opted out of notifications for good. */
   muted: "jrp:notify-muted",
-  /** Digest already sent — guards against a double flush. */
+  /** Signature of the last digest sent, to avoid re-sending the same one. */
   digestSent: "jrp:digest-sent",
+  /** How many digests this session has already sent. */
+  digestCount: "jrp:digest-count",
   /** Whether this visitor had been here before THIS session started. */
   returningResolved: "jrp:was-returning",
 } as const;
@@ -77,6 +79,40 @@ export function readUtm(params: URLSearchParams): Record<string, string> {
     if (value) utm[key] = value.slice(0, 80);
   }
   return utm;
+}
+
+/**
+ * Names the call-to-action a click landed on, or null for an ordinary click.
+ *
+ * Works by delegation, so a new mailto or social link anywhere on the site is
+ * tracked the moment it ships. Anything needing an explicit name — the chat
+ * composer, which is a button rather than a link — carries `data-cta`.
+ */
+export function classifyCta(el: Element | null): string | null {
+  const tagged = el?.closest("[data-cta]");
+  if (tagged) {
+    const label = (tagged.getAttribute("data-cta") ?? "").trim().slice(0, 40);
+    if (label) return label;
+  }
+
+  const anchor = el?.closest("a[href]");
+  const href = anchor?.getAttribute("href") ?? "";
+  if (!href) return null;
+  if (href.startsWith("mailto:")) return "Email";
+  if (href.startsWith("tel:")) return "Phone";
+  if (!/^https?:/i.test(href)) return null;
+
+  try {
+    const url = new URL(href, window.location.href);
+    // Internal links are already covered by page tracking.
+    if (url.hostname === window.location.hostname) return null;
+    const host = url.hostname.replace(/^www\./, "").toLowerCase();
+    if (host.includes("linkedin")) return "LinkedIn";
+    if (host.includes("tiktok")) return "TikTok";
+    return `Outbound · ${host}`;
+  } catch {
+    return null;
+  }
 }
 
 /**

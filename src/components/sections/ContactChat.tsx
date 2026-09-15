@@ -124,6 +124,7 @@ export default function ContactChat({
               <button
                 type="button"
                 className={styles.chip}
+                data-cta="Chat message"
                 onClick={() => send(s)}
               >
                 {s}
@@ -166,6 +167,7 @@ export default function ContactChat({
         <button
           type="submit"
           className={styles.sendBtn}
+          data-cta="Chat message"
           disabled={loading || !input.trim()}
           aria-label="Send message"
         >
