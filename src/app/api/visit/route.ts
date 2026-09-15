@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { postToSlack, slackConfigured } from "@/lib/slack";
+import { notifyMode } from "@/lib/notifyMode";
 import {
   buildVisitMessage,
   fingerprint,
@@ -66,8 +67,10 @@ function str(value: unknown, max = 200): string {
 }
 
 export async function POST(req: NextRequest) {
-  // Nothing configured (local dev, preview) — accept and drop.
-  if (!slackConfigured()) return new NextResponse(null, { status: 204 });
+  // Nothing configured (local dev, preview), or arrival pings are off.
+  if (!slackConfigured() || notifyMode() === "digest") {
+    return new NextResponse(null, { status: 204 });
+  }
 
   const userAgent = req.headers.get("user-agent") ?? "";
   if (isBot(userAgent)) return new NextResponse(null, { status: 204 });

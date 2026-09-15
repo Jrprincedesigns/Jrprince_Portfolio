@@ -78,18 +78,48 @@ assistant only speaks to work that actually exists on the site. It's
 non-streaming for simplicity — to stream, switch to `generateContentStream`
 in `src/app/api/chat/route.ts`.
 
-## Slack visitor notifications
+## Visitor insight
 
-A Slack message lands whenever someone new visits the site.
+Two layers, answering different questions:
 
-**How it works.** `VisitPing` (mounted in `src/app/layout.tsx`) posts once per
-browser session to `POST /api/visit`. That route reads Vercel's edge geo
-headers, formats a Block Kit message in `src/lib/visitor.ts`, and sends it via
-`src/lib/slack.ts`. Each notification carries the page, referrer source,
-city/region/country, device, any UTM params, and whether the visitor is new or
-returning.
+| Layer | Answers |
+| ----- | ------- |
+| Slack notifications (custom) | Who is on the site *right now*, and what did this particular visitor do? |
+| Microsoft Clarity (hosted) | Across everyone: where do people drop off, what do they rage-click, what does a session look like? |
 
-**Setup.**
+### Slack notifications
+
+Two messages per visitor, both optional via `VISIT_NOTIFY_MODE`:
+
+1. **Arrival** — `VisitPing` posts once per browser session to `POST /api/visit`.
+   Page, referrer source, location, device, UTM params, new vs. returning.
+2. **Session digest** — `SessionTracker` accumulates the whole visit and flushes
+   it to `POST /api/session` via `sendBeacon` on departure.
+
+The digest carries what a recruiter actually did:
+
+- **Engaged time** — ticks only while the tab is visible, so a backgrounded tab
+  doesn't turn a four-second visit into forty minutes.
+- **Scroll depth per page**, drawn as a bar.
+- **Time per chapter** on case studies, read straight from the chapter rail
+  `ChapterNav` already renders — so it stays in sync with your content for free.
+- **Rage clicks**, labelled by chapter (`The problem space · img.shot`) rather
+  than a meaningless class name.
+- **Clicks on visuals that do nothing** — someone trying to enlarge a mockup.
+  High-signal for a portfolio.
+- **Entry and exit path**, click count, screen size.
+
+A session is tagged 🔥 Deep read, 🎯 Engaged session, 💨 Quick bounce or
+👋 Session ended, so the notification preview alone tells you whether to look.
+
+### Microsoft Clarity
+
+Set `NEXT_PUBLIC_CLARITY_ID` to enable session replay, scroll and click
+heatmaps, and native rage/dead-click detection. Free, unsampled, no traffic cap.
+This is where aggregate drop-off lives — the Slack digest is per-session, so
+Clarity's scroll heatmap is what tells you *where most people stop reading*.
+
+### Setup
 
 1. Create a Slack app at <https://api.slack.com/apps> → *Incoming Webhooks* →
    *Add New Webhook to Workspace*, and pick the channel you want pinged.
@@ -97,21 +127,28 @@ returning.
 3. Add it in Vercel → Project Settings → Environment Variables as
    **`SLACK_WEBHOOK_URL`**, scoped to **Production** only so preview deploys
    stay quiet. Optionally add `VISIT_HASH_SALT` (any random string).
-4. Redeploy.
+4. For Clarity, create a project at <https://clarity.microsoft.com>, copy the
+   project ID, and add it as **`NEXT_PUBLIC_CLARITY_ID`** — Production only.
+5. Redeploy.
 
-**Controls.**
+### Controls
 
 - **Mute your own devices** — visit any page once with `?nonotify=1`
-  (e.g. `https://www.jrprince.design/?nonotify=1`). That browser never pings
-  again. Clear site data to undo.
-- **Volume** — one ping per visitor session, not per page view. The route also
-  drops known bots, dedupes the same visitor for 30 minutes, and caps
-  notifications at 60/hour.
-- **Turn it off** — remove `SLACK_WEBHOOK_URL`. The route no-ops without it.
+  (e.g. `https://www.jrprince.design/?nonotify=1`). That browser stops pinging
+  and stops tracking. Clear site data to undo. Do this first, or you'll be
+  triggering half your own notifications.
+- **Volume** — one arrival ping and one digest per visitor *session*, not per
+  page view. Set `VISIT_NOTIFY_MODE=digest` to halve it. The routes drop known
+  bots, dedupe a visitor for 30 minutes, and cap arrivals at 60/hour.
+- **Turn it off** — remove `SLACK_WEBHOOK_URL` (notifications) or
+  `NEXT_PUBLIC_CLARITY_ID` (Clarity). Both no-op when unset.
 
-**Privacy.** No cookies and no third-party tracker. The visitor's IP is hashed
-in memory purely for rate limiting — it is never stored, logged, or sent to
-Slack.
+### Privacy
+
+The Slack layer sets no cookies and loads no third-party script. The visitor's
+IP is hashed in memory purely for rate limiting — never stored, logged, or sent
+to Slack. Clarity is a hosted service, so enabling it does send session data to
+Microsoft; skip `NEXT_PUBLIC_CLARITY_ID` if you'd rather it didn't.
 
 ## Deploying to Vercel
 
