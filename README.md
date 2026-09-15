@@ -78,12 +78,48 @@ assistant only speaks to work that actually exists on the site. It's
 non-streaming for simplicity — to stream, switch to `generateContentStream`
 in `src/app/api/chat/route.ts`.
 
+## Slack visitor notifications
+
+A Slack message lands whenever someone new visits the site.
+
+**How it works.** `VisitPing` (mounted in `src/app/layout.tsx`) posts once per
+browser session to `POST /api/visit`. That route reads Vercel's edge geo
+headers, formats a Block Kit message in `src/lib/visitor.ts`, and sends it via
+`src/lib/slack.ts`. Each notification carries the page, referrer source,
+city/region/country, device, any UTM params, and whether the visitor is new or
+returning.
+
+**Setup.**
+
+1. Create a Slack app at <https://api.slack.com/apps> → *Incoming Webhooks* →
+   *Add New Webhook to Workspace*, and pick the channel you want pinged.
+2. Copy the `https://hooks.slack.com/services/...` URL.
+3. Add it in Vercel → Project Settings → Environment Variables as
+   **`SLACK_WEBHOOK_URL`**, scoped to **Production** only so preview deploys
+   stay quiet. Optionally add `VISIT_HASH_SALT` (any random string).
+4. Redeploy.
+
+**Controls.**
+
+- **Mute your own devices** — visit any page once with `?nonotify=1`
+  (e.g. `https://www.jrprince.design/?nonotify=1`). That browser never pings
+  again. Clear site data to undo.
+- **Volume** — one ping per visitor session, not per page view. The route also
+  drops known bots, dedupes the same visitor for 30 minutes, and caps
+  notifications at 60/hour.
+- **Turn it off** — remove `SLACK_WEBHOOK_URL`. The route no-ops without it.
+
+**Privacy.** No cookies and no third-party tracker. The visitor's IP is hashed
+in memory purely for rate limiting — it is never stored, logged, or sent to
+Slack.
+
 ## Deploying to Vercel
 
 1. Push this repo to GitHub.
 2. Import it at <https://vercel.com/new>.
 3. Add an Environment Variable **`GEMINI_API_KEY`** (and optionally
-   `GEMINI_MODEL`) in the project settings.
+   `GEMINI_MODEL`) in the project settings. Add **`SLACK_WEBHOOK_URL`** too if
+   you want visitor notifications — see above.
 4. Deploy. Every push to the default branch ships automatically.
 
 ## Accessibility & motion
