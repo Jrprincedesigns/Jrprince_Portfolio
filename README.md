@@ -153,8 +153,12 @@ Clarity's scroll heatmap is what tells you *where most people stop reading*.
 
 - **Mute your own devices** — visit any page once with `?nonotify=1`
   (e.g. `https://www.jrprince.design/?nonotify=1`). That browser stops pinging
-  and stops tracking. Clear site data to undo. Do this first, or you'll be
-  triggering half your own notifications.
+  Slack *and* stops loading Clarity, so it contributes no session, replay or
+  heatmap data either. Clear site data to undo. Do this first, or you'll be
+  half your own dataset.
+- **Recordings made before you muted** stay in Clarity. Delete them there, or
+  add your IP under Clarity → Settings → IP blocking for a second layer that
+  does not depend on browser storage.
 - **Volume** — one arrival ping and one digest per visitor *session*, not per
   page view. Set `VISIT_NOTIFY_MODE=digest` to halve it. The routes drop known
   bots, dedupe a visitor for 30 minutes, and cap arrivals at 60/hour.
