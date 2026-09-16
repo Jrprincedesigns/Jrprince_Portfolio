@@ -80,6 +80,37 @@ function prettyPath(entry: PageEntry): string {
   return slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+/**
+ * How fast they moved through a page, as engaged milliseconds per percent of
+ * depth covered. Depth alone can't tell a read from a flick: covering 100% of
+ * a case study in 22s and reading it properly both render as a full bar.
+ *
+ * Thresholds are per-percent so they hold whether someone covered a third of a
+ * study or all of it — 600ms/% is a minute for a full pass, 250ms/% is 25s.
+ */
+const READ_PACE = 600;
+const SKIM_PACE = 250;
+/** Below this there isn't enough of a page covered to judge pace. */
+const MIN_DEPTH_TO_JUDGE = 10;
+
+export type ReadingPace = "read" | "skimmed" | null;
+
+export function readingPace(entry: PageEntry): ReadingPace {
+  if (entry.maxScroll < MIN_DEPTH_TO_JUDGE) return null;
+  const msPerPercent = entry.engagedMs / entry.maxScroll;
+  if (msPerPercent >= READ_PACE) return "read";
+  if (msPerPercent < SKIM_PACE) return "skimmed";
+  return null;
+}
+
+/** Suffix for a case-study line. The middle pace stays unlabelled. */
+function paceLabel(entry: PageEntry): string {
+  const pace = readingPace(entry);
+  if (pace === "read") return "  📖 read";
+  if (pace === "skimmed") return "  ⚡ skimmed";
+  return "";
+}
+
 /** Ten-cell bar — reads cleanly in Slack's proportional font. */
 function bar(percent: number): string {
   const filled = Math.max(0, Math.min(10, Math.round(percent / 10)));
@@ -103,14 +134,16 @@ function engagementLabel(summary: SessionSummary): { emoji: string; label: strin
   }
 
   const studies = summary.pages.filter((p) => isCaseStudy(p.path));
-  const deepRead = studies.some((p) => p.maxScroll >= 70 && p.engagedMs >= 60_000);
-  // Depth counts even in a short session: someone who scrolled most of a case
-  // study engaged with the work, however fast they moved.
-  const skimmed = studies.some((p) => p.maxScroll >= 40);
+  const deepRead = studies.some(
+    (p) => p.maxScroll >= 70 && p.engagedMs >= 60_000 && readingPace(p) === "read"
+  );
+  // Depth counts in a short session, but a flick through does not: covering a
+  // case study at skimming pace is not the same as engaging with it.
+  const covered = studies.some((p) => p.maxScroll >= 40 && readingPace(p) !== "skimmed");
   const minutes = summary.durationMs / 60_000;
 
   if (deepRead && minutes >= 3) return { emoji: "🔥", label: "Deep read" };
-  if (skimmed || (studies.length > 0 && minutes >= 1)) {
+  if (covered || (studies.length > 0 && minutes >= 1)) {
     return { emoji: "🎯", label: "Engaged session" };
   }
   if (minutes < 0.5) return { emoji: "💨", label: "Quick bounce" };
@@ -159,7 +192,7 @@ export function buildDigestMessage(summary: SessionSummary) {
   if (studies.length) {
     const lines = studies.map((p) => {
       const link = `<${base}${p.path}|${prettyPath(p)}>`;
-      return `${bar(p.maxScroll)} \`${String(p.maxScroll).padStart(3)}%\` · ${formatDuration(p.engagedMs)} — ${link}`;
+      return `${bar(p.maxScroll)} \`${String(p.maxScroll).padStart(3)}%\` · ${formatDuration(p.engagedMs)} — ${link}${paceLabel(p)}`;
     });
     blocks.push({ type: "divider" });
     blocks.push({

@@ -100,7 +100,13 @@ The digest carries what a recruiter actually did:
 
 - **Engaged time** — ticks only while the tab is visible, so a backgrounded tab
   doesn't turn a four-second visit into forty minutes.
-- **Scroll depth per page**, drawn as a bar.
+- **Scroll depth per page**, drawn as a bar, with a reading-pace flag beside
+  it. Depth alone can't tell a read from a flick — covering 100% of a case
+  study in 22s and reading it properly both draw a full bar — so each line is
+  marked `📖 read` (sustained) or `⚡ skimmed` (fast), with the middle left
+  unlabelled. Pace is engaged time per percent covered, so it holds whether
+  someone got through a third of a study or all of it; a 42% bar marked
+  `📖 read` means they read what they reached, carefully.
 - **Time per chapter** on case studies, read straight from the chapter rail
   `ChapterNav` already renders — so it stays in sync with your content for free.
 - **Rage clicks**, labelled by chapter (`The problem space · img.shot`) rather
