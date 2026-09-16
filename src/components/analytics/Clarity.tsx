@@ -1,4 +1,8 @@
+"use client";
+
 import Script from "next/script";
+import { useEffect, useState } from "react";
+import { isMuted } from "@/lib/clientSession";
 
 /**
  * Microsoft Clarity — session replay, scroll and click heatmaps, and native
@@ -6,10 +10,21 @@ import Script from "next/script";
  *
  * Set `NEXT_PUBLIC_CLARITY_ID` to enable. Without it nothing is injected, so
  * local dev and preview deploys stay out of the recordings.
+ *
+ * Honours the same `?nonotify=1` mute as the Slack layer: the tag is injected
+ * from an effect rather than server-rendered, so a muted browser never loads
+ * Clarity at all — no session, no replay, no heatmap contribution. Mute is the
+ * one switch for both layers, which is what "mute this browser" has to mean.
  */
 export default function Clarity() {
   const id = process.env.NEXT_PUBLIC_CLARITY_ID;
-  if (!id) return null;
+  const [allowed, setAllowed] = useState(false);
+
+  useEffect(() => {
+    if (!isMuted(new URLSearchParams(window.location.search))) setAllowed(true);
+  }, []);
+
+  if (!id || !allowed) return null;
 
   return (
     <Script id="ms-clarity" strategy="afterInteractive">
