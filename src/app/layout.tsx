@@ -5,6 +5,9 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { site } from "@/data/site";
 import Nav from "@/components/Nav/Nav";
+import VisitPing from "@/components/VisitPing";
+import SessionTracker from "@/components/analytics/SessionTracker";
+import Clarity from "@/components/analytics/Clarity";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -69,6 +72,9 @@ export default function RootLayout({
         <Nav />
         <main>{children}</main>
         <Analytics />
+        <VisitPing />
+        <SessionTracker />
+        <Clarity />
       </body>
     </html>
   );
