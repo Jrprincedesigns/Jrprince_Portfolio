@@ -201,14 +201,6 @@ const doorvest: CaseStudyContent = {
       name: "doorvest-panels",
     },
     {
-      kind: "media",
-      width: "bleed",
-      variant: "wide",
-      images: [
-        { src: "/img/cases/doorvest/problem-space.png", w: 2018, h: 1486, alt: "Framing the problem into design goals: educate without overwhelming, simplify while still showing risk, help first-time investors feel capable, and lean less on manual communication" },
-      ],
-    },
-    {
       kind: "group",
       label: "Live user research",
       id: "live-user-research",
@@ -224,12 +216,8 @@ const doorvest: CaseStudyContent = {
       ],
     },
     {
-      kind: "media",
-      width: "bleed",
-      variant: "wide",
-      images: [
-        { src: "/img/cases/doorvest/user-research.png", w: 2018, h: 1486, alt: "A live user-research session with the Head of Product and a customer: “I keep missing the emails Doorvest sends. I really wanted that house!”" },
-      ],
+      kind: "reveal",
+      name: "live-research-stickies",
     },
     {
       kind: "group",
@@ -312,14 +300,6 @@ const doorvest: CaseStudyContent = {
             "I pulled the whole ownership lifecycle into one dashboard: portfolio performance, renovation status, leases, and documents. Owning through Doorvest became as self-serve as buying through it.",
           ],
         },
-      ],
-    },
-    {
-      kind: "media",
-      width: "bleed",
-      variant: "wide",
-      images: [
-        { src: "/img/cases/doorvest/reservation.png", w: 1440, h: 1100, alt: "The reservation confirmation and order summary screen" },
       ],
     },
     {
