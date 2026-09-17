@@ -11,6 +11,8 @@ interface RevealProps {
   /** Render as a different element while keeping the animation. */
   as?: "div" | "section" | "li" | "span";
   className?: string;
+  /** Forwarded to the rendered element — e.g. a section's chapter-rail anchor. */
+  id?: string;
   /** How far the element must scroll into view before animating (0–1). */
   amount?: number;
   /** Animate only once (default) or every time it enters the viewport. */
@@ -27,6 +29,7 @@ export default function Reveal({
   delay = 0,
   as = "div",
   className,
+  id,
   amount = 0.3,
   once = true,
 }: RevealProps) {
@@ -35,10 +38,17 @@ export default function Reveal({
   // `as` picks the rendered element; the ref stays typed to a div for simplicity.
   const MotionTag = motion[as] as typeof motion.div;
 
+  // `data-reveal` lets a single global CSS rule force these visible under
+  // prefers-reduced-motion (with !important, so it beats framer-motion's inline
+  // opacity:0). Relying on framer's useReducedMotion is not enough: when reduced
+  // motion is already on at load, the hook can stay false and leave below-the-
+  // fold blocks stuck hidden — the CSS guard removes that failure mode entirely.
   return (
     <MotionTag
       ref={ref}
       className={className}
+      id={id}
+      data-reveal=""
       variants={riseIn}
       initial="hidden"
       animate={inView ? "visible" : "hidden"}

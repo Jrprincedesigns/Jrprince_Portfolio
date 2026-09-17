@@ -10,8 +10,10 @@ import type {
 } from "@/data/caseStudyContent";
 import ChapterNav from "./ChapterNav";
 import EmbedFrame from "./EmbedFrame";
+import HeroShowcase from "./HeroShowcase";
 import AmbasdrHero from "./reveals/AmbasdrHero";
 import AmbasdrScrollVideo from "./reveals/AmbasdrScrollVideo";
+import Reveal from "@/components/motion/Reveal";
 import styles from "./CaseStudy.module.css";
 
 /**
@@ -91,11 +93,20 @@ export default function CaseStudyView({
       .filter((b): b is Extract<CaseBlock, { kind: "section" }> => b.kind === "section")
       .map((b) => ({ id: sectionId(b), label: b.title }));
 
+  const showcase = study.heroShowcase;
+
   return (
     <article className={styles.page}>
       {chapters.length > 1 && <ChapterNav chapters={chapters} />}
 
-      <section className={`${styles.hero} ${styles.medium}`}>
+      {showcase && (
+        <HeroShowcase
+          image={showcase.image}
+          wordmark={showcase.wordmark ?? study.project}
+        />
+      )}
+
+      <section className={`${styles.hero} ${styles.medium} ${showcase ? styles.heroTight : ""}`}>
         {/* Utility row: back out of the study, or go see the shipped thing. */}
         <div className={styles.heroUtility}>
           <Link href="/#case-studies" className={styles.backLink}>
@@ -113,8 +124,17 @@ export default function CaseStudyView({
           )}
         </div>
 
-        <p className={styles.eyebrow}>{study.eyebrow ?? study.project}</p>
-        <h1 className={styles.title}>{study.title}</h1>
+        {/* With a showcase hero the project name carries the top of the page and
+            the descriptive title drops into the overview row; without one the
+            title stays the H1 and the project name is a small eyebrow. */}
+        {showcase ? (
+          <h1 className={styles.title}>{study.project}</h1>
+        ) : (
+          <>
+            <p className={styles.eyebrow}>{study.eyebrow ?? study.project}</p>
+            <h1 className={styles.title}>{study.title}</h1>
+          </>
+        )}
 
         <div className={styles.metaGrid}>
           {study.meta.map((m) => (
@@ -126,20 +146,35 @@ export default function CaseStudyView({
         </div>
 
         {study.outcomes && study.outcomes.length > 0 && (
-          <dl className={styles.outcomes}>
-            {study.outcomes.map((o) => (
-              <div key={o.label} className={styles.outcome}>
-                <dt className={styles.outcomeValue}>{o.value}</dt>
-                <dd className={styles.outcomeLabel}>{o.label}</dd>
-              </div>
-            ))}
-          </dl>
+          <div className={styles.metricsRow}>
+            <h2 className={styles.overviewLabel}>Key metrics</h2>
+            <dl className={styles.metricsGrid}>
+              {study.outcomes.map((o, i) => (
+                <Reveal
+                  as="div"
+                  key={o.label}
+                  className={styles.metricCard}
+                  delay={i * 0.08}
+                >
+                  <span className={styles.metricIndex}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <dt className={styles.metricValue}>{o.value}</dt>
+                  <dd className={styles.metricLabel}>{o.label}</dd>
+                  <span className={styles.metricTag}>Impact metric</span>
+                </Reveal>
+              ))}
+            </dl>
+          </div>
         )}
 
         {study.lead && (
           <div className={styles.overviewRow}>
             <h2 className={styles.overviewLabel}>Project overview</h2>
-            <p className={styles.lead}>{study.lead}</p>
+            <div className={styles.overviewBody}>
+              {showcase && <p className={styles.overviewTitle}>{study.title}</p>}
+              <p className={styles.lead}>{study.lead}</p>
+            </div>
           </div>
         )}
       </section>
@@ -183,34 +218,43 @@ export default function CaseStudyView({
       {study.blocks.map((block, i) => {
         if (block.kind === "section") {
           return (
-            <section
-              className={`${styles.block} ${widthOf(block, styles.reading)}`}
+            <Reveal
+              as="section"
+              className={`${styles.block} ${widthOf(block, styles.medium)} ${styles.sectionSplit}`}
               key={i}
               id={sectionId(block)}
+              amount={0.15}
             >
-              <h2 className={styles.sectionTitle}>{block.title}</h2>
-              <div className={styles.sectionCopy}>
-                {block.kicker && <p className={styles.kicker}>{block.kicker}</p>}
-                {block.body.map((p, j) => (
-                  <p key={j}>{p}</p>
-                ))}
+              {/* Title becomes the left-column label (still the chapter-rail
+                  label + anchor); the kicker, when present, is promoted to the
+                  large statement that leads the copy. */}
+              <h2 className={styles.sectionLabel}>{block.title}</h2>
+              <div className={styles.sectionBody}>
+                {block.kicker && (
+                  <p className={styles.sectionLead}>{block.kicker}</p>
+                )}
+                <div className={styles.sectionCopy}>
+                  {block.body.map((p, j) => (
+                    <p key={j}>{p}</p>
+                  ))}
+                </div>
               </div>
-            </section>
+            </Reveal>
           );
         }
         if (block.kind === "quote") {
           return (
-            <div className={`${styles.block} ${widthOf(block, styles.reading)}`} key={i}>
+            <Reveal as="div" className={`${styles.block} ${widthOf(block, styles.reading)}`} key={i}>
               <blockquote className={styles.quote}>{block.text}</blockquote>
-            </div>
+            </Reveal>
           );
         }
         if (block.kind === "embed") {
           return (
-            <div className={`${styles.block} ${widthOf(block, styles.medium)}`} key={i}>
+            <Reveal as="div" className={`${styles.block} ${widthOf(block, styles.medium)}`} key={i}>
               <EmbedFrame embed={block.embed} title={block.caption ?? "Interactive diagram"} />
               {block.caption && <p className={styles.caption}>{block.caption}</p>}
-            </div>
+            </Reveal>
           );
         }
         if (block.kind === "reveal") {
@@ -256,7 +300,7 @@ export default function CaseStudyView({
         }
         if (block.kind === "cards") {
           return (
-            <section className={`${styles.block} ${widthOf(block, styles.medium)}`} key={i}>
+            <Reveal as="section" className={`${styles.block} ${widthOf(block, styles.medium)}`} key={i} amount={0.15}>
               {block.label && <h2 className={styles.cardsLabel}>{block.label}</h2>}
               <div className={styles.cardGrid}>
                 {block.items.map((c) => (
@@ -266,7 +310,7 @@ export default function CaseStudyView({
                   </div>
                 ))}
               </div>
-            </section>
+            </Reveal>
           );
         }
         if (block.kind === "timeline") {
@@ -289,7 +333,7 @@ export default function CaseStudyView({
         }
         if (block.kind === "decisionLog") {
           return (
-            <section className={`${styles.block} ${widthOf(block, styles.reading)}`} key={i} id={block.id}>
+            <Reveal as="section" className={`${styles.block} ${widthOf(block, styles.reading)}`} key={i} id={block.id} amount={0.15}>
               <div className={styles.decisionInner}>
                 <span className={styles.decisionTag}>Decision log</span>
                 <h3 className={styles.decisionTitle}>{block.title}</h3>
@@ -302,12 +346,12 @@ export default function CaseStudyView({
                   ))}
                 </dl>
               </div>
-            </section>
+            </Reveal>
           );
         }
         if (block.kind === "evolution") {
           return (
-            <section className={`${styles.block} ${widthOf(block, styles.medium)}`} key={i}>
+            <Reveal as="section" className={`${styles.block} ${widthOf(block, styles.medium)}`} key={i} amount={0.15}>
               {block.label && <h2 className={styles.cardsLabel}>{block.label}</h2>}
               <div className={styles.evoTable}>
                 <div className={styles.evoHead}>
@@ -325,7 +369,7 @@ export default function CaseStudyView({
                   </div>
                 ))}
               </div>
-            </section>
+            </Reveal>
           );
         }
         if (block.kind === "questions") {
@@ -352,35 +396,35 @@ export default function CaseStudyView({
         if (block.images && block.images.length > 0) {
           if (block.variant === "grid") {
             return (
-              <div className={`${styles.block} ${widthOf(block, styles.wide)}`} key={i}>
+              <Reveal as="div" className={`${styles.block} ${widthOf(block, styles.wide)}`} key={i} amount={0.15}>
                 <div className={styles.imageGrid}>
                   {block.images.map((im, j) => (
                     <Figure img={im} key={j} />
                   ))}
                 </div>
-              </div>
+              </Reveal>
             );
           }
           if (block.variant === "tall") {
             return (
-              <div className={`${styles.block} ${widthOf(block, styles.reading)}`} key={i}>
+              <Reveal as="div" className={`${styles.block} ${widthOf(block, styles.reading)}`} key={i} amount={0.15}>
                 <div className={styles.tallWrap}>
                   <Figure img={block.images[0]} />
                 </div>
-              </div>
+              </Reveal>
             );
           }
           return (
-            <div className={`${styles.block} ${widthOf(block, width)}`} key={i}>
+            <Reveal as="div" className={`${styles.block} ${widthOf(block, width)}`} key={i} amount={0.15}>
               <Figure img={block.images[0]} />
-            </div>
+            </Reveal>
           );
         }
 
         // ---- placeholder media ----
         if (block.variant === "grid") {
           return (
-            <div className={`${styles.block} ${widthOf(block, styles.wide)}`} key={i}>
+            <Reveal as="div" className={`${styles.block} ${widthOf(block, styles.wide)}`} key={i} amount={0.15}>
               <div className={styles.imageGrid}>
                 {(block.labels ?? []).map((label, j) => (
                   <div className={styles.mock} key={j}>
@@ -388,15 +432,15 @@ export default function CaseStudyView({
                   </div>
                 ))}
               </div>
-            </div>
+            </Reveal>
           );
         }
         return (
-          <div className={`${styles.block} ${widthOf(block, styles.medium)}`} key={i}>
+          <Reveal as="div" className={`${styles.block} ${widthOf(block, styles.medium)}`} key={i} amount={0.15}>
             <div className={styles.wideInner}>
               <span className={styles.mockLabel}>{block.labels?.[0]}</span>
             </div>
-          </div>
+          </Reveal>
         );
       })}
 

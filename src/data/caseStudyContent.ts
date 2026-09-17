@@ -92,6 +92,17 @@ export interface CaseStudyContent {
    *  mockups that read too large edge-to-edge. Keeps the full-bleed footprint. */
   heroFramed?: boolean;
   heroLabel?: string;
+  /**
+   * Product-showcase hero: a framed screenshot floating on a brand-coloured
+   * band, rising into place at the very top of the study. Distinct from
+   * `heroImage` (a full-bleed shot). When set, the big hero heading becomes the
+   * project name and the descriptive title moves into the overview row.
+   */
+  heroShowcase?: {
+    image: CaseImage;
+    /** Faded wordmark behind the card (defaults to `project`). */
+    wordmark?: string;
+  };
   /** When present, renders a sticky chapter rail + enables scroll reveal. */
   chapters?: CaseChapter[];
   blocks: CaseBlock[];
@@ -115,6 +126,14 @@ const doorvest: CaseStudyContent = {
   project: "Doorvest",
     liveUrl: "https://www.doorvest.com",
     liveLabel: "View site",
+  heroShowcase: {
+    image: {
+      src: "/img/cases/doorvest/hero-home.png",
+      w: 1531,
+      h: 887,
+      alt: "The Doorvest marketplace homepage — buy, manage and sell investment properties in one place",
+    },
+  },
   title: "Turning a high-touch service into a scalable investment marketplace.",
   lead:
     "As founding product designer at Doorvest, I owned the full investor " +
