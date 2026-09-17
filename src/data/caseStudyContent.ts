@@ -216,9 +216,23 @@ const doorvest: CaseStudyContent = {
       ],
     },
     {
-      kind: "banner",
-      eyebrow: "The turn",
-      text: "One linear funnel was never going to fit both.",
+      kind: "decisionLog",
+      id: "one-funnel",
+      title: "One funnel was never going to fit both",
+      rows: [
+        {
+          label: "New investors",
+          text: "Needed education and reassurance before they would act.",
+        },
+        {
+          label: "Experienced investors",
+          text: "Wanted the opposite — fast access to the numbers, and sharper filters so they could move quickly.",
+        },
+        {
+          label: "The call",
+          text: "The product flexes to how confident and how decisive someone is in the moment, rather than walking everyone through one fixed sequence.",
+        },
+      ],
     },
     {
       kind: "quote",
