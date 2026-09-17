@@ -96,9 +96,25 @@ export default function CaseStudyView({
       {chapters.length > 1 && <ChapterNav chapters={chapters} />}
 
       <section className={`${styles.hero} ${styles.medium}`}>
+        {/* Utility row: back out of the study, or go see the shipped thing. */}
+        <div className={styles.heroUtility}>
+          <Link href="/#case-studies" className={styles.backLink}>
+            <span aria-hidden="true">←</span> Back to case studies
+          </Link>
+          {study.liveUrl && (
+            <a
+              className={styles.liveLink}
+              href={study.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {study.liveLabel ?? "View site"} <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
+
         <p className={styles.eyebrow}>{study.eyebrow ?? study.project}</p>
         <h1 className={styles.title}>{study.title}</h1>
-        {study.lead && <p className={styles.lead}>{study.lead}</p>}
 
         <div className={styles.metaGrid}>
           {study.meta.map((m) => (
@@ -118,6 +134,13 @@ export default function CaseStudyView({
               </div>
             ))}
           </dl>
+        )}
+
+        {study.lead && (
+          <div className={styles.overviewRow}>
+            <h2 className={styles.overviewLabel}>Project overview</h2>
+            <p className={styles.lead}>{study.lead}</p>
+          </div>
         )}
       </section>
 
@@ -348,7 +371,7 @@ export default function CaseStudyView({
             );
           }
           return (
-            <div className={`${styles.block} ${width}`} key={i}>
+            <div className={`${styles.block} ${widthOf(block, width)}`} key={i}>
               <Figure img={block.images[0]} />
             </div>
           );

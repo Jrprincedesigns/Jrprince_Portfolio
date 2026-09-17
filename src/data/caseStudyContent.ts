@@ -82,6 +82,10 @@ export interface CaseStudyContent {
    * with nothing measured omits this and the hero renders no result row.
    */
   outcomes?: CaseStat[];
+  /** The shipped product. Renders the hero's "View site" link when present. */
+  liveUrl?: string;
+  /** Label for that link; defaults to "View site". */
+  liveLabel?: string;
   focusAreas?: string[];
   heroImage?: CaseImage;
   /** Render the hero on a white field, scaled to 93% — for laptop/device
@@ -109,6 +113,8 @@ const BRAND: Record<string, string> = {
 const doorvest: CaseStudyContent = {
   slug: "real-estate-investing",
   project: "Doorvest",
+    liveUrl: "https://www.doorvest.com",
+    liveLabel: "View site",
   title: "Turning a high-touch service into a scalable investment marketplace.",
   lead:
     "As founding product designer at Doorvest, I owned the full investor " +
@@ -138,7 +144,38 @@ const doorvest: CaseStudyContent = {
       ],
     },
     {
+      kind: "cards",
+      label: "Where it broke down",
+      items: [
+        {
+          title: "Buying sight unseen",
+          body: "People were wiring a large sum toward a house they had only ever seen in photos.",
+        },
+        {
+          title: "No grasp of the numbers",
+          body: "Cash flow, appreciation and reserve costs were unfamiliar, so first-time investors could not judge whether a home was a good deal.",
+        },
+        {
+          title: "Renovation work was invisible",
+          body: "Before committing, people wanted to see the work done on a home and understand how it was underwritten. Neither was visible to them.",
+        },
+        {
+          title: "A funnel built for control",
+          body: "Every manual handoff added another delay, and another reason to hesitate.",
+        },
+        {
+          title: "Alerts that arrived too late",
+          body: "Time-sensitive emails were missed, and the homes that did surface often had nothing to do with what someone had asked for.",
+        },
+        {
+          title: "Held together by hand",
+          body: "Emails, spreadsheets and sales calls meant nobody could move on their own. Things stalled exactly when people started to feel ready.",
+        },
+      ],
+    },
+    {
       kind: "media",
+      width: "bleed",
       variant: "wide",
       images: [
         {
@@ -159,6 +196,7 @@ const doorvest: CaseStudyContent = {
     },
     {
       kind: "media",
+      width: "bleed",
       variant: "wide",
       images: [
         {
@@ -175,6 +213,25 @@ const doorvest: CaseStudyContent = {
       body: [
         "One pattern cut through everything: people weren't all using Doorvest the same way. Newer investors needed education and reassurance before they'd act. Experienced investors wanted the opposite: fast access to the numbers and sharper filters so they could move quickly.",
         "That split changed how I approached the work. One linear funnel was never going to fit both. The product had to flex to how confident and how decisive each person was in the moment.",
+      ],
+    },
+    {
+      kind: "decisionLog",
+      id: "one-funnel",
+      title: "One funnel was never going to fit both",
+      rows: [
+        {
+          label: "New investors",
+          text: "Needed education and reassurance before they would act.",
+        },
+        {
+          label: "Experienced investors",
+          text: "Wanted the opposite — fast access to the numbers, and sharper filters so they could move quickly.",
+        },
+        {
+          label: "The call",
+          text: "The product flexes to how confident and how decisive someone is in the moment, rather than walking everyone through one fixed sequence.",
+        },
       ],
     },
     {
