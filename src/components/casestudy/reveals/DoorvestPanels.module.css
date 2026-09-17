@@ -2,105 +2,103 @@
   margin: 0;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(14px, 2vw, 28px);
-  aspect-ratio: 1440 / 980;
-}
-
-/* Left: soft panel holding the auto-scrolling app window + the statement card */
-.left {
+/* The Figma frame's 1440×1054 coordinate space, scaled to the container width
+   (JS sets --s from a ResizeObserver, like the Ambasdr hero). */
+.stage {
   position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  background: linear-gradient(160deg, #f5f7fa, #e8edf3);
+  width: 100%;
+  aspect-ratio: 1440 / 1054;
+}
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1440px;
+  height: 1054px;
+  transform: scale(var(--s, 0.5));
+  transform-origin: top left;
 }
 
-.window {
+.panel {
   position: absolute;
-  top: clamp(18px, 4.5%, 44px);
-  left: clamp(18px, 5.5%, 54px);
-  right: clamp(18px, 5.5%, 54px);
-  bottom: clamp(64px, 20%, 150px);
-  display: flex;
-  flex-direction: column;
-  border-radius: 14px;
-  overflow: hidden;
+  border-radius: 24px;
   background: #fff;
   border: 1px solid rgba(22, 22, 22, 0.08);
-  box-shadow: 0 18px 44px rgba(20, 30, 60, 0.1);
+  box-shadow: 0 20px 48px rgba(20, 30, 60, 0.07);
 }
-.chrome {
-  flex: 0 0 auto;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0 12px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-.chrome span {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.14);
-}
-.viewport {
-  position: relative;
-  flex: 1 1 auto;
-  overflow: hidden;
-}
-.scroller {
+.panelImg {
   position: absolute;
-  inset: 0 0 auto 0;
-  display: flex;
-  flex-direction: column;
-}
-.scroller.run {
-  animation: dvscroll 18s linear infinite;
-}
-.scrollImg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-@keyframes dvscroll {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-50%);
-  }
+  border-radius: 24px;
+  overflow: hidden;
+  background: #0b0f14;
 }
 
 .statement {
   position: absolute;
-  left: clamp(22px, 8%, 64px);
-  right: clamp(22px, 16%, 128px);
-  bottom: clamp(22px, 5%, 54px);
+  display: block;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 14px 32px rgba(20, 30, 60, 0.12);
+}
+
+.browser {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 18px 44px rgba(20, 30, 60, 0.16);
   will-change: transform;
 }
-.statementImg {
+.chrome {
+  flex: 0 0 auto;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.chrome span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+.chrome span:nth-child(1) {
+  background: #ff5f57;
+}
+.chrome span:nth-child(2) {
+  background: #febc2e;
+}
+.chrome span:nth-child(3) {
+  background: #28c840;
+}
+.browserImg {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 10px;
-  box-shadow: 0 16px 36px rgba(20, 30, 60, 0.16);
 }
 
-/* Right: the ownership dashboard on its sunset field */
-.right {
-  border-radius: 20px;
-  overflow: hidden;
-  background: #0b0f14;
-}
-.rightImg {
+.sunset {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
   display: block;
+}
+.sidebar {
+  position: absolute;
+  will-change: transform;
+}
+.sidebarImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(20, 30, 60, 0.14);
 }
 
 .caption {
@@ -112,18 +110,4 @@
   line-height: 1.45;
   letter-spacing: 0.01em;
   color: var(--cs-muted);
-}
-
-@media (max-width: 760px) {
-  .grid {
-    grid-template-columns: 1fr;
-    aspect-ratio: auto;
-    gap: 16px;
-  }
-  .left {
-    aspect-ratio: 4 / 5;
-  }
-  .right {
-    aspect-ratio: 3 / 4;
-  }
 }
