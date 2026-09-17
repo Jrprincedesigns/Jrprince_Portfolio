@@ -14,7 +14,6 @@ import HeroShowcase from "./HeroShowcase";
 import AmbasdrHero from "./reveals/AmbasdrHero";
 import AmbasdrScrollVideo from "./reveals/AmbasdrScrollVideo";
 import DoorvestPanels from "./reveals/DoorvestPanels";
-import LiveResearchStickies from "./reveals/LiveResearchStickies";
 import Reveal from "@/components/motion/Reveal";
 import styles from "./CaseStudy.module.css";
 
@@ -389,9 +388,6 @@ export default function CaseStudyView({
               )}
               {block.name === "doorvest-panels" && (
                 <DoorvestPanels caption={block.caption} />
-              )}
-              {block.name === "live-research-stickies" && (
-                <LiveResearchStickies caption={block.caption} />
               )}
             </div>
           );

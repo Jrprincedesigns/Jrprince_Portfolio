@@ -201,8 +201,12 @@ const doorvest: CaseStudyContent = {
       name: "doorvest-panels",
     },
     {
-      kind: "reveal",
-      name: "live-research-stickies",
+      kind: "media",
+      width: "bleed",
+      variant: "wide",
+      images: [
+        { src: "/img/cases/doorvest/problem-space.png", w: 2018, h: 1486, alt: "Framing the problem into design goals: educate without overwhelming, simplify while still showing risk, help first-time investors feel capable, and lean less on manual communication" },
+      ],
     },
     {
       kind: "group",
@@ -217,6 +221,14 @@ const doorvest: CaseStudyContent = {
             "The problem wasn't one broken screen. The whole experience was held together by emails, spreadsheets, and sales calls, so people couldn't move on their own. Things stalled at exactly the moment they were starting to feel ready.",
           ],
         },
+      ],
+    },
+    {
+      kind: "media",
+      width: "bleed",
+      variant: "wide",
+      images: [
+        { src: "/img/cases/doorvest/user-research.png", w: 2018, h: 1486, alt: "A live user-research session with the Head of Product and a customer: “I keep missing the emails Doorvest sends. I really wanted that house!”" },
       ],
     },
     {
