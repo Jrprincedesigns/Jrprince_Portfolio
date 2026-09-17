@@ -25,7 +25,13 @@ export interface CaseImage {
   alt?: string;
 }
 
-export type CaseBlock =
+/**
+ * Content width a block can ask for. Blocks default to the width their kind
+ * has always used; declaring one overrides it. `bleed` runs edge to edge.
+ */
+export type CaseWidth = "reading" | "medium" | "wide" | "bleed";
+
+export type CaseBlock = (
   | { kind: "section"; title: string; kicker?: string; body: string[]; id?: string }
   | { kind: "quote"; text: string }
   | { kind: "banner"; text: string; eyebrow?: string; id?: string }
@@ -53,7 +59,8 @@ export type CaseBlock =
       labels?: string[];
     }
   | { kind: "embed"; embed: string; caption?: string }
-  | { kind: "reveal"; name: string; caption?: string };
+  | { kind: "reveal"; name: string; caption?: string }
+) & { width?: CaseWidth };
 
 /** Sticky-nav chapters (flagship studies); each id must match a block's id. */
 export interface CaseChapter {
@@ -69,6 +76,12 @@ export interface CaseStudyContent {
   title: string;
   lead?: string;
   meta: CaseMeta[];
+  /**
+   * Headline results, rendered in the hero so the outcome opens the case study
+   * instead of closing it. Values are the study's own measured numbers; a study
+   * with nothing measured omits this and the hero renders no result row.
+   */
+  outcomes?: CaseStat[];
   focusAreas?: string[];
   heroImage?: CaseImage;
   /** Render the hero on a white field, scaled to 93% — for laptop/device
@@ -109,6 +122,11 @@ const doorvest: CaseStudyContent = {
     { label: "Industry", value: "Proptech · Fintech · B2C" },
     { label: "Client", value: "Doorvest" },
     { label: "Timeline", value: "2021 – 2025" },
+  ],
+  outcomes: [
+    { value: "+13.8%", label: "Visitor → active-investor conversion, post-launch" },
+    { value: "+40%", label: "Home reservations vs. the prior funnel" },
+    { value: "~80%", label: "Engagement & retention after marketplace launch" },
   ],
   blocks: [
     {
@@ -263,15 +281,7 @@ const doorvest: CaseStudyContent = {
       caption:
         "How the redesigned platform connected the operation: every workflow, tool, and team, with the product at the center. Hover any node to trace its role and connections.",
     },
-    {
-      kind: "stats",
-      items: [
-        { value: "+13.8%", label: "Lift in visitor → active-investor conversion after launch" },
-        { value: "+40%", label: "Increase in home reservations vs. the prior funnel" },
-        { value: "~80%", label: "User engagement & retention after the in-app marketplace launched" },
-      ],
-    },
-    {
+{
       kind: "section",
       title: "Reflection",
       body: [
@@ -301,6 +311,9 @@ const superfile: CaseStudyContent = {
     { label: "Industry", value: "Cybersecurity · Fintech · B2C" },
     { label: "Team", value: "CEO, CTO, PM · 7 engineers" },
     { label: "Timeline", value: "2024 – 2025" },
+  ],
+  outcomes: [
+    { value: "$14M+", label: "Invested off the 0→1 product design" },
   ],
   chapters: [
     { id: "the-problem-space", label: "The problem space" },
@@ -477,6 +490,11 @@ const synctera: CaseStudyContent = {
     { label: "Client", value: "Synctera" },
     { label: "Timeline", value: "Oct 2023 – Mar 2024" },
   ],
+  outcomes: [
+    { value: "20%", label: "Fewer wrongful transaction blocks, before vs. after" },
+    { value: "3→1", label: "Fragmented tools unified into one in-context flow" },
+    { value: "1", label: "Source of truth for every case decision" },
+  ],
   heroImage: {
     src: "/img/cases/synctera/hero-cases.png",
     w: 1800,
@@ -574,15 +592,7 @@ const synctera: CaseStudyContent = {
         "At a glance it answered three questions: what needs attention now, who's working on what, and where things are stuck. That replaced tribal knowledge with a picture everyone shared.",
       ],
     },
-    {
-      kind: "stats",
-      items: [
-        { value: "20%", label: "Fewer wrongful transaction blocks (before vs. after launch)" },
-        { value: "3→1", label: "Fragmented tools unified into one in-context flow" },
-        { value: "1", label: "Source of truth for every case decision" },
-      ],
-    },
-    {
+{
       kind: "section",
       title: "Impact & Validation",
       body: [
@@ -854,6 +864,11 @@ const pareto: CaseStudyContent = {
     { label: "Client", value: "Pareto Intelligence" },
     { label: "Timeline", value: "Mar 2020 – Jun 2022" },
   ],
+  outcomes: [
+    { value: "25%", label: "Reduction in task completion time" },
+    { value: "30%", label: "Decrease in user error rates" },
+    { value: "20%", label: "Increase in new subscriptions" },
+  ],
   heroImage: {
     src: "/img/cases/pareto/hero-dashboard.png",
     w: 1800,
@@ -862,15 +877,7 @@ const pareto: CaseStudyContent = {
   },
   heroFramed: true,
   blocks: [
-    {
-      kind: "stats",
-      items: [
-        { value: "25%", label: "Reduction in task completion time" },
-        { value: "30%", label: "Decrease in user error rates" },
-        { value: "20%", label: "Increase in new subscriptions" },
-      ],
-    },
-    {
+{
       kind: "section",
       title: "About Pareto",
       body: [
