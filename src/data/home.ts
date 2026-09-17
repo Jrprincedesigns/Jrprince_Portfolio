@@ -57,11 +57,18 @@ export interface CaseStudy {
   description: string;
   image: string;
   href: string;
+  /**
+   * Headline result, revealed in the card's hover notch. Values are lifted
+   * verbatim from the study's own stats block — never estimated here. Omit on
+   * a study that has no measured outcome yet and the card renders no notch.
+   */
+  outcome?: { value: string; label: string };
 }
 
 export const caseStudies: CaseStudy[] = [
   {
     slug: "real-estate-investing",
+    outcome: { value: "+40%", label: "Increase in home reservations" },
     title: "Real Estate Investing Feel Simple",
     theme: "green",
     tags: ["Marketplace Design", "End 2 End Experience", "Design System"],
@@ -74,6 +81,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "trust-at-scale",
+    outcome: { value: "3→1", label: "Fragmented tools unified into one flow" },
     title: "Designing for Trust at Scale",
     theme: "cream",
     tags: ["Operational UX", "Decision Support"],
@@ -86,6 +94,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "secure-file-sharing",
+    outcome: { value: "$14M+", label: "Invested off the 0→1 product design" },
     title: "Rethinking",
     titleHighlight: "Secure File Sharing",
     theme: "black",
@@ -99,6 +108,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "digital-identity",
+    outcome: { value: "500", label: "Waitlist signups before beta" },
     title: "Reimagining Digital Identity",
     theme: "cream",
     tags: ["AI Identity", "Conversation Design"],
@@ -111,6 +121,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "healthcare-data",
+    outcome: { value: "25%", label: "Reduction in task completion time" },
     title: "Making Healthcare Data Understandable",
     theme: "navy",
     tags: ["Information Design", "Healthcare Analytics"],

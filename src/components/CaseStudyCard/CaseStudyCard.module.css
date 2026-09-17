@@ -1,77 +1,184 @@
-.wrap {
-  perspective: 1000px;
-}
+/*
+ * Case-study card with a hover notch.
+ *
+ * Geometry: the notch is anchored flush to the bottom-right of the artwork and
+ * slides up out of a fixed window. Its two exposed inside corners are filled by
+ * `.fillet` squares masked with a radial gradient — a plain border-radius bends
+ * a corner outward, and a carved notch needs the surrounding surface to bend
+ * inward instead.
+ *
+ * The notch is painted in the card's own theme colour so it reads as the card
+ * surface reclaiming space from the artwork. Showing the page through instead
+ * is not an option here: the section sits on a gradient, so no flat colour
+ * would line up.
+ */
 
 .card {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-  border-radius: var(--radius-lg);
-  transform-style: preserve-3d;
+  --fillet: 18px;
+  --notch-radius: var(--radius-sm);
+
+  display: block;
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+  transition: transform var(--dur-med) var(--ease-out),
+    box-shadow var(--dur-med) var(--ease-out);
   will-change: transform;
 }
 
-.cover {
+/*
+ * The notch is painted in the brand highlight rather than the card's own theme.
+ * A theme-coloured notch disappears into the card it is cut from — it only
+ * reads where artwork happens to sit behind it, which differs per card. The
+ * highlight separates on all four themes and makes the result the focal point
+ * of the hover, which is the whole reason the notch exists.
+ *
+ * To fall back to per-card theming, point --theme at the matching --card-* token.
+ */
+.card {
+  --theme: var(--card-highlight);
+  --on-theme: var(--black);
+}
+
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.32);
+}
+
+/* Clipping frame: the artwork scales inside it while the card edge holds. */
+.frame {
+  display: block;
   position: relative;
-  aspect-ratio: 16 / 11;
-  border-radius: var(--radius-lg);
   overflow: hidden;
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--accent) 85%, #000 0%),
-    color-mix(in srgb, var(--accent) 45%, #000 20%)
-  );
-  box-shadow: var(--shadow-md);
-  display: grid;
-  place-items: center;
-  transition: transform var(--dur-med) var(--ease-out);
+  border-radius: inherit;
 }
 
-.card:hover .cover {
-  transform: translateZ(30px) scale(1.01);
+.art {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform-origin: 50% 40%;
+  transition: transform var(--dur-slow) var(--ease-out);
+  will-change: transform;
 }
 
-.coverLabel {
-  color: #fff;
-  font-size: var(--step-3);
-  font-weight: 650;
-  letter-spacing: -0.02em;
-  opacity: 0.9;
-  transform: translateZ(40px);
+.card:hover .art,
+.card:focus-visible .art {
+  transform: scale(1.04);
 }
 
-.body {
+/* ---- Notch ------------------------------------------------------------- */
+
+/* Fixed window the notch travels within. Sized by its content. */
+.notchWindow {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  /* Room for the notch plus the fillet that sits above it. */
+  padding-top: var(--fillet);
+  padding-left: var(--fillet);
+  pointer-events: none;
+}
+
+.notch {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
-  padding-inline: var(--space-xs);
+  gap: 0.15em;
+  padding: 0.7rem 0.95rem 0.75rem;
+  background: var(--theme);
+  color: var(--on-theme);
+  border-top-left-radius: var(--notch-radius);
+  transform: translateY(101%);
+  transition: transform var(--dur-med) var(--ease-out);
+  will-change: transform;
 }
 
-.meta {
-  display: flex;
-  justify-content: space-between;
-  color: var(--text-muted);
-  font-size: var(--step--1);
+.card:hover .notch,
+.card:focus-visible .notch {
+  transform: translateY(0);
 }
 
-.title {
+/*
+ * Concave corners. Each fillet is a square of the notch colour with a quarter
+ * disc masked out, leaving the wedge that curves the artwork into the notch.
+ * Both sit inside `.notch`, so they travel with it.
+ */
+.fillet {
+  position: absolute;
+  width: var(--fillet);
+  height: var(--fillet);
+  background: var(--theme);
+  pointer-events: none;
+}
+
+/* Above the notch, flush to the card's right edge: curves the surface down. */
+.filletTop {
+  bottom: 100%;
+  right: 0;
+  -webkit-mask: radial-gradient(
+    circle var(--fillet) at 0 0,
+    transparent 0 var(--fillet),
+    #000 calc(var(--fillet) + 0.5px)
+  );
+  mask: radial-gradient(
+    circle var(--fillet) at 0 0,
+    transparent 0 var(--fillet),
+    #000 calc(var(--fillet) + 0.5px)
+  );
+}
+
+/* Left of the notch, flush to its bottom: curves the artwork in from the side. */
+.filletSide {
+  right: 100%;
+  bottom: 0;
+  -webkit-mask: radial-gradient(
+    circle var(--fillet) at 0 0,
+    transparent 0 var(--fillet),
+    #000 calc(var(--fillet) + 0.5px)
+  );
+  mask: radial-gradient(
+    circle var(--fillet) at 0 0,
+    transparent 0 var(--fillet),
+    #000 calc(var(--fillet) + 0.5px)
+  );
+}
+
+.outcomeValue {
   font-size: var(--step-2);
-  font-weight: 600;
+  font-weight: 700;
+  line-height: 1;
   letter-spacing: -0.02em;
 }
 
-.tags {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-  margin-top: var(--space-xs);
+.outcomeLabel {
+  font-size: var(--step--1);
+  line-height: 1.25;
+  max-width: 16ch;
+  opacity: 0.78;
 }
 
-.tag {
-  font-size: var(--step--1);
-  color: var(--text-muted);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 3px 10px;
+/* ---- Touch and reduced motion ------------------------------------------ */
+
+/* No hover to trigger it, so the notch rests open. */
+@media (hover: none) {
+  .notch {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notch {
+    transform: translateY(0);
+  }
+  .art {
+    transition: none;
+  }
+  .card:hover .art,
+  .card:focus-visible .art {
+    transform: none;
+  }
 }

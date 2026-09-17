@@ -1,93 +1,58 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "framer-motion";
-import type { PointerEvent } from "react";
-import type { CaseStudy } from "@/data/caseStudies";
+import type { CaseStudy } from "@/data/home";
 import styles from "./CaseStudyCard.module.css";
 
-// A motion-enabled Link so we can drive `rotateX`/`rotateY` motion values.
-const MotionLink = motion.create(Link);
-
-interface CaseStudyCardProps {
-  study: CaseStudy;
-  index: number;
-}
-
 /**
- * A case-study card with a subtle 3D tilt that follows the cursor — an
- * interaction-design flourish that rewards hovering without being noisy.
- * On touch devices (no hover) it stays flat.
+ * A case-study card in the home grid.
+ *
+ * The card artwork is a single composed image, so the hover notch is the one
+ * piece of card content that lives in the DOM. It carries the study's headline
+ * result — something the artwork does not already say — and is carved out of
+ * the artwork's bottom-right corner with two concave fillets, so it reads as
+ * cut from the card rather than laid on top of it.
+ *
+ * A study with no measured outcome renders no notch.
  */
-export default function CaseStudyCard({ study, index }: CaseStudyCardProps) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+export default function CaseStudyCard({ study }: { study: CaseStudy }) {
+  const { outcome } = study;
 
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [6, -6]), {
-    stiffness: 200,
-    damping: 20,
-  });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), {
-    stiffness: 200,
-    damping: 20,
-  });
-
-  function handlePointerMove(e: PointerEvent<HTMLAnchorElement>) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  }
-
-  function handlePointerLeave() {
-    x.set(0);
-    y.set(0);
-  }
+  // The notch is the only place this result appears, and it is visual-only on
+  // hover — so it goes in the link's accessible name and the rendered copy is
+  // hidden, rather than being announced twice or not at all.
+  const label = outcome
+    ? `${study.title} — view case study. Result: ${outcome.value} ${outcome.label}.`
+    : `${study.title} — view case study`;
 
   return (
-    <motion.article
-      className={styles.wrap}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.6, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+    <Link
+      href={`/work/${study.slug}`}
+      className={styles.card}
+      data-theme={study.theme}
+      aria-label={label}
     >
-      <MotionLink
-        href={`/work/${study.slug}`}
-        className={styles.card}
-        onPointerMove={handlePointerMove}
-        onPointerLeave={handlePointerLeave}
-        style={{ rotateX, rotateY }}
-        aria-label={`${study.title}: ${study.subtitle}`}
-      >
-        <div
-          className={styles.cover}
-          style={{ ["--accent" as string]: study.accent }}
-        >
-          {/* Replace this placeholder block with next/image once you add assets:
-              <Image src={study.cover.src} alt={study.cover.alt} fill /> */}
-          <span className={styles.coverLabel}>{study.title}</span>
-        </div>
+      <span className={styles.frame}>
+        <Image
+          src={study.image}
+          alt=""
+          width={848}
+          height={1206}
+          quality={95}
+          sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 30vw"
+          className={styles.art}
+        />
 
-        <div className={styles.body}>
-          <div className={styles.meta}>
-            <span>{study.client}</span>
-            <span>{study.year}</span>
-          </div>
-          <h3 className={styles.title}>{study.subtitle}</h3>
-          <ul className={styles.tags}>
-            {study.disciplines.slice(0, 3).map((d) => (
-              <li key={d} className={styles.tag}>
-                {d}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </MotionLink>
-    </motion.article>
+        {outcome && (
+          <span className={styles.notchWindow} aria-hidden="true">
+            <span className={styles.notch}>
+              <span className={`${styles.fillet} ${styles.filletTop}`} />
+              <span className={`${styles.fillet} ${styles.filletSide}`} />
+              <span className={styles.outcomeValue}>{outcome.value}</span>
+              <span className={styles.outcomeLabel}>{outcome.label}</span>
+            </span>
+          </span>
+        )}
+      </span>
+    </Link>
   );
 }
