@@ -60,6 +60,21 @@ export type CaseBlock = (
     }
   | { kind: "embed"; embed: string; caption?: string }
   | { kind: "reveal"; name: string; caption?: string }
+  | {
+      /**
+       * A titled group: a category label (and optional pinned visual) in a
+       * left column, with its child blocks flowing in a wider right column.
+       * Mirrors the Figma's section structure. The label is the chapter-rail
+       * entry, so `id` anchors the rail. Child sections render compact (heading
+       * + body, no inner two-column split) since the group already provides it.
+       */
+      kind: "group";
+      label: string;
+      id?: string;
+      /** Visual pinned in the left column beneath the label (e.g. a phone). */
+      media?: CaseImage;
+      blocks: CaseBlock[];
+    }
 ) & { width?: CaseWidth };
 
 /** Sticky-nav chapters (flagship studies); each id must match a block's id. */
@@ -155,40 +170,29 @@ const doorvest: CaseStudyContent = {
   ],
   blocks: [
     {
-      kind: "section",
-      title: "The problem space",
-      body: [
-        "Buying a rental property you'll never walk through is a lot to ask of someone. Most first-time investors didn't fully understand cash flow, appreciation, or reserve costs, and they had no real sense of how day-to-day tenant management worked. We were asking them to wire a large sum toward a house they'd only ever seen in photos.",
-        "Almost everything came back to confidence. Before committing, people wanted to see the renovation work, understand how a home was underwritten, and know what returns to expect. The existing funnel was built around control instead of momentum, so every manual handoff added another delay and another reason to hesitate. That hesitation showed up directly in drop-off and weak repeat activity.",
-      ],
-    },
-    {
-      kind: "cards",
-      label: "Where it broke down",
-      items: [
+      kind: "group",
+      label: "The Problem Space",
+      id: "the-problem-space",
+      blocks: [
         {
-          title: "Buying sight unseen",
-          body: "People were wiring a large sum toward a house they had only ever seen in photos.",
+          kind: "section",
+          title: "The problem space",
+          body: [
+            "Buying a rental property you'll never walk through is a lot to ask of someone. Most first-time investors didn't fully understand cash flow, appreciation, or reserve costs, and they had no real sense of how day-to-day tenant management worked. We were asking them to wire a large sum toward a house they'd only ever seen in photos.",
+            "Almost everything came back to confidence. Before committing, people wanted to see the renovation work, understand how a home was underwritten, and know what returns to expect. The existing funnel was built around control instead of momentum, so every manual handoff added another delay and another reason to hesitate. That hesitation showed up directly in drop-off and weak repeat activity.",
+          ],
         },
         {
-          title: "No grasp of the numbers",
-          body: "Cash flow, appreciation and reserve costs were unfamiliar, so first-time investors could not judge whether a home was a good deal.",
-        },
-        {
-          title: "Renovation work was invisible",
-          body: "Before committing, people wanted to see the work done on a home and understand how it was underwritten. Neither was visible to them.",
-        },
-        {
-          title: "A funnel built for control",
-          body: "Every manual handoff added another delay, and another reason to hesitate.",
-        },
-        {
-          title: "Alerts that arrived too late",
-          body: "Time-sensitive emails were missed, and the homes that did surface often had nothing to do with what someone had asked for.",
-        },
-        {
-          title: "Held together by hand",
-          body: "Emails, spreadsheets and sales calls meant nobody could move on their own. Things stalled exactly when people started to feel ready.",
+          kind: "cards",
+          label: "Where it broke down",
+          items: [
+            { title: "Buying sight unseen", body: "People were wiring a large sum toward a house they had only ever seen in photos." },
+            { title: "No grasp of the numbers", body: "Cash flow, appreciation and reserve costs were unfamiliar, so first-time investors could not judge whether a home was a good deal." },
+            { title: "Renovation work was invisible", body: "Before committing, people wanted to see the work done on a home and understand how it was underwritten. Neither was visible to them." },
+            { title: "A funnel built for control", body: "Every manual handoff added another delay, and another reason to hesitate." },
+            { title: "Alerts that arrived too late", body: "Time-sensitive emails were missed, and the homes that did surface often had nothing to do with what someone had asked for." },
+            { title: "Held together by hand", body: "Emails, spreadsheets and sales calls meant nobody could move on their own. Things stalled exactly when people started to feel ready." },
+          ],
         },
       ],
     },
@@ -197,20 +201,7 @@ const doorvest: CaseStudyContent = {
       width: "bleed",
       variant: "wide",
       images: [
-        {
-          src: "/img/cases/doorvest/problem-space.png",
-          w: 2018,
-          h: 1486,
-          alt: "Framing the problem into design goals: educate without overwhelming, simplify while still showing risk, help first-time investors feel capable, and lean less on manual communication",
-        },
-      ],
-    },
-    {
-      kind: "section",
-      title: "Live user research",
-      body: [
-        "Between support threads and session data, how long people stayed and where they dropped off, the frustration was hard to miss. People were missing time-sensitive email alerts, and when they did show up, they were often looking at homes that had nothing to do with what they'd asked for.",
-        "The problem wasn't one broken screen. The whole experience was held together by emails, spreadsheets, and sales calls, so people couldn't move on their own. Things stalled at exactly the moment they were starting to feel ready.",
+        { src: "/img/cases/doorvest/problem-panels.png", w: 2880, h: 2108, alt: "A statement download beside the ownership dashboard, reframing a scattered, high-touch experience into one place" },
       ],
     },
     {
@@ -218,117 +209,126 @@ const doorvest: CaseStudyContent = {
       width: "bleed",
       variant: "wide",
       images: [
+        { src: "/img/cases/doorvest/problem-space.png", w: 2018, h: 1486, alt: "Framing the problem into design goals: educate without overwhelming, simplify while still showing risk, help first-time investors feel capable, and lean less on manual communication" },
+      ],
+    },
+    {
+      kind: "group",
+      label: "Live user research",
+      id: "live-user-research",
+      blocks: [
         {
-          src: "/img/cases/doorvest/user-research.png",
-          w: 2018,
-          h: 1486,
-          alt: "A live user-research session with the Head of Product and a customer: “I keep missing the emails Doorvest sends. I really wanted that house!”",
+          kind: "section",
+          title: "Live user research",
+          body: [
+            "Between support threads and session data, how long people stayed and where they dropped off, the frustration was hard to miss. People were missing time-sensitive email alerts, and when they did show up, they were often looking at homes that had nothing to do with what they'd asked for.",
+            "The problem wasn't one broken screen. The whole experience was held together by emails, spreadsheets, and sales calls, so people couldn't move on their own. Things stalled at exactly the moment they were starting to feel ready.",
+          ],
         },
       ],
     },
     {
-      kind: "section",
-      title: "Core product insight",
-      body: [
-        "One pattern cut through everything: people weren't all using Doorvest the same way. Newer investors needed education and reassurance before they'd act. Experienced investors wanted the opposite: fast access to the numbers and sharper filters so they could move quickly.",
-        "That split changed how I approached the work. One linear funnel was never going to fit both. The product had to flex to how confident and how decisive each person was in the moment.",
+      kind: "media",
+      width: "bleed",
+      variant: "wide",
+      images: [
+        { src: "/img/cases/doorvest/user-research.png", w: 2018, h: 1486, alt: "A live user-research session with the Head of Product and a customer: “I keep missing the emails Doorvest sends. I really wanted that house!”" },
       ],
     },
     {
-      kind: "decisionLog",
-      id: "one-funnel",
-      title: "One funnel was never going to fit both",
-      rows: [
+      kind: "group",
+      label: "Core Product Insight",
+      id: "core-product-insight",
+      blocks: [
         {
-          label: "New investors",
-          text: "Needed education and reassurance before they would act.",
+          kind: "section",
+          title: "Core product insight",
+          body: [
+            "One pattern cut through everything: people weren't all using Doorvest the same way. Newer investors needed education and reassurance before they'd act. Experienced investors wanted the opposite: fast access to the numbers and sharper filters so they could move quickly.",
+            "That split changed how I approached the work. One linear funnel was never going to fit both. The product had to flex to how confident and how decisive each person was in the moment.",
+          ],
         },
         {
-          label: "Experienced investors",
-          text: "Wanted the opposite — fast access to the numbers, and sharper filters so they could move quickly.",
+          kind: "decisionLog",
+          id: "one-funnel",
+          title: "One funnel was never going to fit both",
+          rows: [
+            { label: "New investors", text: "Needed education and reassurance before they would act." },
+            { label: "Experienced investors", text: "Wanted the opposite — fast access to the numbers, and sharper filters so they could move quickly." },
+            { label: "The call", text: "The product flexes to how confident and how decisive someone is in the moment, rather than walking everyone through one fixed sequence." },
+          ],
         },
         {
-          label: "The call",
-          text: "The product flexes to how confident and how decisive someone is in the moment, rather than walking everyone through one fixed sequence.",
+          kind: "quote",
+          text: "Investors weren't all using Doorvest the same way. Some needed to be taught. Others just needed to be trusted to move fast.",
         },
-      ],
-    },
-    {
-      kind: "quote",
-      text: "Investors weren't all using Doorvest the same way. Some needed to be taught. Others just needed to be trusted to move fast.",
-    },
-    {
-      kind: "section",
-      title: "Marketplace intelligence & behavioral modeling",
-      kicker: "We made immediate marketplace access the default.",
-      body: [
-        "The original experience relied on timed email property drops. The cadence manufactured pressure while giving people almost nothing to actually look at. I moved discovery and reservation straight into the product, so investors could browse and compare homes at their own pace instead of waiting for the next email.",
-        "Each listing put everything in one place: photos, financial projections, neighborhood data, and a clear Reserve Home button. I focused the marketplace on the moments where money was on the line and cut the delays that had been quietly killing conversion.",
       ],
     },
     {
       kind: "media",
       variant: "wide",
       images: [
+        { src: "/img/cases/doorvest/marketplace.png", w: 3840, h: 2160, alt: "The Doorvest marketplace: investment portfolios above the browsable in-app home inventory" },
+      ],
+    },
+    {
+      kind: "group",
+      label: "Features",
+      id: "features",
+      media: { src: "/img/cases/doorvest/features-phone.png", w: 912, h: 1584, alt: "The Doorvest portfolios experience on mobile" },
+      blocks: [
         {
-          src: "/img/cases/doorvest/marketplace.png",
-          w: 3840,
-          h: 2160,
-          alt: "The Doorvest marketplace: investment portfolios above the browsable in-app home inventory",
+          kind: "section",
+          title: "Marketplace intelligence & behavioral modeling",
+          kicker: "We made immediate marketplace access the default.",
+          body: [
+            "The original experience relied on timed email property drops. The cadence manufactured pressure while giving people almost nothing to actually look at. I moved discovery and reservation straight into the product, so investors could browse and compare homes at their own pace instead of waiting for the next email.",
+            "Each listing put everything in one place: photos, financial projections, neighborhood data, and a clear Reserve Home button. I focused the marketplace on the moments where money was on the line and cut the delays that had been quietly killing conversion.",
+          ],
         },
-      ],
-    },
-    {
-      kind: "section",
-      title: "“Doormatch” preference matching",
-      body: [
-        "Instead of a separate swipe app, I put Like and Dislike buttons on each property card. It borrowed the familiarity of swiping without pulling people out of the browsing flow. When someone liked a home, we recorded its attributes: location, price, home type, and so on.",
-        "I argued against a standalone swipe experience. It would have rewarded novelty over real decisions and pulled people away from the actual investment. Those signals fed Doormatch, which surfaced homes likely to fit each person's criteria. It narrowed the field for them over time, without anyone filling out a preferences form.",
-        "It personalized the marketplace and gave the sales team a read on what each person wanted, without the constant back-and-forth.",
-      ],
-    },
-    {
-      kind: "quote",
-      text: "Doormatch helped people find a “yes” faster. An internal analysis showed a noticeable uptick in Letters of Intent after it launched. Even when someone didn't buy right away, they browsed more once the options felt tailored to them.",
-    },
-    {
-      kind: "section",
-      title: "Streamlined purchase flow",
-      kicker: "The blocker was never intent. It was effort.",
-      body: [
-        "I cut the reservation flow down to a few clicks by removing unnecessary fields and reusing what we already knew from someone's profile. Instant feedback, a clear confirmation screen, and a follow-up email made committing feel quick and reassuring instead of daunting.",
+        {
+          kind: "quote",
+          text: "Doormatch helped people find a “yes” faster. An internal analysis showed a noticeable uptick in Letters of Intent after it launched. Even when someone didn't buy right away, they browsed more once the options felt tailored to them.",
+        },
+        {
+          kind: "section",
+          title: "“Doormatch” preference matching",
+          body: [
+            "Instead of a separate swipe app, I put Like and Dislike buttons on each property card. It borrowed the familiarity of swiping without pulling people out of the browsing flow. When someone liked a home, we recorded its attributes: location, price, home type, and so on.",
+            "I argued against a standalone swipe experience. It would have rewarded novelty over real decisions and pulled people away from the actual investment. Those signals fed Doormatch, which surfaced homes likely to fit each person's criteria. It narrowed the field for them over time, without anyone filling out a preferences form.",
+            "It personalized the marketplace and gave the sales team a read on what each person wanted, without the constant back-and-forth.",
+          ],
+        },
+        {
+          kind: "section",
+          title: "Streamlined purchase flow",
+          kicker: "The blocker was never intent. It was effort.",
+          body: [
+            "I cut the reservation flow down to a few clicks by removing unnecessary fields and reusing what we already knew from someone's profile. Instant feedback, a clear confirmation screen, and a follow-up email made committing feel quick and reassuring instead of daunting.",
+          ],
+        },
+        {
+          kind: "section",
+          title: "Dashboard evolution",
+          body: [
+            "Reserving a home was only half the journey. Ownership itself was scattered across emails, spreadsheets, and manual back-and-forth. Investors had no single place to see what they owned or how it was performing.",
+            "I pulled the whole ownership lifecycle into one dashboard: portfolio performance, renovation status, leases, and documents. Owning through Doorvest became as self-serve as buying through it.",
+          ],
+        },
       ],
     },
     {
       kind: "media",
       variant: "wide",
       images: [
-        {
-          src: "/img/cases/doorvest/reservation.png",
-          w: 1440,
-          h: 1100,
-          alt: "The reservation confirmation and order summary screen",
-        },
-      ],
-    },
-    {
-      kind: "section",
-      title: "Dashboard evolution",
-      body: [
-        "Reserving a home was only half the journey. Ownership itself was scattered across emails, spreadsheets, and manual back-and-forth. Investors had no single place to see what they owned or how it was performing.",
-        "I pulled the whole ownership lifecycle into one dashboard: portfolio performance, renovation status, leases, and documents. Owning through Doorvest became as self-serve as buying through it.",
+        { src: "/img/cases/doorvest/reservation.png", w: 1440, h: 1100, alt: "The reservation confirmation and order summary screen" },
       ],
     },
     {
       kind: "media",
       variant: "wide",
       images: [
-        {
-          src: "/img/cases/doorvest/dashboard.png",
-          w: 2422,
-          h: 1540,
-          alt: "The centralized ownership dashboard on web and mobile: portfolio value, homes, distributions, recent activity, statements, and documents in one place",
-        },
+        { src: "/img/cases/doorvest/dashboard.png", w: 2422, h: 1540, alt: "The centralized ownership dashboard on web and mobile: portfolio value, homes, distributions, recent activity, statements, and documents in one place" },
       ],
     },
     {
@@ -344,11 +344,18 @@ const doorvest: CaseStudyContent = {
       ],
     },
     {
-      kind: "section",
-      title: "Operational impact",
-      body: [
-        "The platform took friction out for investors and internal teams at once. Bringing discovery, evaluation, and reservation into one place removed the manual coordination that had bottlenecked the sales team. It also gave everyone a shared view across investor demand, acquisitions, and operations.",
-        "The clearest signal was engagement. Before, plenty of people finished onboarding without ever creating an account and drifted off. Once discovery and reservation lived in the product, they had a reason to stay and keep browsing. That shift, a design and product call the Head of Product and I made together and defended to the CEO and CTO, is where the lift in engagement and retention came from.",
+      kind: "group",
+      label: "Impact",
+      id: "operational-impact",
+      blocks: [
+        {
+          kind: "section",
+          title: "Operational impact",
+          body: [
+            "The platform took friction out for investors and internal teams at once. Bringing discovery, evaluation, and reservation into one place removed the manual coordination that had bottlenecked the sales team. It also gave everyone a shared view across investor demand, acquisitions, and operations.",
+            "The clearest signal was engagement. Before, plenty of people finished onboarding without ever creating an account and drifted off. Once discovery and reservation lived in the product, they had a reason to stay and keep browsing. That shift, a design and product call the Head of Product and I made together and defended to the CEO and CTO, is where the lift in engagement and retention came from.",
+          ],
+        },
       ],
     },
     {
@@ -357,17 +364,24 @@ const doorvest: CaseStudyContent = {
       caption:
         "How the redesigned platform connected the operation: every workflow, tool, and team, with the product at the center. Hover any node to trace its role and connections.",
     },
-{
-      kind: "section",
-      title: "Reflection",
-      body: [
-        "My biggest takeaway was how emotional these decisions are. People weren't only weighing returns. They were deciding whether to hand a company a life-changing amount of money for a house they'd never set foot in.",
-        "Over four years, Doorvest grew from a fragmented, operator-heavy service into a product that carries someone through the whole arc of investing: finding a home, reserving it, managing a portfolio, and the long tail of ownership.",
-      ],
-    },
     {
-      kind: "quote",
-      text: "With financial products, you're designing for confidence as much as for returns.",
+      kind: "group",
+      label: "Reflection",
+      id: "reflection",
+      blocks: [
+        {
+          kind: "section",
+          title: "Reflection",
+          body: [
+            "My biggest takeaway was how emotional these decisions are. People weren't only weighing returns. They were deciding whether to hand a company a life-changing amount of money for a house they'd never set foot in.",
+            "Over four years, Doorvest grew from a fragmented, operator-heavy service into a product that carries someone through the whole arc of investing: finding a home, reserving it, managing a portfolio, and the long tail of ownership.",
+          ],
+        },
+        {
+          kind: "quote",
+          text: "With financial products, you're designing for confidence as much as for returns.",
+        },
+      ],
     },
   ],
 };

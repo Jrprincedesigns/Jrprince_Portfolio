@@ -928,7 +928,8 @@ export const doorvestSystemMapHtml = `<!DOCTYPE html>
 
   function init() {
     applyZoom();
-    showNode("core");
+    // Opens on the Reservation system node, matching the Figma's default state.
+    showNode("reservation");
 
     const core = document.querySelector('[data-id="core"]');
     if (core) {

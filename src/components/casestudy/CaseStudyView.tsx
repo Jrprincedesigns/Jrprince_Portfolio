@@ -25,12 +25,19 @@ function widthOf(block: CaseBlock, fallback: string): string {
   return block.width ? (styles[block.width] ?? fallback) : fallback;
 }
 
-/** Stable id for a section heading so the chapter rail can anchor to it. */
+/** Stable id for a section/group heading so the chapter rail can anchor to it. */
 function slugify(s: string) {
   return s
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+/** Loose equality so a group's child heading is hidden when it just repeats the
+ *  group's own label. */
+function sameText(a: string, b: string) {
+  const n = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "");
+  return n(a) === n(b);
 }
 
 function Shot({
@@ -66,11 +73,73 @@ function Figure({ img }: { img: CaseImage }) {
   );
 }
 
+/** The inner blocks of a group (section / cards / quote / decisionLog), rendered
+ *  compact: no width container or reveal of their own — the group provides both,
+ *  and its right column is already the reading measure. */
+function GroupChild({
+  block,
+  groupLabel,
+}: {
+  block: CaseBlock;
+  groupLabel: string;
+}) {
+  if (block.kind === "section") {
+    const showHeading = !sameText(block.title, groupLabel);
+    return (
+      <div className={styles.groupSection}>
+        {showHeading && <h3 className={styles.groupHeading}>{block.title}</h3>}
+        {block.kicker && <p className={styles.sectionLead}>{block.kicker}</p>}
+        <div className={styles.sectionCopy}>
+          {block.body.map((p, j) => (
+            <p key={j}>{p}</p>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  if (block.kind === "quote") {
+    return <blockquote className={styles.quote}>{block.text}</blockquote>;
+  }
+  if (block.kind === "cards") {
+    return (
+      <div className={styles.groupSection}>
+        {block.label && <h3 className={styles.groupHeading}>{block.label}</h3>}
+        <div className={styles.cardGrid}>
+          {block.items.map((c) => (
+            <div key={c.title} className={styles.card}>
+              <h4 className={styles.cardTitle}>{c.title}</h4>
+              <p className={styles.cardBody}>{c.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  if (block.kind === "decisionLog") {
+    return (
+      <div className={styles.decisionInner} id={block.id}>
+        <span className={styles.decisionTag}>Decision log</span>
+        <h3 className={styles.decisionTitle}>{block.title}</h3>
+        <dl className={styles.decisionRows}>
+          {block.rows.map((r) => (
+            <div key={r.label} className={styles.decisionRow}>
+              <dt className={styles.decisionLabel}>{r.label}</dt>
+              <dd className={styles.decisionText}>{r.text}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    );
+  }
+  return null;
+}
+
 /**
- * Editorial case-study page built on a four-tier grid — reading (760),
- * medium (1040), wide (1280), and full-bleed. Body copy stays in the reading
- * column; images step out to wider tiers by role. Every study gets a sticky
- * chapter rail (from explicit chapters, else derived from section headings).
+ * Editorial case-study page. Flagship studies (Doorvest) organise their content
+ * into titled `group` blocks — a category label (and optional pinned visual) in
+ * a left column, content in a wider right column — matching the Figma. Full-
+ * bleed media and embeds sit between the groups. Simpler studies use a flat
+ * block list; each `section` then renders as its own two-column split.
  */
 export default function CaseStudyView({
   study,
@@ -82,18 +151,28 @@ export default function CaseStudyView({
   next: CaseRef | null;
 }) {
   const showHeroMedia = study.heroImage || study.draft;
+  const showcase = study.heroShowcase;
 
-  // Anchor id for a section block: explicit id, else a slug of its title.
   const sectionId = (b: Extract<CaseBlock, { kind: "section" }>) =>
     b.id ?? slugify(b.title);
+  const groupId = (b: Extract<CaseBlock, { kind: "group" }>) =>
+    b.id ?? slugify(b.label);
 
+  // The chapter rail follows the groups when a study has them (their labels are
+  // the Figma's left-column categories); otherwise it derives from sections.
+  const groups = study.blocks.filter(
+    (b): b is Extract<CaseBlock, { kind: "group" }> => b.kind === "group"
+  );
   const chapters: CaseChapter[] =
     study.chapters ??
-    study.blocks
-      .filter((b): b is Extract<CaseBlock, { kind: "section" }> => b.kind === "section")
-      .map((b) => ({ id: sectionId(b), label: b.title }));
-
-  const showcase = study.heroShowcase;
+    (groups.length > 0
+      ? groups.map((g) => ({ id: groupId(g), label: g.label }))
+      : study.blocks
+          .filter(
+            (b): b is Extract<CaseBlock, { kind: "section" }> =>
+              b.kind === "section"
+          )
+          .map((b) => ({ id: sectionId(b), label: b.title })));
 
   return (
     <article className={styles.page}>
@@ -106,7 +185,7 @@ export default function CaseStudyView({
         />
       )}
 
-      <section className={`${styles.hero} ${styles.medium} ${showcase ? styles.heroTight : ""}`}>
+      <section className={`${styles.hero} ${showcase ? styles.wide : styles.medium} ${showcase ? styles.heroTight : ""}`}>
         {/* Utility row: back out of the study, or go see the shipped thing. */}
         <div className={styles.heroUtility}>
           <Link href="/#case-studies" className={styles.backLink}>
@@ -124,26 +203,44 @@ export default function CaseStudyView({
           )}
         </div>
 
-        {/* With a showcase hero the project name carries the top of the page and
-            the descriptive title drops into the overview row; without one the
-            title stays the H1 and the project name is a small eyebrow. */}
+        {/* With a showcase hero, the project name is the H1 and sits on one row
+            with the meta; the descriptive title drops into the overview row. */}
         {showcase ? (
-          <h1 className={styles.title}>{study.project}</h1>
+          <div className={styles.identityRow}>
+            <h1 className={styles.identityName}>{study.project}</h1>
+            <div className={styles.metaInline}>
+              {study.meta.map((m) => (
+                <div key={m.label} className={styles.metaInlineItem}>
+                  <div className={styles.metaLabel}>{m.label}</div>
+                  <div className={styles.metaValue}>{m.value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         ) : (
           <>
             <p className={styles.eyebrow}>{study.eyebrow ?? study.project}</p>
             <h1 className={styles.title}>{study.title}</h1>
+            <div className={styles.metaGrid}>
+              {study.meta.map((m) => (
+                <div key={m.label} className={styles.metaItem}>
+                  <div className={styles.metaLabel}>{m.label}</div>
+                  <div className={styles.metaValue}>{m.value}</div>
+                </div>
+              ))}
+            </div>
           </>
         )}
 
-        <div className={styles.metaGrid}>
-          {study.meta.map((m) => (
-            <div key={m.label} className={styles.metaItem}>
-              <div className={styles.metaLabel}>{m.label}</div>
-              <div className={styles.metaValue}>{m.value}</div>
+        {study.lead && (
+          <div className={styles.overviewRow}>
+            <h2 className={styles.overviewLabel}>Project overview</h2>
+            <div className={styles.overviewBody}>
+              {showcase && <p className={styles.overviewTitle}>{study.title}</p>}
+              <p className={styles.lead}>{study.lead}</p>
             </div>
-          ))}
-        </div>
+          </div>
+        )}
 
         {study.outcomes && study.outcomes.length > 0 && (
           <div className={styles.metricsRow}>
@@ -156,25 +253,17 @@ export default function CaseStudyView({
                   className={styles.metricCard}
                   delay={i * 0.08}
                 >
-                  <span className={styles.metricIndex}>
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
                   <dt className={styles.metricValue}>{o.value}</dt>
                   <dd className={styles.metricLabel}>{o.label}</dd>
-                  <span className={styles.metricTag}>Impact metric</span>
+                  <div className={styles.metricFoot}>
+                    <span className={styles.metricIndex}>
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className={styles.metricTag}>Impact metrics</span>
+                  </div>
                 </Reveal>
               ))}
             </dl>
-          </div>
-        )}
-
-        {study.lead && (
-          <div className={styles.overviewRow}>
-            <h2 className={styles.overviewLabel}>Project overview</h2>
-            <div className={styles.overviewBody}>
-              {showcase && <p className={styles.overviewTitle}>{study.title}</p>}
-              <p className={styles.lead}>{study.lead}</p>
-            </div>
           </div>
         )}
       </section>
@@ -216,6 +305,39 @@ export default function CaseStudyView({
       )}
 
       {study.blocks.map((block, i) => {
+        if (block.kind === "group") {
+          return (
+            <Reveal
+              as="section"
+              className={`${styles.block} ${styles.wide} ${styles.groupBlock}`}
+              key={i}
+              id={groupId(block)}
+              amount={0.1}
+            >
+              <div className={styles.groupLabelCol}>
+                <h2 className={styles.groupLabel}>{block.label}</h2>
+                {block.media && (
+                  <div className={styles.groupMedia}>
+                    <Image
+                      src={block.media.src}
+                      alt={block.media.alt ?? ""}
+                      width={block.media.w}
+                      height={block.media.h}
+                      quality={95}
+                      sizes="(max-width: 900px) 60vw, 340px"
+                      className={styles.groupMediaImg}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className={styles.groupContent}>
+                {block.blocks.map((b, j) => (
+                  <GroupChild key={j} block={b} groupLabel={block.label} />
+                ))}
+              </div>
+            </Reveal>
+          );
+        }
         if (block.kind === "section") {
           return (
             <Reveal
@@ -225,9 +347,6 @@ export default function CaseStudyView({
               id={sectionId(block)}
               amount={0.15}
             >
-              {/* Title becomes the left-column label (still the chapter-rail
-                  label + anchor); the kicker, when present, is promoted to the
-                  large statement that leads the copy. */}
               <h2 className={styles.sectionLabel}>{block.title}</h2>
               <div className={styles.sectionBody}>
                 {block.kicker && (
@@ -251,7 +370,7 @@ export default function CaseStudyView({
         }
         if (block.kind === "embed") {
           return (
-            <Reveal as="div" className={`${styles.block} ${widthOf(block, styles.medium)}`} key={i}>
+            <Reveal as="div" className={`${styles.block} ${widthOf(block, styles.wide)}`} key={i}>
               <EmbedFrame embed={block.embed} title={block.caption ?? "Interactive diagram"} />
               {block.caption && <p className={styles.caption}>{block.caption}</p>}
             </Reveal>

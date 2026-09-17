@@ -275,6 +275,85 @@
   font-weight: 600;
 }
 
+/* ---- Titled group -------------------------------------------------------
+ * The Figma's section shape: a category label (and optional pinned visual) in a
+ * narrow left column, content flowing in a wider right column. The label column
+ * sticks so it (and any pinned phone) stays with the content as it scrolls.
+ */
+.groupBlock {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 9fr);
+  gap: clamp(1.5rem, 5vw, 110px);
+  align-items: start;
+}
+.groupLabelCol {
+  position: sticky;
+  top: clamp(84px, 12vh, 120px);
+  align-self: start;
+}
+.groupLabel {
+  margin: 0;
+  font-size: clamp(15px, 1.4vw, 19px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--cs-ink);
+}
+.groupMedia {
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+.groupMediaImg {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  display: block;
+}
+.groupContent {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 3vw, 2.75rem);
+}
+.groupSection {
+  min-width: 0;
+}
+.groupHeading {
+  margin: 0 0 clamp(0.6rem, 1.2vw, 0.95rem);
+  font-size: clamp(19px, 1.7vw, 26px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+
+/* ---- Identity row (showcase heroes: project name + inline meta) ---------- */
+.identityRow {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  align-items: end;
+  margin-top: clamp(1.25rem, 3vw, 2.25rem);
+  padding-top: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--cs-rule);
+}
+.identityName {
+  margin: 0;
+  font-size: clamp(40px, 6vw, 84px);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-weight: 700;
+}
+.metaInline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  padding-bottom: 0.4rem;
+}
+.metaInline .metaLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+}
+
 /* =============================================================
    Pull quote (reading)
    ============================================================= */
@@ -832,8 +911,8 @@
  */
 .metricsRow {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
-  gap: clamp(1.25rem, 4vw, 3.5rem);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 9fr);
+  gap: clamp(1.5rem, 5vw, 110px);
   margin-top: clamp(1rem, 2.5vw, 1.5rem);
   padding-top: clamp(0.85rem, 2vw, 1.2rem);
   border-top: 1px solid var(--cs-rule, rgba(0, 0, 0, 0.12));
@@ -842,34 +921,31 @@
 .metricsGrid {
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
-  gap: clamp(0.75rem, 1.6vw, 1.1rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+  gap: clamp(0.75rem, 1.4vw, 1rem);
 }
 
+/* Figma metric card: green value up top, description, and a footer row with the
+   index (left) and an "Impact metrics" pill (right) pinned to the bottom. */
 .metricCard {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  padding: clamp(1.1rem, 2vw, 1.5rem);
-  border: 1px solid rgba(22, 22, 22, 0.08);
+  gap: 0.5rem;
+  min-height: 188px;
+  padding: clamp(1.1rem, 1.8vw, 1.5rem);
+  border: 1px solid rgba(22, 22, 22, 0.06);
   border-radius: 16px;
-  background: var(--cs-card);
-}
-
-.metricIndex {
-  font-size: 11px;
-  color: var(--cs-muted);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
+  background: #fff;
+  box-shadow: 0 6px 26px rgba(57, 106, 239, 0.06);
 }
 
 .metricValue {
-  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.9rem);
-  font-weight: 700;
+  font-size: clamp(1.9rem, 1.3rem + 2vw, 3rem);
+  font-weight: 600;
   line-height: 1;
   letter-spacing: -0.03em;
-  color: #3f8a63; /* deepened Doorvest green for contrast on the cream card */
+  color: #4ea37c; /* Doorvest green */
 }
 
 .metricLabel {
@@ -879,16 +955,30 @@
   color: var(--cs-muted);
 }
 
+.metricFoot {
+  margin-top: auto;
+  padding-top: clamp(0.75rem, 1.4vw, 1.1rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.metricIndex {
+  font-size: 12px;
+  color: var(--cs-muted);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
 .metricTag {
-  margin-top: 0.45rem;
-  align-self: flex-start;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #3f8a63;
-  background: rgba(78, 163, 124, 0.12);
+  font-size: 11px;
+  letter-spacing: 0.01em;
+  color: #396aef; /* Doorvest blue */
+  background: rgba(57, 106, 239, 0.1);
   border-radius: 999px;
-  padding: 4px 10px;
+  padding: 5px 12px;
+  white-space: nowrap;
 }
 
 /* Title moved into the overview row (studies with a showcase hero). */
@@ -962,8 +1052,8 @@
  */
 .overviewRow {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
-  gap: clamp(1.25rem, 4vw, 3.5rem);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 9fr);
+  gap: clamp(1.5rem, 5vw, 110px);
   margin-top: clamp(2rem, 5vw, 3.25rem);
   padding-top: clamp(1.5rem, 3vw, 2rem);
   border-top: 1px solid var(--cs-rule, rgba(0, 0, 0, 0.12));
@@ -989,11 +1079,33 @@
 @media (max-width: 760px) {
   .sectionSplit,
   .metricsRow,
-  .overviewRow {
+  .overviewRow,
+  .groupBlock,
+  .identityRow {
     grid-template-columns: 1fr;
     gap: clamp(0.6rem, 3vw, 1rem);
   }
-  .sectionLabel {
+  .sectionLabel,
+  .groupLabel {
     color: var(--cs-muted);
+  }
+  /* Label column stops sticking once it's stacked above the content. */
+  .groupLabelCol {
+    position: static;
+    top: auto;
+  }
+  .groupMedia {
+    margin-top: clamp(1rem, 3vw, 1.5rem);
+  }
+  .groupMediaImg {
+    max-width: 220px;
+  }
+  .identityRow {
+    align-items: start;
+    gap: clamp(1.25rem, 4vw, 1.75rem);
+  }
+  /* The group's content gap can shrink on a phone. */
+  .groupContent {
+    gap: clamp(1.5rem, 5vw, 2rem);
   }
 }
