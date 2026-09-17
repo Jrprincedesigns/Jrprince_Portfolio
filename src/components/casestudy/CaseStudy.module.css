@@ -27,6 +27,20 @@
   text-decoration: none;
 }
 
+/* Showcase studies (Doorvest) follow the Figma's near-white field instead of
+   the warm editorial beige. Cards go white and lean on a soft shadow to
+   separate from the near-white background. */
+.pageLight {
+  --cs-bg: #fcfcfc;
+  --cs-card: #ffffff;
+  --cs-rule: rgba(22, 22, 22, 0.1);
+}
+.pageLight .card,
+.pageLight .decisionInner {
+  border-color: rgba(22, 22, 22, 0.07);
+  box-shadow: 0 8px 26px rgba(20, 30, 60, 0.05);
+}
+
 /* ---- Width containers ---- */
 .reading,
 .medium,

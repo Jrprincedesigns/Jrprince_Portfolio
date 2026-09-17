@@ -175,7 +175,7 @@ export default function CaseStudyView({
           .map((b) => ({ id: sectionId(b), label: b.title })));
 
   return (
-    <article className={styles.page}>
+    <article className={`${styles.page} ${showcase ? styles.pageLight : ""}`}>
       {chapters.length > 1 && <ChapterNav chapters={chapters} />}
 
       {showcase && (
