@@ -197,12 +197,8 @@ const doorvest: CaseStudyContent = {
       ],
     },
     {
-      kind: "media",
-      width: "bleed",
-      variant: "wide",
-      images: [
-        { src: "/img/cases/doorvest/problem-panels.png", w: 2880, h: 2108, alt: "A statement download beside the ownership dashboard, reframing a scattered, high-touch experience into one place" },
-      ],
+      kind: "reveal",
+      name: "doorvest-panels",
     },
     {
       kind: "media",
@@ -266,6 +262,7 @@ const doorvest: CaseStudyContent = {
     },
     {
       kind: "media",
+      width: "bleed",
       variant: "wide",
       images: [
         { src: "/img/cases/doorvest/marketplace.png", w: 3840, h: 2160, alt: "The Doorvest marketplace: investment portfolios above the browsable in-app home inventory" },
@@ -319,6 +316,7 @@ const doorvest: CaseStudyContent = {
     },
     {
       kind: "media",
+      width: "bleed",
       variant: "wide",
       images: [
         { src: "/img/cases/doorvest/reservation.png", w: 1440, h: 1100, alt: "The reservation confirmation and order summary screen" },
@@ -326,6 +324,7 @@ const doorvest: CaseStudyContent = {
     },
     {
       kind: "media",
+      width: "bleed",
       variant: "wide",
       images: [
         { src: "/img/cases/doorvest/dashboard.png", w: 2422, h: 1540, alt: "The centralized ownership dashboard on web and mobile: portfolio value, homes, distributions, recent activity, statements, and documents in one place" },

@@ -13,6 +13,7 @@ import EmbedFrame from "./EmbedFrame";
 import HeroShowcase from "./HeroShowcase";
 import AmbasdrHero from "./reveals/AmbasdrHero";
 import AmbasdrScrollVideo from "./reveals/AmbasdrScrollVideo";
+import DoorvestPanels from "./reveals/DoorvestPanels";
 import Reveal from "@/components/motion/Reveal";
 import styles from "./CaseStudy.module.css";
 
@@ -384,6 +385,9 @@ export default function CaseStudyView({
               )}
               {block.name === "ambasdr-scroll-video" && (
                 <AmbasdrScrollVideo caption={block.caption} />
+              )}
+              {block.name === "doorvest-panels" && (
+                <DoorvestPanels caption={block.caption} />
               )}
             </div>
           );

@@ -1014,6 +1014,12 @@
 .bleed .figure {
   border-radius: 0;
 }
+/* Full-bleed media sits flat, edge to edge — no floating-card shadow (these
+   product shots already carry their own panel framing). */
+.bleed .shot,
+.bleed img {
+  box-shadow: none;
+}
 
 /*
  * The image carries `.shot` itself rather than sitting inside it, so a
