@@ -833,15 +833,86 @@
   border-radius: 0;
 }
 
-.bleed .shot img,
-.bleed .figure img {
+/*
+ * The image carries `.shot` itself rather than sitting inside it, so a
+ * descendant selector matches nothing and the block bleeds while the picture
+ * stays at its contained width. Target the image directly.
+ */
+.bleed img {
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .outcomeValue {
     transition: none;
+  }
+}
+
+/* ---- Hero utility row ---------------------------------------------------
+ * Back out of the study, or go look at the shipped product. Sits above the
+ * title so both exits are available before the reader commits to scrolling.
+ */
+.heroUtility {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  font-size: var(--step-0);
+}
+
+.backLink,
+.liveLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.75;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.backLink:hover,
+.backLink:focus-visible,
+.liveLink:hover,
+.liveLink:focus-visible {
+  opacity: 1;
+}
+
+/* ---- Overview row -------------------------------------------------------
+ * A narrow label beside a wide column of copy. The asymmetry is the point:
+ * it breaks the single centred measure the rest of the study runs on, and it
+ * puts the lead paragraph after the results rather than before them.
+ */
+.overviewRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+  gap: clamp(1.25rem, 4vw, 3.5rem);
+  margin-top: clamp(2rem, 5vw, 3.25rem);
+  padding-top: clamp(1.5rem, 3vw, 2rem);
+  border-top: 1px solid var(--cs-rule, rgba(0, 0, 0, 0.12));
+}
+
+.overviewLabel {
+  margin: 0;
+  font-size: var(--step-0);
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+.overviewRow .lead {
+  margin: 0;
+}
+
+/* One column on a phone: a 1fr/2.4fr split leaves the label column too narrow
+   to hold a word. */
+@media (max-width: 720px) {
+  .overviewRow {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 }
