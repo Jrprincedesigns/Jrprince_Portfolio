@@ -1,0 +1,94 @@
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* The Figma 500×400 sticky-cluster coordinate space, scaled to the container
+   width (JS sets --s from a ResizeObserver, like DoorvestPanels / AmbasdrHero).
+   A little breathing room around the cluster so lifted/dragged notes and their
+   shadows are not clipped. */
+.stage {
+  position: relative;
+  width: min(100%, 720px);
+  margin-inline: auto;
+  aspect-ratio: 500 / 400;
+  padding: 0;
+}
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 500px;
+  height: 400px;
+  transform: scale(var(--s, 1));
+  transform-origin: top left;
+  touch-action: none;
+}
+
+.note {
+  position: absolute;
+  padding: 14px 16px;
+  border-radius: 2px;
+  user-select: none;
+  will-change: transform;
+  /* framer-motion sets the transform; keep it composited from top-left. */
+  transform-origin: center center;
+}
+
+.text {
+  font-family: var(--font-inter), var(--font-sans), "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: #1a1a2e;
+  margin: 0;
+  pointer-events: none;
+}
+
+.tidy {
+  margin-top: 40px;
+  padding: 12px 28px;
+  border-radius: 100px;
+  border: 1px solid rgba(22, 22, 22, 0.08);
+  background: #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  font-family: var(--font-inter), var(--font-sans), "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  color: #1a1a2e;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+.tidy:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  transform: scale(1.04);
+}
+.tidy:active {
+  transform: scale(0.99);
+}
+.tidy:focus-visible {
+  outline: 2px solid var(--cs-accent, #4c6ef5);
+  outline-offset: 3px;
+}
+
+.caption {
+  margin-top: 18px;
+  margin-inline: auto;
+  max-width: 62ch;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: var(--cs-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .note {
+    transition: none !important;
+  }
+}
