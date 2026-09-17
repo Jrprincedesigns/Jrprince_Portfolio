@@ -786,3 +786,62 @@
     flex-direction: column;
   }
 }
+
+/* ---- Hero outcomes ------------------------------------------------------
+ * The measured result of the work, sitting in the hero rather than at the
+ * foot of the study. A reader who only sees one screen should still see what
+ * the work achieved — and most only see one screen.
+ */
+.outcomes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
+  gap: clamp(1rem, 3vw, 2.25rem);
+  margin-top: clamp(1.75rem, 4vw, 2.75rem);
+  padding-top: clamp(1.25rem, 3vw, 1.75rem);
+  border-top: 1px solid var(--cs-rule, rgba(0, 0, 0, 0.12));
+}
+
+.outcome {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.outcomeValue {
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.9rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.outcomeLabel {
+  margin: 0;
+  font-size: var(--step--1);
+  line-height: 1.4;
+  max-width: 28ch;
+  opacity: 0.72;
+}
+
+/*
+ * A media block that asks for `bleed` runs edge to edge. `.bleed` already
+ * existed for the banner divider and the footer, but nothing in the block
+ * stream could reach it, so every image rendered at one of two contained
+ * widths regardless of what it was showing.
+ */
+.bleed .shot,
+.bleed .figure {
+  border-radius: 0;
+}
+
+.bleed .shot img,
+.bleed .figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .outcomeValue {
+    transition: none;
+  }
+}

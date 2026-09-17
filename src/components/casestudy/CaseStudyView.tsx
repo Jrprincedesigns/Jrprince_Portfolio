@@ -5,14 +5,23 @@ import type {
   CaseStudyContent,
   CaseRef,
   CaseImage,
-  CaseChapter,
   CaseBlock,
+  CaseChapter,
 } from "@/data/caseStudyContent";
 import ChapterNav from "./ChapterNav";
 import EmbedFrame from "./EmbedFrame";
 import AmbasdrHero from "./reveals/AmbasdrHero";
 import AmbasdrScrollVideo from "./reveals/AmbasdrScrollVideo";
 import styles from "./CaseStudy.module.css";
+
+/**
+ * A block renders at the width its kind has always used, unless it asks for
+ * another. Keeping the per-kind value as the fallback means adding `width` to
+ * one block changes that block and nothing else.
+ */
+function widthOf(block: CaseBlock, fallback: string): string {
+  return block.width ? (styles[block.width] ?? fallback) : fallback;
+}
 
 /** Stable id for a section heading so the chapter rail can anchor to it. */
 function slugify(s: string) {
@@ -99,6 +108,17 @@ export default function CaseStudyView({
             </div>
           ))}
         </div>
+
+        {study.outcomes && study.outcomes.length > 0 && (
+          <dl className={styles.outcomes}>
+            {study.outcomes.map((o) => (
+              <div key={o.label} className={styles.outcome}>
+                <dt className={styles.outcomeValue}>{o.value}</dt>
+                <dd className={styles.outcomeLabel}>{o.label}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
       </section>
 
       {showHeroMedia && (
@@ -141,7 +161,7 @@ export default function CaseStudyView({
         if (block.kind === "section") {
           return (
             <section
-              className={`${styles.block} ${styles.reading}`}
+              className={`${styles.block} ${widthOf(block, styles.reading)}`}
               key={i}
               id={sectionId(block)}
             >
@@ -157,14 +177,14 @@ export default function CaseStudyView({
         }
         if (block.kind === "quote") {
           return (
-            <div className={`${styles.block} ${styles.reading}`} key={i}>
+            <div className={`${styles.block} ${widthOf(block, styles.reading)}`} key={i}>
               <blockquote className={styles.quote}>{block.text}</blockquote>
             </div>
           );
         }
         if (block.kind === "embed") {
           return (
-            <div className={`${styles.block} ${styles.medium}`} key={i}>
+            <div className={`${styles.block} ${widthOf(block, styles.medium)}`} key={i}>
               <EmbedFrame embed={block.embed} title={block.caption ?? "Interactive diagram"} />
               {block.caption && <p className={styles.caption}>{block.caption}</p>}
             </div>
@@ -172,7 +192,7 @@ export default function CaseStudyView({
         }
         if (block.kind === "reveal") {
           return (
-            <div className={`${styles.block} ${styles.wide}`} key={i}>
+            <div className={`${styles.block} ${widthOf(block, styles.wide)}`} key={i}>
               {block.name === "ambasdr-hero" && (
                 <AmbasdrHero caption={block.caption} />
               )}
@@ -201,7 +221,7 @@ export default function CaseStudyView({
         }
         if (block.kind === "stats") {
           return (
-            <section className={`${styles.block} ${styles.reading} ${styles.stats}`} key={i}>
+            <section className={`${styles.block} ${widthOf(block, styles.reading)} ${styles.stats}`} key={i}>
               {block.items.map((s) => (
                 <div key={s.label}>
                   <div className={styles.statValue}>{s.value}</div>
@@ -213,7 +233,7 @@ export default function CaseStudyView({
         }
         if (block.kind === "cards") {
           return (
-            <section className={`${styles.block} ${styles.medium}`} key={i}>
+            <section className={`${styles.block} ${widthOf(block, styles.medium)}`} key={i}>
               {block.label && <h2 className={styles.cardsLabel}>{block.label}</h2>}
               <div className={styles.cardGrid}>
                 {block.items.map((c) => (
@@ -228,7 +248,7 @@ export default function CaseStudyView({
         }
         if (block.kind === "timeline") {
           return (
-            <section className={`${styles.block} ${styles.wide}`} key={i}>
+            <section className={`${styles.block} ${widthOf(block, styles.wide)}`} key={i}>
               {block.label && <h2 className={styles.cardsLabel}>{block.label}</h2>}
               <ol className={styles.timelineRow}>
                 {block.items.map((t, j) => (
@@ -246,7 +266,7 @@ export default function CaseStudyView({
         }
         if (block.kind === "decisionLog") {
           return (
-            <section className={`${styles.block} ${styles.reading}`} key={i} id={block.id}>
+            <section className={`${styles.block} ${widthOf(block, styles.reading)}`} key={i} id={block.id}>
               <div className={styles.decisionInner}>
                 <span className={styles.decisionTag}>Decision log</span>
                 <h3 className={styles.decisionTitle}>{block.title}</h3>
@@ -264,7 +284,7 @@ export default function CaseStudyView({
         }
         if (block.kind === "evolution") {
           return (
-            <section className={`${styles.block} ${styles.medium}`} key={i}>
+            <section className={`${styles.block} ${widthOf(block, styles.medium)}`} key={i}>
               {block.label && <h2 className={styles.cardsLabel}>{block.label}</h2>}
               <div className={styles.evoTable}>
                 <div className={styles.evoHead}>
@@ -287,7 +307,7 @@ export default function CaseStudyView({
         }
         if (block.kind === "questions") {
           return (
-            <section className={`${styles.block} ${styles.reading}`} key={i} id={block.id}>
+            <section className={`${styles.block} ${widthOf(block, styles.reading)}`} key={i} id={block.id}>
               {block.label && <h2 className={styles.cardsLabel}>{block.label}</h2>}
               <ul className={styles.questionList}>
                 {block.items.map((q) => (
@@ -309,7 +329,7 @@ export default function CaseStudyView({
         if (block.images && block.images.length > 0) {
           if (block.variant === "grid") {
             return (
-              <div className={`${styles.block} ${styles.wide}`} key={i}>
+              <div className={`${styles.block} ${widthOf(block, styles.wide)}`} key={i}>
                 <div className={styles.imageGrid}>
                   {block.images.map((im, j) => (
                     <Figure img={im} key={j} />
@@ -320,7 +340,7 @@ export default function CaseStudyView({
           }
           if (block.variant === "tall") {
             return (
-              <div className={`${styles.block} ${styles.reading}`} key={i}>
+              <div className={`${styles.block} ${widthOf(block, styles.reading)}`} key={i}>
                 <div className={styles.tallWrap}>
                   <Figure img={block.images[0]} />
                 </div>
@@ -337,7 +357,7 @@ export default function CaseStudyView({
         // ---- placeholder media ----
         if (block.variant === "grid") {
           return (
-            <div className={`${styles.block} ${styles.wide}`} key={i}>
+            <div className={`${styles.block} ${widthOf(block, styles.wide)}`} key={i}>
               <div className={styles.imageGrid}>
                 {(block.labels ?? []).map((label, j) => (
                   <div className={styles.mock} key={j}>
@@ -349,7 +369,7 @@ export default function CaseStudyView({
           );
         }
         return (
-          <div className={`${styles.block} ${styles.medium}`} key={i}>
+          <div className={`${styles.block} ${widthOf(block, styles.medium)}`} key={i}>
             <div className={styles.wideInner}>
               <span className={styles.mockLabel}>{block.labels?.[0]}</span>
             </div>
