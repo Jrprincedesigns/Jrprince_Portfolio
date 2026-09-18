@@ -9,12 +9,11 @@ const B = "/img/cases/doorvest";
 const STAGE_W = 1440;
 
 /**
- * The problem-space media, a faithful port of the Figma composition
- * (node 4408:47906) laid out in its 1440×1054 coordinate space and scaled to
- * the container. Two looping motions straight from the Figma prototype cohort
- * (2s, linear, moving over the first 52.6% then holding): the Doorvest sidebar
- * slides in over the sunset (x: 0→-284), and the browser window scrolls up out
- * of the lower-left panel (y: 0→-513). The statement card is static.
+ * The problem-space media, a port of the Figma composition (node 4408:47906)
+ * laid out in its 1440×1054 coordinate space and scaled to the container. Two
+ * looping motions: the browser window scrolls up out of the lower-left panel
+ * (y: 0→-513), and the full Doorvest dashboard floats over the sunset with a
+ * gentle vertical parallax. The statement card is static.
  *
  * Reduced motion: render both at their revealed end-state so the content reads
  * without animating.
@@ -45,9 +44,7 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
     return () => ro.disconnect();
   }, []);
 
-  const sidebar = reduce
-    ? { x: -284, y: -3 }
-    : { x: [0, -284, -284, 0], y: [0, -3, -3, 0] };
+  const dashboard = reduce ? { y: 0 } : { y: [22, -8, -8, 22] };
   const browser = reduce ? { y: -513 } : { y: [0, -513, -513, 0] };
 
   return (
@@ -101,7 +98,7 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
             </motion.div>
           </div>
 
-          {/* Right panel — sunset field + sidebar sliding in (x: 0 → -284) */}
+          {/* Right panel — sunset field + full dashboard floating (gentle parallax) */}
           <div
             className={styles.panelImg}
             style={{ left: 732, top: 24, width: 684, height: 1006 }}
@@ -116,20 +113,20 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
               sizes="(max-width: 900px) 100vw, 740px"
             />
             <motion.div
-              className={styles.sidebar}
-              style={{ left: 470, top: 59, width: 240, height: 894 }}
-              initial={reduce ? sidebar : { x: 0, y: 0 }}
-              animate={sidebar}
+              className={styles.dashboardCard}
+              style={{ left: 32, top: 306, width: 620, height: 394 }}
+              initial={reduce ? dashboard : { y: 22 }}
+              animate={dashboard}
               transition={reduce ? { duration: 0 } : LOOP}
             >
               <Image
-                src={`${B}/panel-sidebar.png`}
-                alt="The Doorvest ownership dashboard navigation"
-                width={964}
-                height={3580}
+                src={`${B}/panel-dashboard.png`}
+                alt="The Doorvest ownership dashboard"
+                width={4226}
+                height={2685}
                 quality={95}
-                className={styles.sidebarImg}
-                sizes="320px"
+                className={styles.dashboardImg}
+                sizes="(max-width: 900px) 90vw, 620px"
               />
             </motion.div>
           </div>

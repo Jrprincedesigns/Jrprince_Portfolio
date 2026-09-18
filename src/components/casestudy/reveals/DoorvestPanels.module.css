@@ -89,16 +89,16 @@
   object-fit: cover;
   display: block;
 }
-.sidebar {
+.dashboardCard {
   position: absolute;
   will-change: transform;
 }
-.sidebarImg {
+.dashboardImg {
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 16px;
-  box-shadow: 0 12px 32px rgba(20, 30, 60, 0.14);
+  border-radius: 14px;
+  box-shadow: 0 26px 60px rgba(20, 30, 60, 0.3);
 }
 
 .caption {
