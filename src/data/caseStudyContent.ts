@@ -321,7 +321,9 @@ const doorvest: CaseStudyContent = {
       blocks: [
         {
           kind: "section",
-          title: "Operational impact",
+          // Title matches the group label so no redundant heading renders — the
+          // "Impact" left label serves as the header, like the other sections.
+          title: "Impact",
           body: [
             "The platform took friction out for investors and internal teams at once. Bringing discovery, evaluation, and reservation into one place removed the manual coordination that had bottlenecked the sales team. It also gave everyone a shared view across investor demand, acquisitions, and operations.",
             "The clearest signal was engagement. Before, plenty of people finished onboarding without ever creating an account and drifted off. Once discovery and reservation lived in the product, they had a reason to stay and keep browsing. That shift, a design and product call the Head of Product and I made together and defended to the CEO and CTO, is where the lift in engagement and retention came from.",
