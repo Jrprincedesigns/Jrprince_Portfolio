@@ -19,10 +19,12 @@ const STAGE_W = 1440;
  * Reduced motion: render both at their revealed end-state so the content reads
  * without animating.
  */
+/* Seamless loop: reveal in, hold, reveal back out, repeat — returning to the
+ * start value so there's no hard snap at the loop seam. */
 const LOOP = {
-  duration: 2,
-  times: [0, 0.526, 1],
-  ease: "linear" as const,
+  duration: 5.4,
+  times: [0, 0.16, 0.84, 1],
+  ease: "easeInOut" as const,
   repeat: Infinity,
 };
 
@@ -45,8 +47,8 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
 
   const sidebar = reduce
     ? { x: -284, y: -3 }
-    : { x: [0, -284, -284], y: [0, -3, -3] };
-  const browser = reduce ? { y: -513 } : { y: [0, -513, -513] };
+    : { x: [0, -284, -284, 0], y: [0, -3, -3, 0] };
+  const browser = reduce ? { y: -513 } : { y: [0, -513, -513, 0] };
 
   return (
     <figure className={styles.figure}>
@@ -62,9 +64,10 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
               alt=""
               width={996}
               height={312}
+              quality={95}
               className={styles.statement}
               style={{ left: 103, top: 97, width: 478, height: 136 }}
-              sizes="240px"
+              sizes="480px"
             />
           </div>
 
@@ -91,8 +94,9 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
                 alt=""
                 width={3840}
                 height={2160}
+                quality={95}
                 className={styles.browserImg}
-                sizes="240px"
+                sizes="480px"
               />
             </motion.div>
           </div>
@@ -107,8 +111,9 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
               alt=""
               width={1367}
               height={2012}
+              quality={95}
               className={styles.sunset}
-              sizes="(max-width: 900px) 100vw, 620px"
+              sizes="(max-width: 900px) 100vw, 740px"
             />
             <motion.div
               className={styles.sidebar}
@@ -122,8 +127,9 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
                 alt="The Doorvest ownership dashboard navigation"
                 width={429}
                 height={1790}
+                quality={95}
                 className={styles.sidebarImg}
-                sizes="240px"
+                sizes="320px"
               />
             </motion.div>
           </div>
