@@ -56,12 +56,12 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
             <Image
               src={`${B}/panel-statement.png`}
               alt=""
-              width={996}
-              height={312}
+              width={1992}
+              height={624}
               quality={95}
               className={styles.statement}
-              style={{ left: 103, top: 97, width: 478, height: 136 }}
-              sizes="480px"
+              style={{ left: 103, top: 90, width: 478, height: 150 }}
+              sizes="560px"
             />
           </div>
 
