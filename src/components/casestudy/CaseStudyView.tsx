@@ -184,6 +184,7 @@ export default function CaseStudyView({
         <HeroShowcase
           image={showcase.image}
           wordmark={showcase.wordmark ?? study.project}
+          band={showcase.band}
         />
       )}
 

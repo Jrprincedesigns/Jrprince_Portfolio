@@ -7,7 +7,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  background: #4ea37c; /* Doorvest green (DV Green token) */
+  background: var(--cs-band, #4ea37c); /* per-study band; defaults to Doorvest green */
   display: flex;
   justify-content: center;
   align-items: center;
