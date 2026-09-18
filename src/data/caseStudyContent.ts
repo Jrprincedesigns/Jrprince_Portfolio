@@ -307,7 +307,7 @@ const doorvest: CaseStudyContent = {
       width: "bleed",
       variant: "wide",
       images: [
-        { src: "/img/cases/doorvest/dashboard.png", w: 2422, h: 1540, alt: "The centralized ownership dashboard on web and mobile: portfolio value, homes, distributions, recent activity, statements, and documents in one place" },
+        { src: "/img/cases/doorvest/dashboard-board.png", w: 2880, h: 1620, alt: "The centralized ownership dashboard on web and mobile: portfolio value, homes, distributions, recent activity, statements, and documents in one place" },
       ],
     },
     {
