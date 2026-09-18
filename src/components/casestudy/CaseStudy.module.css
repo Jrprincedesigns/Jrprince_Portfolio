@@ -1079,11 +1079,15 @@
   border-top: 1px solid var(--cs-rule, rgba(0, 0, 0, 0.12));
 }
 
+/* Matches .groupLabel so every left-column header (Project overview, Key
+   metrics, and the group labels) reads as one uniform size and weight. */
 .overviewLabel {
   margin: 0;
-  font-size: var(--step-0);
-  font-weight: 400;
-  opacity: 0.6;
+  font-size: clamp(15px, 1.4vw, 19px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--cs-ink);
 }
 
 .overviewRow .lead {

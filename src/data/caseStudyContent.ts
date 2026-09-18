@@ -303,14 +303,6 @@ const doorvest: CaseStudyContent = {
       ],
     },
     {
-      kind: "media",
-      width: "bleed",
-      variant: "wide",
-      images: [
-        { src: "/img/cases/doorvest/dashboard-board.png", w: 2880, h: 1620, alt: "The centralized ownership dashboard on web and mobile: portfolio value, homes, distributions, recent activity, statements, and documents in one place" },
-      ],
-    },
-    {
       kind: "evolution",
       label: "From fragmented service to owned product",
       beforeLabel: "Operator-heavy service",
