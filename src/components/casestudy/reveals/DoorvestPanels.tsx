@@ -9,22 +9,20 @@ const B = "/img/cases/doorvest";
 const STAGE_W = 1440;
 
 /**
- * The problem-space media, a port of the Figma composition (node 4408:47906)
- * laid out in its 1440×1054 coordinate space and scaled to the container. Two
- * one-shot motions that play once when the figure scrolls into view (no loop):
- * the app window rises up out of the lower-left panel (y: 0→-513), and the full
- * Doorvest dashboard slides in over the sunset (Figma's horizontal x-slide,
- * node 4408:47913 — here entering from the right, ~20% of its width). The
- * statement card is static.
+ * The problem-space media, a faithful port of the Figma composition
+ * (node 4408:47906) laid out in its 1440×1054 coordinate space and scaled to
+ * the container. Two one-shot motions that play once when the figure scrolls
+ * into view (no loop): the app window rises up out of the lower-left panel
+ * (y: 0→-513), and the Doorvest dashboard — placed at its NATIVE 1408×894 size
+ * (node 4408:47913) at x:470 so only its sidebar peeks past the clipping panel
+ * (node 4408:47911) — slides left (x: 0→-284, y: 0→-3) to reveal the main view.
+ * The statement card is static.
  *
  * Reduced motion: render both at their revealed end-state so the content reads
  * without animating.
  */
 const RISE = { duration: 1.6, ease: [0.22, 1, 0.36, 1] as const };
-const SLIDE = { duration: 1.1, ease: [0.22, 1, 0.36, 1] as const };
-/* Figma slides the dashboard x: 0→-284 at its native 1408px width (~20%).
- * Scaled to the 620px card shown here, that's ~124px; it enters from the right. */
-const DASH_SLIDE = 124;
+const SLIDE = { duration: 1.05, ease: [0.22, 1, 0.36, 1] as const };
 
 export default function DoorvestPanels({ caption }: { caption?: string }) {
   const stageRef = useRef<HTMLDivElement>(null);
@@ -108,9 +106,9 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
             />
             <motion.div
               className={styles.dashboardCard}
-              style={{ left: 28, top: 302, width: 622, height: 395 }}
-              initial={{ x: DASH_SLIDE }}
-              animate={{ x: revealed ? 0 : DASH_SLIDE }}
+              style={{ left: 470, top: 59, width: 1408, height: 894 }}
+              initial={{ x: 0, y: 0 }}
+              animate={revealed ? { x: -284, y: -3 } : { x: 0, y: 0 }}
               transition={reduce ? { duration: 0 } : SLIDE}
             >
               <Image
@@ -120,7 +118,7 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
                 height={2685}
                 quality={95}
                 className={styles.dashboardImg}
-                sizes="(max-width: 900px) 90vw, 620px"
+                sizes="(max-width: 900px) 200vw, 1040px"
               />
             </motion.div>
           </div>
