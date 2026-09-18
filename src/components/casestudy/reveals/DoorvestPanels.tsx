@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
 import styles from "./DoorvestPanels.module.css";
 
@@ -11,26 +11,22 @@ const STAGE_W = 1440;
 /**
  * The problem-space media, a port of the Figma composition (node 4408:47906)
  * laid out in its 1440×1054 coordinate space and scaled to the container. Two
- * looping motions: the browser window scrolls up out of the lower-left panel
- * (y: 0→-513), and the full Doorvest dashboard floats over the sunset with a
- * gentle vertical parallax. The statement card is static.
+ * one-shot motions that play once when the figure scrolls into view (no loop):
+ * the app window rises up out of the lower-left panel (y: 0→-513), and the full
+ * Doorvest dashboard settles over the sunset (y: 22→0). The statement card is
+ * static.
  *
  * Reduced motion: render both at their revealed end-state so the content reads
  * without animating.
  */
-/* Seamless loop: reveal in, hold, reveal back out, repeat — returning to the
- * start value so there's no hard snap at the loop seam. */
-const LOOP = {
-  duration: 5.4,
-  times: [0, 0.16, 0.84, 1],
-  ease: "easeInOut" as const,
-  repeat: Infinity,
-};
+const RISE = { duration: 1.6, ease: [0.22, 1, 0.36, 1] as const };
+const SETTLE = { duration: 1.1, ease: [0.22, 1, 0.36, 1] as const };
 
 export default function DoorvestPanels({ caption }: { caption?: string }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  const inView = useInView(stageRef, { once: true, amount: 0.3 });
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -44,8 +40,7 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
     return () => ro.disconnect();
   }, []);
 
-  const dashboard = reduce ? { y: 0 } : { y: [22, -8, -8, 22] };
-  const browser = reduce ? { y: -513 } : { y: [0, -513, -513, 0] };
+  const revealed = reduce || inView;
 
   return (
     <figure className={styles.figure}>
@@ -68,7 +63,7 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
             />
           </div>
 
-          {/* Browser panel — window scrolls up (y: 0 → -513) */}
+          {/* App window — rises up out of the lower-left panel (y: 0 → -513) */}
           <div
             className={styles.panel}
             style={{ left: 24, top: 371, width: 684, height: 659, overflow: "hidden" }}
@@ -76,24 +71,19 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
             <motion.div
               className={styles.browser}
               style={{ left: 145, top: 578, width: 393, height: 712 }}
-              initial={reduce ? browser : { y: 0 }}
-              animate={browser}
-              transition={reduce ? { duration: 0 } : LOOP}
+              initial={{ y: 0 }}
+              animate={{ y: revealed ? -513 : 0 }}
+              transition={reduce ? { duration: 0 } : RISE}
               aria-hidden="true"
             >
-              <div className={styles.chrome}>
-                <span />
-                <span />
-                <span />
-              </div>
               <Image
-                src={`${B}/marketplace.png`}
+                src={`${B}/panel-app.png`}
                 alt=""
-                width={3840}
-                height={2160}
+                width={1572}
+                height={2848}
                 quality={95}
                 className={styles.browserImg}
-                sizes="480px"
+                sizes="440px"
               />
             </motion.div>
           </div>
@@ -115,9 +105,9 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
             <motion.div
               className={styles.dashboardCard}
               style={{ left: 32, top: 306, width: 620, height: 394 }}
-              initial={reduce ? dashboard : { y: 22 }}
-              animate={dashboard}
-              transition={reduce ? { duration: 0 } : LOOP}
+              initial={{ y: 22 }}
+              animate={{ y: revealed ? 0 : 22 }}
+              transition={reduce ? { duration: 0 } : SETTLE}
             >
               <Image
                 src={`${B}/panel-dashboard.png`}
