@@ -27,6 +27,20 @@
   text-decoration: none;
 }
 
+/* Showcase studies (Doorvest) follow the Figma's near-white field instead of
+   the warm editorial beige. Cards go white and lean on a soft shadow to
+   separate from the near-white background. */
+.pageLight {
+  --cs-bg: #fcfcfc;
+  --cs-card: #ffffff;
+  --cs-rule: rgba(22, 22, 22, 0.1);
+}
+.pageLight .card,
+.pageLight .decisionInner {
+  border-color: rgba(22, 22, 22, 0.07);
+  box-shadow: 0 8px 26px rgba(20, 30, 60, 0.05);
+}
+
 /* ---- Width containers ---- */
 .reading,
 .medium,
@@ -65,6 +79,12 @@
   padding-top: clamp(96px, 12vh, 148px);
   padding-bottom: clamp(4px, 1.5vw, 16px);
 }
+/* With a showcase band above it, the hero no longer opens the page, so it does
+   not need the tall top padding that clears the fixed nav on a text hero. The
+   tighter top helps the results clear the first viewport. */
+.heroTight {
+  padding-top: clamp(28px, 3vw, 44px);
+}
 .eyebrow {
   font-size: clamp(13px, 1vw, 15px);
   color: var(--cs-muted);
@@ -88,7 +108,7 @@
   color: var(--cs-muted);
 }
 .metaGrid {
-  margin-top: clamp(40px, 5vw, 60px);
+  margin-top: clamp(24px, 3.5vw, 40px);
   border-top: 1px solid var(--cs-rule);
   border-bottom: 1px solid var(--cs-rule);
   display: grid;
@@ -224,9 +244,9 @@
 }
 .sectionCopy {
   font-size: clamp(15px, 0.6rem + 0.35vw, 17px);
-  line-height: 1.55;
+  line-height: 1.6;
   letter-spacing: -0.005em;
-  color: var(--cs-ink);
+  color: #626262;
 }
 .sectionCopy p {
   margin: 0 0 18px;
@@ -236,6 +256,125 @@
 }
 .kicker {
   font-weight: 700;
+}
+
+/* ---- Two-column section --------------------------------------------------
+ * The section title steps out into a narrow left label (it stays the chapter-
+ * rail label and anchor), and the copy runs in a wider right column. A section
+ * with a kicker promotes it to the large statement that leads the copy. Mirrors
+ * the asymmetry the overview row already establishes.
+ */
+.sectionSplit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+  gap: clamp(1.25rem, 4vw, 3.5rem);
+  align-items: start;
+}
+.sectionLabel {
+  margin: 0;
+  font-size: clamp(15px, 1.4vw, 19px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--cs-ink);
+}
+.sectionBody {
+  min-width: 0;
+}
+/* The kicker sits under the heading as a muted subtitle (Figma), not a big
+   statement. */
+.sectionLead {
+  margin: 0 0 16px;
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+  color: #626262;
+}
+
+/* ---- Titled group -------------------------------------------------------
+ * The Figma's section shape: a category label (and optional pinned visual) in a
+ * narrow left column, content flowing in a wider right column. The label column
+ * sticks so it (and any pinned phone) stays with the content as it scrolls.
+ */
+.groupBlock {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 9fr);
+  gap: clamp(1.5rem, 5vw, 110px);
+  align-items: start;
+}
+.groupLabelCol {
+  position: sticky;
+  top: clamp(84px, 12vh, 120px);
+  align-self: start;
+}
+.groupLabel {
+  margin: 0;
+  font-size: clamp(15px, 1.4vw, 19px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--cs-ink);
+}
+.groupMedia {
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+.groupMediaImg {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  display: block;
+}
+.groupContent {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.75rem, 3vw, 2.75rem);
+}
+.groupSection {
+  min-width: 0;
+}
+/* Figma: 24px medium (not bold), roomy line-height, near-black. */
+.groupHeading {
+  margin: 0 0 16px;
+  font-size: clamp(18px, 1.5vw, 24px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: #121212;
+}
+/* When a kicker subtitle follows, sit it tight under the heading. */
+.groupHeading:has(+ .sectionLead) {
+  margin-bottom: 8px;
+}
+
+/* ---- Identity row (showcase heroes: project name + inline meta) ---------- */
+.identityRow {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  align-items: end;
+  margin-top: clamp(1.25rem, 3vw, 2.25rem);
+  padding-top: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--cs-rule);
+}
+.identityName {
+  margin: 0;
+  font-size: clamp(40px, 6vw, 84px);
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  font-weight: 700;
+}
+.metaInline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  padding-bottom: 0.4rem;
+}
+.metaInline .metaLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
 }
 
 /* =============================================================
@@ -787,39 +926,91 @@
   }
 }
 
-/* ---- Hero outcomes ------------------------------------------------------
+/* ---- Hero key metrics ---------------------------------------------------
  * The measured result of the work, sitting in the hero rather than at the
- * foot of the study. A reader who only sees one screen should still see what
- * the work achieved — and most only see one screen.
+ * foot of the study — a reader who only sees one screen still sees what the
+ * work achieved. A narrow label beside the result cards, matching the overview
+ * row's asymmetry; each result is a card carrying an index and a tag.
  */
-.outcomes {
+.metricsRow {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
-  gap: clamp(1rem, 3vw, 2.25rem);
-  margin-top: clamp(1.75rem, 4vw, 2.75rem);
-  padding-top: clamp(1.25rem, 3vw, 1.75rem);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 9fr);
+  gap: clamp(1.5rem, 5vw, 110px);
+  margin-top: clamp(1rem, 2.5vw, 1.5rem);
+  padding-top: clamp(0.85rem, 2vw, 1.2rem);
   border-top: 1px solid var(--cs-rule, rgba(0, 0, 0, 0.12));
 }
 
-.outcome {
+.metricsGrid {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+  gap: clamp(0.75rem, 1.4vw, 1rem);
+}
+
+/* Figma metric card: green value up top, description, and a footer row with the
+   index (left) and an "Impact metrics" pill (right) pinned to the bottom. */
+.metricCard {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.5rem;
+  min-height: 188px;
+  padding: clamp(1.1rem, 1.8vw, 1.5rem);
+  border: 1px solid rgba(22, 22, 22, 0.06);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 6px 26px rgba(57, 106, 239, 0.06);
 }
 
-.outcomeValue {
-  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.9rem);
-  font-weight: 700;
+.metricValue {
+  font-size: clamp(1.9rem, 1.3rem + 2vw, 3rem);
+  font-weight: 600;
   line-height: 1;
   letter-spacing: -0.03em;
+  color: #4ea37c; /* Doorvest green */
 }
 
-.outcomeLabel {
+.metricLabel {
   margin: 0;
   font-size: var(--step--1);
   line-height: 1.4;
-  max-width: 28ch;
-  opacity: 0.72;
+  color: var(--cs-muted);
+}
+
+.metricFoot {
+  margin-top: auto;
+  padding-top: clamp(0.75rem, 1.4vw, 1.1rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.metricIndex {
+  font-size: 12px;
+  color: var(--cs-muted);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.metricTag {
+  font-size: 11px;
+  letter-spacing: 0.01em;
+  color: #396aef; /* Doorvest blue */
+  background: rgba(57, 106, 239, 0.1);
+  border-radius: 999px;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+
+/* Title moved into the overview row (studies with a showcase hero). */
+.overviewTitle {
+  margin: 0 0 clamp(0.75rem, 2vw, 1.15rem);
+  font-size: clamp(1.3rem, 1rem + 1.6vw, 2rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  font-weight: 600;
 }
 
 /*
@@ -832,6 +1023,12 @@
 .bleed .figure {
   border-radius: 0;
 }
+/* Full-bleed media sits flat, edge to edge — no floating-card shadow (these
+   product shots already carry their own panel framing). */
+.bleed .shot,
+.bleed img {
+  box-shadow: none;
+}
 
 /*
  * The image carries `.shot` itself rather than sitting inside it, so a
@@ -843,12 +1040,6 @@
   height: auto;
   display: block;
   border-radius: 0;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .outcomeValue {
-    transition: none;
-  }
 }
 
 /* ---- Hero utility row ---------------------------------------------------
@@ -890,29 +1081,64 @@
  */
 .overviewRow {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
-  gap: clamp(1.25rem, 4vw, 3.5rem);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 9fr);
+  gap: clamp(1.5rem, 5vw, 110px);
   margin-top: clamp(2rem, 5vw, 3.25rem);
   padding-top: clamp(1.5rem, 3vw, 2rem);
   border-top: 1px solid var(--cs-rule, rgba(0, 0, 0, 0.12));
 }
 
+/* Matches .groupLabel so every left-column header (Project overview, Key
+   metrics, and the group labels) reads as one uniform size and weight. */
 .overviewLabel {
   margin: 0;
-  font-size: var(--step-0);
-  font-weight: 400;
-  opacity: 0.6;
+  font-size: clamp(15px, 1.4vw, 19px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--cs-ink);
 }
 
 .overviewRow .lead {
   margin: 0;
 }
 
-/* One column on a phone: a 1fr/2.4fr split leaves the label column too narrow
-   to hold a word. */
-@media (max-width: 720px) {
-  .overviewRow {
+/* ---- Two-column layouts fold to one column on a phone -------------------
+ * The 1fr label column is too narrow to hold a word there, and the copy wants
+ * the full width. Kept at the foot of the file so it lands after every
+ * two-column base rule and wins the cascade at equal specificity. Shares the
+ * one 760px content breakpoint (was split across 760/720 before).
+ */
+@media (max-width: 760px) {
+  .sectionSplit,
+  .metricsRow,
+  .overviewRow,
+  .groupBlock,
+  .identityRow {
     grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: clamp(0.6rem, 3vw, 1rem);
+  }
+  .sectionLabel,
+  .groupLabel {
+    color: var(--cs-muted);
+  }
+  /* Label column stops sticking once it's stacked above the content. */
+  .groupLabelCol {
+    position: static;
+    top: auto;
+  }
+  .groupMedia {
+    margin-top: clamp(1rem, 3vw, 1.5rem);
+  }
+  .groupMediaImg {
+    max-width: 220px;
+  }
+  .identityRow {
+    align-items: start;
+    gap: clamp(1.25rem, 4vw, 1.75rem);
+  }
+  /* The group's content gap can shrink on a phone. */
+  .groupContent {
+    gap: clamp(1.5rem, 5vw, 2rem);
   }
 }
