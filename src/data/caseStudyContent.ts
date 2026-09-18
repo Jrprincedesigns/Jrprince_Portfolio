@@ -253,7 +253,7 @@ const doorvest: CaseStudyContent = {
       width: "bleed",
       variant: "wide",
       images: [
-        { src: "/img/cases/doorvest/marketplace.png", w: 3840, h: 2160, alt: "The Doorvest marketplace: investment portfolios above the browsable in-app home inventory" },
+        { src: "/img/cases/doorvest/marketplace-board.png", w: 2880, h: 1620, alt: "The Doorvest marketplace: investment portfolios above the browsable in-app home inventory" },
       ],
     },
     {
