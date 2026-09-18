@@ -120,6 +120,13 @@ export interface CaseStudyContent {
     /** Brand-colour band behind the card (defaults to Doorvest green). */
     band?: string;
   };
+  /**
+   * Page colour theme. "dark" flips the study onto a dark field (light text,
+   * dark cards, light chapter rail); default keeps the showcase/beige logic.
+   */
+  theme?: "light" | "dark";
+  /** Accent colour for metric values etc. (defaults to Doorvest green). */
+  accent?: string;
   /** When present, renders a sticky chapter rail + enables scroll reveal. */
   chapters?: CaseChapter[];
   blocks: CaseBlock[];
@@ -372,8 +379,10 @@ const superfile: CaseStudyContent = {
       h: 1368,
       alt: "Superfile's file-native capabilities: trackable, unhackable, and take-backable files",
     },
-    band: "#1c2333",
+    band: "#1f1f1f",
   },
+  theme: "dark",
+  accent: "#d0f010",
   title: "Designing secure monetization for a zero-trust file platform.",
   lead:
     "Superfile is a venture-backed cybersecurity startup building files that stay " +

@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { site } from "@/data/site";
@@ -176,8 +177,20 @@ export default function CaseStudyView({
           )
           .map((b) => ({ id: sectionId(b), label: b.title })));
 
+  const dark = study.theme === "dark";
+
   return (
-    <article className={`${styles.page} ${showcase ? styles.pageLight : ""}`}>
+    <article
+      className={`${styles.page} ${
+        dark ? styles.pageDark : showcase ? styles.pageLight : ""
+      }`}
+      data-cs-dark={dark ? "" : undefined}
+      style={
+        study.accent
+          ? ({ ["--cs-accent"]: study.accent } as CSSProperties)
+          : undefined
+      }
+    >
       {chapters.length > 1 && <ChapterNav chapters={chapters} />}
 
       {showcase && (
