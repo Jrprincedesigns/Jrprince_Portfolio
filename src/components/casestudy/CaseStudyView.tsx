@@ -271,12 +271,12 @@ export default function CaseStudyView({
                 >
                   <dt className={styles.metricValue}>{o.value}</dt>
                   <dd className={styles.metricLabel}>{o.label}</dd>
-                  <div className={styles.metricFoot}>
+                  <dd className={styles.metricFoot}>
                     <span className={styles.metricIndex}>
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className={styles.metricTag}>Impact metrics</span>
-                  </div>
+                  </dd>
                 </Reveal>
               ))}
             </dl>

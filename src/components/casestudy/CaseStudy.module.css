@@ -61,15 +61,15 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 .pageDark .metricTag {
-  color: var(--cs-muted);
-  background: rgba(255, 255, 255, 0.07);
+  color: #cbc7be; /* AA on the chip (>= 4.5:1) */
+  background: rgba(255, 255, 255, 0.09);
 }
 .pageDark .mock,
 .pageDark .wideInner {
   background: linear-gradient(135deg, #2b2a27, #201f1d);
 }
 .pageDark .mockLabel {
-  color: rgba(255, 255, 255, 0.42);
+  color: rgba(255, 255, 255, 0.62); /* AA on the dark placeholder (>= 4.5:1) */
 }
 
 /* ---- Width containers ---- */
@@ -277,7 +277,7 @@
   font-size: clamp(15px, 0.6rem + 0.35vw, 17px);
   line-height: 1.6;
   letter-spacing: -0.005em;
-  color: #626262;
+  color: var(--cs-muted);
 }
 .sectionCopy p {
   margin: 0 0 18px;
@@ -320,7 +320,7 @@
   line-height: 1.6;
   letter-spacing: 0;
   font-weight: 400;
-  color: #626262;
+  color: var(--cs-muted);
 }
 
 /* ---- Titled group -------------------------------------------------------
@@ -372,7 +372,7 @@
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.4;
-  color: #121212;
+  color: var(--cs-ink);
 }
 /* When a kicker subtitle follows, sit it tight under the heading. */
 .groupHeading:has(+ .sectionLead) {
@@ -1010,7 +1010,7 @@
 }
 
 .metricFoot {
-  margin-top: auto;
+  margin: auto 0 0; /* pushes to card bottom; resets the default <dd> inline margin */
   padding-top: clamp(0.75rem, 1.4vw, 1.1rem);
   display: flex;
   align-items: center;
