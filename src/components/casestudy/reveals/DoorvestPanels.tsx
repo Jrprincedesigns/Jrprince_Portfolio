@@ -13,14 +13,18 @@ const STAGE_W = 1440;
  * laid out in its 1440×1054 coordinate space and scaled to the container. Two
  * one-shot motions that play once when the figure scrolls into view (no loop):
  * the app window rises up out of the lower-left panel (y: 0→-513), and the full
- * Doorvest dashboard settles over the sunset (y: 22→0). The statement card is
- * static.
+ * Doorvest dashboard slides in over the sunset (Figma's horizontal x-slide,
+ * node 4408:47913 — here entering from the right, ~20% of its width). The
+ * statement card is static.
  *
  * Reduced motion: render both at their revealed end-state so the content reads
  * without animating.
  */
 const RISE = { duration: 1.6, ease: [0.22, 1, 0.36, 1] as const };
-const SETTLE = { duration: 1.1, ease: [0.22, 1, 0.36, 1] as const };
+const SLIDE = { duration: 1.1, ease: [0.22, 1, 0.36, 1] as const };
+/* Figma slides the dashboard x: 0→-284 at its native 1408px width (~20%).
+ * Scaled to the 620px card shown here, that's ~124px; it enters from the right. */
+const DASH_SLIDE = 124;
 
 export default function DoorvestPanels({ caption }: { caption?: string }) {
   const stageRef = useRef<HTMLDivElement>(null);
@@ -104,10 +108,10 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
             />
             <motion.div
               className={styles.dashboardCard}
-              style={{ left: 32, top: 306, width: 620, height: 394 }}
-              initial={{ y: 22 }}
-              animate={{ y: revealed ? 0 : 22 }}
-              transition={reduce ? { duration: 0 } : SETTLE}
+              style={{ left: 28, top: 302, width: 622, height: 395 }}
+              initial={{ x: DASH_SLIDE }}
+              animate={{ x: revealed ? 0 : DASH_SLIDE }}
+              transition={reduce ? { duration: 0 } : SLIDE}
             >
               <Image
                 src={`${B}/panel-dashboard.png`}
