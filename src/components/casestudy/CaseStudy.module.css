@@ -244,9 +244,9 @@
 }
 .sectionCopy {
   font-size: clamp(15px, 0.6rem + 0.35vw, 17px);
-  line-height: 1.55;
+  line-height: 1.6;
   letter-spacing: -0.005em;
-  color: var(--cs-ink);
+  color: #626262;
 }
 .sectionCopy p {
   margin: 0 0 18px;
@@ -281,12 +281,15 @@
 .sectionBody {
   min-width: 0;
 }
+/* The kicker sits under the heading as a muted subtitle (Figma), not a big
+   statement. */
 .sectionLead {
-  margin: 0 0 clamp(16px, 2vw, 24px);
-  font-size: clamp(20px, 2.2vw, 32px);
-  line-height: 1.12;
-  letter-spacing: -0.035em;
-  font-weight: 600;
+  margin: 0 0 16px;
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  font-weight: 400;
+  color: #626262;
 }
 
 /* ---- Titled group -------------------------------------------------------
@@ -331,12 +334,18 @@
 .groupSection {
   min-width: 0;
 }
+/* Figma: 24px medium (not bold), roomy line-height, near-black. */
 .groupHeading {
-  margin: 0 0 clamp(0.6rem, 1.2vw, 0.95rem);
-  font-size: clamp(19px, 1.7vw, 26px);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.12;
+  margin: 0 0 16px;
+  font-size: clamp(18px, 1.5vw, 24px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: #121212;
+}
+/* When a kicker subtitle follows, sit it tight under the heading. */
+.groupHeading:has(+ .sectionLead) {
+  margin-bottom: 8px;
 }
 
 /* ---- Identity row (showcase heroes: project name + inline meta) ---------- */
