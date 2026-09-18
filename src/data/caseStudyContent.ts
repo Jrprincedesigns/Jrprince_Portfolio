@@ -334,8 +334,6 @@ const doorvest: CaseStudyContent = {
     {
       kind: "embed",
       embed: "doorvest-system-map",
-      caption:
-        "How the redesigned platform connected the operation: every workflow, tool, and team, with the product at the center. Hover any node to trace its role and connections.",
     },
     {
       kind: "group",
