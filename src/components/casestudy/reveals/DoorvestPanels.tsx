@@ -125,8 +125,8 @@ export default function DoorvestPanels({ caption }: { caption?: string }) {
               <Image
                 src={`${B}/panel-sidebar.png`}
                 alt="The Doorvest ownership dashboard navigation"
-                width={429}
-                height={1790}
+                width={964}
+                height={3580}
                 quality={95}
                 className={styles.sidebarImg}
                 sizes="320px"
