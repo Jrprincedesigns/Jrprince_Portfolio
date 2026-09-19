@@ -418,7 +418,6 @@ const superfile: CaseStudyContent = {
     {
       kind: "reveal",
       name: "superfile-hero-video",
-      width: "bleed",
     },
     {
       kind: "group",
