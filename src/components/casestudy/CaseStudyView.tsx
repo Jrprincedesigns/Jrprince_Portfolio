@@ -17,6 +17,8 @@ import AmbasdrScrollVideo from "./reveals/AmbasdrScrollVideo";
 import DoorvestPanels from "./reveals/DoorvestPanels";
 import LiveResearchStickies from "./reveals/LiveResearchStickies";
 import SuperfileHero from "./reveals/SuperfileHero";
+import SuperfileEcosystem from "./reveals/SuperfileEcosystem";
+import SuperfilePayCard from "./reveals/SuperfilePayCard";
 import Reveal from "@/components/motion/Reveal";
 import styles from "./CaseStudy.module.css";
 
@@ -408,7 +410,11 @@ export default function CaseStudyView({
               {block.name === "live-research-stickies" && (
                 <LiveResearchStickies caption={block.caption} />
               )}
-              {block.name === "superfile-hero-video" && <SuperfileHero />}
+              {block.name === "superfile-hero-video" && (
+                <SuperfileHero caption={block.caption} />
+              )}
+              {block.name === "superfile-ecosystem" && <SuperfileEcosystem />}
+              {block.name === "superfile-paycard" && <SuperfilePayCard />}
             </div>
           );
         }

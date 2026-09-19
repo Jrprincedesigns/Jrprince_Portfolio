@@ -72,7 +72,7 @@ const ADVANCE_MS = 6500;
  * paused for reduced-motion users (posters, no crossfade), who can still browse
  * via the dots.
  */
-export default function SuperfileHero() {
+export default function SuperfileHero({ caption }: { caption?: string }) {
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -186,6 +186,7 @@ export default function SuperfileHero() {
           </div>
         </div>
       </div>
+      {caption && <figcaption className={styles.figCaption}>{caption}</figcaption>}
     </figure>
   );
 }

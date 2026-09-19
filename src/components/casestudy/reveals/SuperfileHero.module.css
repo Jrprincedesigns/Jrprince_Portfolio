@@ -1,6 +1,14 @@
 .figure {
   margin: 0;
 }
+.figCaption {
+  margin: 18px auto 0;
+  max-width: 66ch;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--cs-muted);
+}
 
 /* The mockup drives the box; its intrinsic 1630×965 ratio keeps the screen
    overlay locked to the monitor at every width. */

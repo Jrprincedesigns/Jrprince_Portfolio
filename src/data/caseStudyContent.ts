@@ -396,7 +396,9 @@ const superfile: CaseStudyContent = {
     { label: "Timeline", value: "2024 – 2025" },
   ],
   outcomes: [
-    { value: "$14M+", label: "Invested off the 0→1 product design" },
+    { value: "$14M+", label: "Raised during the 0→1 period this work anchored" },
+    { value: "0 → 1", label: "First working pay-to-unlock flow, shipped end to end" },
+    { value: "1 flow", label: "Same Stripe + access model across macOS and web" },
   ],
   // Chapter rail derives from the group labels below (Doorvest-style layout).
   blocks: [
@@ -418,6 +420,8 @@ const superfile: CaseStudyContent = {
     {
       kind: "reveal",
       name: "superfile-hero-video",
+      caption:
+        "Context: the SuperFile product I was designing monetization into — one identity and one set of guarantees across every audience.",
     },
     {
       kind: "group",
@@ -450,11 +454,13 @@ const superfile: CaseStudyContent = {
       ],
     },
     {
-      kind: "media",
-      variant: "wide",
-      labels: [
-        "The Superfile product ecosystem: macOS app, web, secure viewers, payments, permissioning, ownership verification, and tracking",
-      ],
+      kind: "reveal",
+      name: "superfile-ecosystem",
+    },
+    {
+      kind: "banner",
+      eyebrow: "The line the whole system turned on",
+      text: "A successful payment could grant access. It could never grant ownership. Every screen, state, and Stripe event had to hold that line.",
     },
     {
       kind: "group",
@@ -467,7 +473,7 @@ const superfile: CaseStudyContent = {
           kicker: "Payment had to sit on top of security, never replace it.",
           body: [
             "The push to monetize came straight from leadership and investors, centered on file ownership. The audience went beyond creators. It included anyone with digital assets who wanted to sell access while keeping control and protection intact.",
-            "That ruled out ordinary paywall patterns right away. If access could be copied, bypassed, or handed over too early, the product would undercut the exact thing it promised to protect.",
+            "That ruled out ordinary paywall patterns right away. If access could be copied, bypassed, or handed over too early, the product would undercut the exact thing it promised to protect. So every decision had to pay off on both sides at once: a real revenue line for the business, and more control — not less — for the person selling the file.",
           ],
         },
         {
@@ -480,7 +486,7 @@ const superfile: CaseStudyContent = {
           kicker: "I owned this end to end, across product strategy, UX, and engineering.",
           body: [
             "We used Stripe as the payment layer instead of building our own. The real work wasn't dropping in a checkout form. It was figuring out how an outside payment provider could safely unlock access inside a security-first product. I led how Stripe's events connected to Superfile's access model, in both design and implementation.",
-            "A payment was a prerequisite for access, not proof of ownership. A successful charge didn't unlock a file on its own. Access was only released after the payment was confirmed and matched to the right file and the right recipient. That gave us room to handle retries, failures, and revocation without ever exposing a sensitive state or granting access too early.",
+            "A payment was a prerequisite for access, not proof of ownership. The obvious version — unlock the instant the charge succeeds — was the one we rejected: a charge can succeed and still be wrong, from fraud to a mismatched recipient to a refund seconds later. A successful charge didn't unlock a file on its own. Access was only released after the payment was confirmed and matched to the right file and the right recipient. That gave us room to handle retries, failures, and revocation without ever exposing a sensitive state or granting access too early.",
             "The map became a shared contract between design and engineering. It drew the boundaries of who owned what, and separated the states that were technically impossible from the ones we simply didn't want.",
           ],
         },
@@ -536,31 +542,19 @@ const superfile: CaseStudyContent = {
       ],
     },
     {
-      kind: "media",
-      variant: "panel",
-      labels: [
-        "How the pay card is layered: basic inputs → transaction-intent layer → the container that releases access",
-      ],
+      kind: "reveal",
+      name: "superfile-paycard",
     },
     {
       kind: "group",
-      label: "Investor storytelling",
+      label: "Making the system legible",
       id: "investor-storytelling",
       blocks: [
         {
           kind: "section",
-          title: "Investor storytelling",
+          title: "Making an invisible system legible",
           body: [
             "Complex technology only matters if people get it. Early on, investors were handed technical diagrams. Later, they followed a story instead: the problem, ownership, how it makes money, control, and the market. Showing it visually turned out to be the bridge between technical depth and business value.",
-          ],
-        },
-        {
-          kind: "section",
-          title: "What shipped",
-          kicker: "A working pay-to-unlock flow, used end to end before it ever went public.",
-          body: [
-            "The feature launched internally first. Investors ran the full pay-to-unlock flow themselves from invite-only accounts, paying to open a protected file without ever gaining ownership of it. Putting a working security model in their hands, one they completed real tasks in rather than read about in a diagram, moved the company's fundraising conversations forward. It was validation from the people funding the work, though not yet from creators in the wild; getting it in front of real sellers was the planned next step.",
-            "Because the feature kept changing while the company pivoted, I documented every flow, state, and security boundary in Figma and Notion. On a security-sensitive surface those weren't deliverables. They were how design and engineering stayed aligned on what was technically impossible versus what we simply chose not to allow.",
           ],
         },
       ],
@@ -578,6 +572,22 @@ const superfile: CaseStudyContent = {
     },
     {
       kind: "group",
+      label: "What shipped",
+      id: "what-shipped",
+      blocks: [
+        {
+          kind: "section",
+          title: "What shipped",
+          kicker: "A working pay-to-unlock flow, used end to end before it ever went public.",
+          body: [
+            "The feature launched internally first. Investors ran the full pay-to-unlock flow themselves from invite-only accounts, paying to open a protected file without ever gaining ownership of it. Putting a working security model in their hands, one they completed real tasks in rather than read about in a diagram, moved the company's fundraising conversations forward. It was validation from the people funding the work, though not yet from creators in the wild; getting it in front of real sellers was the planned next step.",
+            "Because the feature kept changing while the company pivoted, I documented every flow, state, and security boundary in Figma and Notion. On a security-sensitive surface those weren't deliverables. They were how design and engineering stayed aligned on what was technically impossible versus what we simply chose not to allow.",
+          ],
+        },
+      ],
+    },
+    {
+      kind: "group",
       label: "Reflection",
       id: "reflection",
       blocks: [
@@ -586,6 +596,7 @@ const superfile: CaseStudyContent = {
           title: "Reflection",
           body: [
             "The hardest part of this project was never the interface. It was holding one line steady, that a payment can unlock access without ever transferring ownership, across product, design, and engineering while the rest of the product kept moving underneath it.",
+            "If I did it again, I'd draw the state diagram before the first screen, not after. On a product where the states are the thing you're selling, the interface is downstream of getting those boundaries right — and the screens I made early all had to be redrawn once the states were settled.",
             "It taught me that on infrastructure this abstract, the design work is as much about making the system legible to engineers, investors, and users as it is about the screens themselves.",
           ],
         },
