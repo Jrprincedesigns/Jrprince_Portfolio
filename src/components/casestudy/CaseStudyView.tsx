@@ -16,6 +16,7 @@ import AmbasdrHero from "./reveals/AmbasdrHero";
 import AmbasdrScrollVideo from "./reveals/AmbasdrScrollVideo";
 import DoorvestPanels from "./reveals/DoorvestPanels";
 import LiveResearchStickies from "./reveals/LiveResearchStickies";
+import SuperfileHero from "./reveals/SuperfileHero";
 import Reveal from "@/components/motion/Reveal";
 import styles from "./CaseStudy.module.css";
 
@@ -407,6 +408,7 @@ export default function CaseStudyView({
               {block.name === "live-research-stickies" && (
                 <LiveResearchStickies caption={block.caption} />
               )}
+              {block.name === "superfile-hero-video" && <SuperfileHero />}
             </div>
           );
         }

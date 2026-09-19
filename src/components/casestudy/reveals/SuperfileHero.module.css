@@ -1,0 +1,98 @@
+.hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 440px;
+  max-height: 88vh;
+  overflow: hidden;
+  background: #0b0b0b;
+  display: flex;
+  align-items: center;
+  isolation: isolate;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: -2;
+}
+
+/* Darken toward the lower-left so the copy stays legible over any frame. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(9, 9, 9, 0.86) 0%,
+      rgba(9, 9, 9, 0.58) 42%,
+      rgba(9, 9, 9, 0.12) 100%
+    ),
+    linear-gradient(0deg, rgba(9, 9, 9, 0.66) 0%, rgba(9, 9, 9, 0) 48%);
+}
+
+.inner {
+  width: 100%;
+  max-width: calc(var(--cs-wide) + 2 * var(--cs-gutter));
+  margin-inline: auto;
+  padding-inline: var(--cs-gutter);
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: clamp(14px, 1.6vw, 20px);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cs-accent, #d0f010);
+}
+
+.title {
+  margin: 0;
+  max-width: 22ch;
+  font-size: clamp(2rem, 1rem + 4.4vw, 4.4rem);
+  line-height: 1.03;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: #fff;
+}
+
+.sub {
+  margin: clamp(18px, 2vw, 26px) 0 0;
+  max-width: 48ch;
+  font-size: clamp(15px, 0.7rem + 0.5vw, 19px);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.toggle {
+  position: absolute;
+  bottom: 18px;
+  right: max(18px, var(--cs-gutter));
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.toggle:hover {
+  background: rgba(0, 0, 0, 0.66);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.toggle:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}

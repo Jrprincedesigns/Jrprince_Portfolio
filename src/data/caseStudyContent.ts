@@ -416,6 +416,11 @@ const superfile: CaseStudyContent = {
       ],
     },
     {
+      kind: "reveal",
+      name: "superfile-hero-video",
+      width: "bleed",
+    },
+    {
       kind: "group",
       label: "Building a new mental model",
       id: "building-a-new-mental-model",
