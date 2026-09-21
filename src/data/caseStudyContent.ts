@@ -498,7 +498,7 @@ const superfile: CaseStudyContent = {
       variant: "wide",
       images: [
         {
-          src: "/img/cases/superfile/system-map.png",
+          src: "/img/cases/superfile/system-map-dark.png",
           w: 1800,
           h: 1392,
           alt: "Pay-to-unlock map: how Stripe events safely trigger access without granting ownership",
