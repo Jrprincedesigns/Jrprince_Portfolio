@@ -1,0 +1,193 @@
+.figure {
+  margin: 0;
+}
+.figCaption {
+  margin: 18px auto 0;
+  max-width: 66ch;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--cs-muted);
+}
+
+/* The mockup drives the box; its intrinsic 1630×965 ratio keeps the screen
+   overlay locked to the monitor at every width. */
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1630 / 965;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.mockup {
+  object-fit: cover;
+}
+
+/* Screen area of the display, measured from the mockup (as % of the image),
+   with a hair of outward bleed so no white glass shows at the bezel. A size
+   container so the slide type can scale with the (small) screen via cqw. */
+.screen {
+  position: absolute;
+  left: 22.6%;
+  top: 19.1%;
+  width: 54.8%;
+  height: 48.2%;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #000;
+  z-index: 1;
+  container-type: inline-size;
+}
+
+/* ---- Slides (crossfade) ---- */
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s ease, visibility 0s linear 0.7s;
+}
+.slide.on {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.7s ease;
+}
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Darken toward the lower-left so the copy stays legible over any frame. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(8, 8, 8, 0.82) 0%, rgba(8, 8, 8, 0.4) 46%, rgba(8, 8, 8, 0) 82%),
+    linear-gradient(0deg, rgba(8, 8, 8, 0.7) 0%, rgba(8, 8, 8, 0) 46%);
+}
+
+.slideIn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 6cqw 7cqw;
+  max-width: 82%;
+}
+.eyebrow {
+  font-size: clamp(7px, 1.5cqw, 13px);
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--cs-accent, #d0f010);
+  margin-bottom: 2.4cqw;
+}
+.title {
+  margin: 0;
+  font-size: clamp(15px, 5.1cqw, 40px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: #fff;
+}
+.sub {
+  margin: 2.6cqw 0 0;
+  max-width: 62cqw;
+  font-size: clamp(8px, 2.05cqw, 15px);
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.86);
+}
+.cta {
+  display: inline-block;
+  margin-top: 3.4cqw;
+  padding: 1.7cqw 3.2cqw;
+  border-radius: 999px;
+  background: var(--cs-accent, #d0f010);
+  color: #101010;
+  font-size: clamp(8px, 1.9cqw, 14px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* ---- Controls ---- */
+.controls {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2cqw 3cqw;
+}
+.dots {
+  display: flex;
+  gap: 2px;
+}
+/* Small visual dot, but a >=24px hit area (WCAG 2.5.8). */
+.dot {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.dotMark {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.dot:hover .dotMark {
+  background: rgba(255, 255, 255, 0.85);
+}
+.dotOn .dotMark {
+  background: #fff;
+  transform: scale(1.35);
+}
+.dot:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -3px;
+  border-radius: 6px;
+}
+
+.toggle {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.42);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.toggle:hover {
+  background: rgba(0, 0, 0, 0.66);
+  border-color: rgba(255, 255, 255, 0.65);
+}
+.toggle:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Reduced motion: no crossfade — slides switch instantly. */
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .slide.on {
+    transition: none;
+  }
+}

@@ -117,7 +117,16 @@ export interface CaseStudyContent {
     image: CaseImage;
     /** Faded wordmark behind the card (defaults to `project`). */
     wordmark?: string;
+    /** Brand-colour band behind the card (defaults to Doorvest green). */
+    band?: string;
   };
+  /**
+   * Page colour theme. "dark" flips the study onto a dark field (light text,
+   * dark cards, light chapter rail); default keeps the showcase/beige logic.
+   */
+  theme?: "light" | "dark";
+  /** Accent colour for metric values etc. (defaults to Doorvest green). */
+  accent?: string;
   /** When present, renders a sticky chapter rail + enables scroll reveal. */
   chapters?: CaseChapter[];
   blocks: CaseBlock[];
@@ -361,12 +370,31 @@ const doorvest: CaseStudyContent = {
 const superfile: CaseStudyContent = {
   slug: "secure-file-sharing",
   project: "Superfile",
+  heroShowcase: {
+    // The designed header (Figma node 4126:42230): the payment + entitlement UI
+    // states — a pay card, the Access granted / Access Denied / Pay-to-unlock
+    // indicators, the confirm-payment card, and the card-number field. Exported
+    // from Figma at 4× and used as the product-state header for the study.
+    image: {
+      src: "/img/cases/superfile/pay-states.png",
+      w: 1704,
+      h: 1544,
+      alt: "Superfile's paid-access interface states: a cardholder pay card, the Access granted and Access Denied indicators, a Pay-to-unlock action, a confirm-payment card priced at $25.00 for a named recipient, and a masked card-number field with a Visa mark.",
+    },
+    band: "#1f1f1f",
+  },
+  theme: "dark",
+  accent: "#d0f010",
   title: "Designing secure monetization for a zero-trust file platform.",
   lead:
-    "Superfile is a venture-backed cybersecurity startup building files that stay " +
-    "under the creator's control even after they're shared. I led design for its " +
-    "pay-to-unlock feature: a way to sell access to a file without ever giving up " +
-    "ownership, built on a zero-trust foundation across macOS and web.",
+    "Directors, artists, and content creators needed to deliver valuable files " +
+    "without losing control of them the moment someone received access. Buyers " +
+    "expected the opposite: after paying, the file should open immediately. As " +
+    "founding product designer at Superfile, a venture-backed cybersecurity " +
+    "startup building files that stay under their creator's control after they're " +
+    "shared, I designed the system between those two expectations: an experience " +
+    "that felt instant to the buyer while preserving the owner's ability to " +
+    "monitor, limit, and revoke access, across macOS and web.",
   meta: [
     { label: "Role", value: "Founding Product Designer" },
     { label: "Industry", value: "Cybersecurity · Fintech · B2C" },
@@ -374,131 +402,201 @@ const superfile: CaseStudyContent = {
     { label: "Timeline", value: "2024 – 2025" },
   ],
   outcomes: [
-    { value: "$14M+", label: "Invested off the 0→1 product design" },
+    { value: "$14M+", label: "Raised during Superfile's 0→1 period; investors operated the working flow themselves" },
+    { value: "0 → 1", label: "First working pay-to-unlock flow, shipped end to end" },
+    { value: "1 flow", label: "One Stripe + entitlement model across macOS and web" },
   ],
-  chapters: [
-    { id: "the-problem-space", label: "The problem space" },
-    { id: "building-a-new-mental-model", label: "A new mental model" },
-    { id: "the-product-ecosystem", label: "Product ecosystem" },
-    { id: "building-with-stripe", label: "Building with Stripe" },
-    { id: "a-controlled-payment-surface", label: "Payment surface" },
-    { id: "component-architecture", label: "Component architecture" },
-    { id: "investor-storytelling", label: "Investor storytelling" },
-    { id: "reflection", label: "Reflection" },
-  ],
+  // Chapter rail derives from the group labels below (Doorvest-style layout).
   blocks: [
+    // Primary architectural visual: the entitlement lifecycle opens the study so
+    // it reads as being about access architecture, not the design of a pay form.
     {
-      kind: "section",
-      title: "The problem space",
-      body: [
-        "With normal file sharing, you lose control the moment someone downloads a copy. Ownership, rights, and access are gone. For creators, the value isn't only in the file itself. It's in what happens to it afterward: who has it, how it's used, and whether it stays protected.",
-        "Superfile changes that. You upload a file, grant access, watch how it's used, adjust permissions, and revoke access whenever you want, all while keeping ownership. A file stays an asset instead of becoming a liability the moment it leaves your hands. My job was to let people sell access to those files without weakening any of that.",
-      ],
+      kind: "reveal",
+      name: "superfile-lifecycle",
+      width: "wide",
     },
     {
-      kind: "section",
-      title: "Building a new mental model",
-      body: [
-        "Changing how ownership works meant designing around permissions and durable access control. Rather than treating a file as infinitely copyable, Superfile tracks where it came from, verifies who's opening it, and adjusts what each viewer can do.",
-        "Control flows from the creator into the file, and each viewer gets their own permissions. It works a little like enterprise access controls, but applied to creative rights.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      images: [
+      kind: "group",
+      label: "Selling access without surrendering control",
+      id: "the-problem-space",
+      blocks: [
         {
-          src: "/img/cases/superfile/capabilities.png",
-          w: 1500,
-          h: 1368,
-          alt: "Superfile's file-native capabilities: trackable, unhackable, and take-backable files",
+          kind: "section",
+          title: "Selling access without surrendering control",
+          body: [
+            "With normal file sharing, you lose control the moment someone downloads a copy. Ownership, rights, and access are gone. For the people Superfile was built for (directors, artists, content creators, and anyone responsible for delivering a valuable file), the value isn't only in the file itself. It's in what happens afterward: who has it, how it's used, and whether it stays protected.",
+            "Superfile keeps that control. You upload a file, grant access, watch how it's used, adjust permissions, and revoke access whenever you want, all while keeping ownership. My job was to let people charge for access to those files without weakening any of that, and without making the buyer wait to open what they'd just paid for.",
+          ],
+        },
+        {
+          kind: "cards",
+          label: "Two sides of the same file",
+          items: [
+            {
+              title: "The file owner",
+              body: "Delivers a protected file, sees who can view it, monitors access and attempted sharing, sets temporary or lasting access, and revokes it without giving up ownership.",
+            },
+            {
+              title: "The recipient",
+              body: "Encounters a protected file, pays for access, and moves straight into the viewer once the charge is confirmed, without ever receiving an unrestricted copy.",
+            },
+          ],
+        },
+      ],
+    },
+    // Supporting diagram #1: who the system served and where authority lived.
+    {
+      kind: "reveal",
+      name: "superfile-actor-map",
+    },
+    {
+      kind: "reveal",
+      name: "superfile-hero-video",
+      caption:
+        "Context: the Superfile product I was designing monetization into: one identity and one set of guarantees across every audience.",
+    },
+    {
+      kind: "group",
+      label: "How the pieces relate",
+      id: "the-product-ecosystem",
+      blocks: [
+        {
+          kind: "section",
+          title: "How the pieces relate",
+          body: [
+            "Changing how ownership works meant designing around permissions and durable access control. Rather than treating a file as infinitely copyable, Superfile tracks where it came from, verifies who's opening it, and adjusts what each viewer can do. Control flows from the creator into the file, and each viewer gets their own permissions, a little like enterprise access controls applied to creative rights.",
+            "That model spans a macOS app, a web platform, secure viewers, payments, permissioning, ownership verification, accounts, and usage tracking. The map below lays out how the pieces relate and where value moves between them, so the system stays legible whether you're an engineer or an investor.",
+          ],
         },
       ],
     },
     {
-      kind: "section",
-      title: "The product ecosystem",
-      body: [
-        "Superfile spans a macOS app, a web platform, secure viewers, payments, permissioning, ownership verification, accounts, and usage tracking. Together they enforce digital rights and let creators actually make money from their work.",
-        "The map below lays out how the pieces relate and where value moves between them, so the whole thing stays legible whether you're an engineer or an investor.",
-      ],
+      kind: "reveal",
+      name: "superfile-ecosystem",
     },
     {
-      kind: "media",
-      variant: "wide",
-      labels: [
-        "The Superfile product ecosystem: macOS app, web, secure viewers, payments, permissioning, ownership verification, and tracking",
-      ],
+      kind: "banner",
+      eyebrow: "The line the whole system turned on",
+      text: "A successful payment could grant access. It could never grant ownership. Every screen, state, and Stripe event had to hold that line.",
     },
     {
-      kind: "section",
-      title: "Context: why this mattered",
-      kicker: "Payment had to sit on top of security, never replace it.",
-      body: [
-        "The push to monetize came straight from leadership and investors, centered on file ownership. The audience went beyond creators. It included anyone with digital assets who wanted to sell access while keeping control and protection intact.",
-        "That ruled out ordinary paywall patterns right away. If access could be copied, bypassed, or handed over too early, the product would undercut the exact thing it promised to protect.",
-      ],
-    },
-    {
-      kind: "quote",
-      text: "The real question wasn't whether to monetize. It was how to do so without breaking Superfile's zero-trust foundation.",
-    },
-    {
-      kind: "section",
-      title: "Building with Stripe",
-      kicker: "I owned this end to end, across product strategy, UX, and engineering.",
-      body: [
-        "We used Stripe as the payment layer instead of building our own. The real work wasn't dropping in a checkout form. It was figuring out how an outside payment provider could safely unlock access inside a security-first product. I led how Stripe's events connected to Superfile's access model, in both design and implementation.",
-        "A payment was a prerequisite for access, not proof of ownership. A successful charge didn't unlock a file on its own. Access was only released after the payment was confirmed and matched to the right file and the right recipient. That gave us room to handle retries, failures, and revocation without ever exposing a sensitive state or granting access too early.",
-        "The map became a shared contract between design and engineering. It drew the boundaries of who owned what, and separated the states that were technically impossible from the ones we simply didn't want.",
-      ],
-    },
-    {
-      kind: "media",
-      variant: "wide",
-      images: [
+      kind: "group",
+      label: "Payment is not permission",
+      id: "building-with-stripe",
+      blocks: [
         {
-          src: "/img/cases/superfile/system-map.png",
-          w: 1800,
-          h: 1392,
-          alt: "Pay-to-unlock map: how Stripe events safely trigger access without granting ownership",
+          kind: "section",
+          title: "Payment is not permission",
+          kicker: "The CEO wanted access to feel instant. The work was making it instant without letting the charge become the authority.",
+          body: [
+            "The push to monetize came straight from leadership, and the CEO wanted access to feel immediate: pay, and the file opens. Anything slower would make the purchase feel broken. That constraint didn't loosen security. It just meant the buyer could never be the one left waiting.",
+            "So we used Stripe for payments instead of building our own, and the real work wasn't dropping in a checkout form. It was deciding what a successful charge was allowed to mean. The obvious version, unlocking the instant the charge succeeds, was the one we rejected: a charge can succeed and still be wrong, from fraud to a mismatched recipient to a refund seconds later. Access was released only after the payment was confirmed and matched to the right file and the right recipient. To the buyer it still felt immediate; underneath, Superfile, not Stripe, stayed the authority over access.",
+            "I led how Stripe's events connected to Superfile's entitlement model, in both design and implementation. The map became a shared contract between design and engineering: it drew who owned what, and separated the states that were technically impossible from the ones we simply chose not to allow.",
+          ],
         },
       ],
     },
     {
-      kind: "section",
-      title: "A controlled payment surface",
-      kicker: "Monetization had to live inside the product without weakening its security.",
-      body: [
-        "Instead of Stripe's default checkout, I designed a custom pay card that lived natively inside Superfile. It let us control exactly how a payment was expressed and validated, and made sure a transaction could never hand over ownership or slip past the security model.",
+      kind: "evolution",
+      label: "From the obvious model to the one we shipped",
+      beforeLabel: "Initial assumption",
+      afterLabel: "Designed model",
+      rows: [
+        { before: "Successful Stripe charge → file unlocks", after: "Payment intent → charge confirmed → recipient and file matched → entitlement granted → viewer opens" },
+        { before: "Stripe is the source of truth for access", after: "Superfile owns the entitlement; Stripe only reports the charge" },
+        { before: "A refund or wrong recipient has already leaked the file", after: "Refund, mismatch, expiry, and attempted sharing stay addressable states" },
+        { before: "Access is a one-time unlock", after: "Access is a verified entitlement the owner can monitor and revoke" },
       ],
     },
     {
-      kind: "section",
-      title: "Component architecture",
-      body: [
-        "The pay-to-unlock surface is built in layers that separate the intent to pay from the authority to grant access. As you move up the stack, the product takes on more of the decision and the user controls less of the outcome: from basic inputs like card number and cardholder name, through the transaction-intent layer, up to the container that finally releases access.",
+      kind: "group",
+      label: "Designing the entitlement boundary",
+      id: "designing-the-access-model",
+      blocks: [
+        {
+          kind: "section",
+          title: "Designing the entitlement boundary",
+          body: [
+            "I mapped how payment, identity, and entitlement had to work together before a file could open, and, just as important, every way that could fail. The model carried the states the system actually needed: denied, paying, confirmed, granted, refunded, revoked, expired, mismatched, and attempted-sharing. Each one had an owner and a defined next step, so design and engineering could agree on what was technically impossible versus what we simply chose not to allow.",
+            "The interactive map below is that model: the same contract I documented in Figma and Notion for the team. Follow the primary journey, or open any node for what it does, who owns it, and where a policy was still undecided.",
+            "Once a transaction was confirmed, the interface itself needed only a small visible change: an indicator that the buyer could now view the file. The screen update was minor. The transition behind it, from requesting access to holding a verified entitlement, was the substantial work.",
+          ],
+        },
+      ],
+    },
+    // Supporting diagram #2: the linear pay-to-access sequence — immediate in the
+    // interface, verified underneath — before the deep interactive model.
+    {
+      kind: "reveal",
+      name: "superfile-sequence",
+    },
+    {
+      kind: "reveal",
+      name: "superfile-system-map",
+      width: "wide",
+    },
+    {
+      kind: "group",
+      label: "Collecting payment without leaking authority",
+      id: "a-controlled-payment-surface",
+      blocks: [
+        {
+          kind: "section",
+          title: "Collecting payment without leaking authority",
+          kicker: "Monetization had to live inside the product without weakening its security.",
+          body: [
+            "Instead of Stripe's default checkout, I designed a custom pay card that lived natively inside Superfile. It captured transaction intent (the intended recipient, the unlock price, and the payment inputs behind a single Pay to unlock action) and nothing more. The authority to grant or keep access was deliberately kept out of the card itself.",
+            "The surface is built in layers that separate the intent to pay from the authority to grant access. As you move up the stack, the product takes on more of the decision and the user controls less of the outcome: from basic inputs like card number and cardholder name, through the transaction-intent layer, up to the container that finally releases access.",
+          ],
+        },
+        {
+          kind: "section",
+          title: "Keeping one payment model across macOS and web",
+          body: [
+            "One big call was whether to build separate payment logic for macOS and web. Going fully native on each was tempting, but over time the two would drift apart in how they handled payments, webhooks, and security. I proposed embedding a lightweight web view inside the macOS app so both platforms ran the same Stripe flow and the same backend logic, leaving fewer places for bugs or security gaps to creep in.",
+          ],
+        },
       ],
     },
     {
-      kind: "media",
-      variant: "panel",
-      labels: [
-        "How the pay card is layered: basic inputs → transaction-intent layer → the container that releases access",
-      ],
+      kind: "reveal",
+      name: "superfile-paycard",
+      caption:
+        "The payment surface captured transaction intent, not access authority: it established the recipient, price, and payment details before Superfile matched the confirmed charge to the correct file and entitlement.",
     },
     {
-      kind: "section",
-      title: "Cross-platform decisions & trade-offs",
-      body: [
-        "One big call was whether to build separate payment logic for macOS and web. Going fully native on each was tempting, but over time the two would drift apart in how they handled payments, webhooks, and security. I proposed embedding a lightweight web view inside the macOS app so both platforms ran the same Stripe flow and the same backend logic. That left fewer places for bugs or security gaps to creep in.",
+      kind: "group",
+      label: "Access is not ownership",
+      id: "access-vs-ownership",
+      blocks: [
+        {
+          kind: "section",
+          title: "Access is not ownership",
+          body: [
+            "The payment surface stopped at intent; the entitlement carried authority. The clearest way to see the difference is to lay every capability against every actor. What a buyer received was a scoped, revocable right to view — not the owner's standing control, and never anything Stripe could touch.",
+          ],
+        },
       ],
     },
+    // Supporting diagram #3: the capability/actor matrix — a different consequence
+    // of "payment is not ownership" than the pay card shows.
     {
-      kind: "section",
-      title: "Investor storytelling",
-      body: [
-        "Complex technology only matters if people get it. Early on, investors were handed technical diagrams. Later, they followed a story instead: the problem, ownership, how it makes money, control, and the market. Showing it visually turned out to be the bridge between technical depth and business value.",
+      kind: "reveal",
+      name: "superfile-permissions",
+      width: "medium",
+    },
+    {
+      kind: "group",
+      label: "Turning infrastructure into a story investors could operate",
+      id: "investor-storytelling",
+      blocks: [
+        {
+          kind: "section",
+          title: "Turning infrastructure into a story investors could operate",
+          body: [
+            "Complex technology only matters if people get it. Early on, investors were handed technical diagrams. Later, they followed a story instead: the problem, ownership, how it makes money, control, and the market. Making it legible visually, and operable in their own hands, turned out to be the bridge between technical depth and business value.",
+          ],
+        },
       ],
     },
     {
@@ -513,25 +611,54 @@ const superfile: CaseStudyContent = {
       ],
     },
     {
-      kind: "section",
-      title: "What shipped",
-      kicker: "A working pay-to-unlock flow, used end to end before it ever went public.",
-      body: [
-        "The feature launched internally first. Investors ran the full pay-to-unlock flow themselves from invite-only accounts, paying to open a protected file without ever gaining ownership of it. Putting a working security model in their hands, one they completed real tasks in rather than read about in a diagram, moved the company's fundraising conversations forward. It was validation from the people funding the work, though not yet from creators in the wild; getting it in front of real sellers was the planned next step.",
-        "Because the feature kept changing while the company pivoted, I documented every flow, state, and security boundary in Figma and Notion. On a security-sensitive surface those weren't deliverables. They were how design and engineering stayed aligned on what was technically impossible versus what we simply chose not to allow.",
+      kind: "group",
+      label: "What we proved, and what remained unproven",
+      id: "what-shipped",
+      blocks: [
+        {
+          kind: "section",
+          title: "What we proved, and what remained unproven",
+          kicker: "A working pay-to-unlock flow, operated end to end before it ever went public.",
+          body: [
+            "The feature launched internally first. From invite-only accounts, investors ran the full flow themselves: they purchased access, opened the protected file immediately, monitored who had access, saw an attempted share, and revoked access live, completing real tasks instead of reading a diagram.",
+            "That validated the model's clarity and technical viability. It was not creator adoption or behavioral validation. The work happened before Superfile had an active creator cohort, so the flow couldn't yet be tested against real seller behavior; I pressure-tested it against payment and entitlement failures instead, then used the live investor walkthroughs to confirm the system was understandable and operable. Creator validation remained the next step.",
+            "Because the feature kept changing while the company pivoted, I documented every flow, state, and security boundary in Figma and Notion, the same contract shown in the map above. On a security-sensitive surface those weren't deliverables; they were how design and engineering stayed aligned on what was impossible versus what we chose not to allow.",
+          ],
+        },
       ],
     },
+    // Outcome / demo sequence: the control loop investors operated themselves,
+    // with an explicit validated / not-yet-validated boundary beneath it.
     {
-      kind: "section",
-      title: "Reflection",
-      body: [
-        "The hardest part of this project was never the interface. It was holding one line steady, that a payment can unlock access without ever transferring ownership, across product, design, and engineering while the rest of the product kept moving underneath it.",
-        "It taught me that on infrastructure this abstract, the design work is as much about making the system legible to engineers, investors, and users as it is about the screens themselves.",
-      ],
+      kind: "reveal",
+      name: "superfile-investor-loop",
+    },
+    // A small conceptual before/after that earns the "states before screens"
+    // lesson — no fabricated product screens, just the shift in the model.
+    {
+      kind: "reveal",
+      name: "superfile-reflection",
+      width: "medium",
     },
     {
-      kind: "quote",
-      text: "The hard part was never secure file sharing. It was designing for confidence and control in a place where ownership usually feels temporary.",
+      kind: "group",
+      label: "States before screens",
+      id: "reflection",
+      blocks: [
+        {
+          kind: "section",
+          title: "States before screens",
+          body: [
+            "The hardest part of this project was never the interface. It was holding one line steady, that a payment can unlock access without ever transferring ownership, across product, design, and engineering while the rest of the product kept moving underneath it.",
+            "If I did it again, I'd draw the state diagram before the first screen, not after. My early screens treated access as a simple visual condition: paid, so unlocked. Once the state model settled, that same indicator turned out to represent a verified entitlement, something the owner could still monitor and revoke, and the screens I'd made had to be redrawn around it. On a product where the states are the thing you're selling, the interface is downstream of getting those boundaries right.",
+            "It taught me that on infrastructure this abstract, the design work is as much about making the system legible to engineers, investors, and users as it is about the screens themselves.",
+          ],
+        },
+        {
+          kind: "quote",
+          text: "The hard part was never secure file sharing. It was designing for confidence and control in a place where ownership usually feels temporary.",
+        },
+      ],
     },
   ],
 };

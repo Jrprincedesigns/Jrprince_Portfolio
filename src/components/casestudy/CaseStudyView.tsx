@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { site } from "@/data/site";
@@ -15,6 +16,16 @@ import AmbasdrHero from "./reveals/AmbasdrHero";
 import AmbasdrScrollVideo from "./reveals/AmbasdrScrollVideo";
 import DoorvestPanels from "./reveals/DoorvestPanels";
 import LiveResearchStickies from "./reveals/LiveResearchStickies";
+import SuperfileHero from "./reveals/SuperfileHero";
+import SuperfileEcosystem from "./reveals/SuperfileEcosystem";
+import SuperfilePayCard from "./reveals/SuperfilePayCard";
+import SuperfileSystemMap from "./reveals/SuperfileSystemMap";
+import SuperfileLifecycle from "./reveals/SuperfileLifecycle";
+import SuperfileActorMap from "./reveals/SuperfileActorMap";
+import SuperfileSequence from "./reveals/SuperfileSequence";
+import SuperfilePermissions from "./reveals/SuperfilePermissions";
+import SuperfileInvestorLoop from "./reveals/SuperfileInvestorLoop";
+import SuperfileReflection from "./reveals/SuperfileReflection";
 import Reveal from "@/components/motion/Reveal";
 import styles from "./CaseStudy.module.css";
 
@@ -176,14 +187,27 @@ export default function CaseStudyView({
           )
           .map((b) => ({ id: sectionId(b), label: b.title })));
 
+  const dark = study.theme === "dark";
+
   return (
-    <article className={`${styles.page} ${showcase ? styles.pageLight : ""}`}>
+    <article
+      className={`${styles.page} ${
+        dark ? styles.pageDark : showcase ? styles.pageLight : ""
+      }`}
+      data-cs-dark={dark ? "" : undefined}
+      style={
+        study.accent
+          ? ({ ["--cs-accent"]: study.accent } as CSSProperties)
+          : undefined
+      }
+    >
       {chapters.length > 1 && <ChapterNav chapters={chapters} />}
 
       {showcase && (
         <HeroShowcase
           image={showcase.image}
           wordmark={showcase.wordmark ?? study.project}
+          band={showcase.band}
         />
       )}
 
@@ -257,12 +281,12 @@ export default function CaseStudyView({
                 >
                   <dt className={styles.metricValue}>{o.value}</dt>
                   <dd className={styles.metricLabel}>{o.label}</dd>
-                  <div className={styles.metricFoot}>
+                  <dd className={styles.metricFoot}>
                     <span className={styles.metricIndex}>
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className={styles.metricTag}>Impact metrics</span>
-                  </div>
+                  </dd>
                 </Reveal>
               ))}
             </dl>
@@ -393,6 +417,18 @@ export default function CaseStudyView({
               {block.name === "live-research-stickies" && (
                 <LiveResearchStickies caption={block.caption} />
               )}
+              {block.name === "superfile-hero-video" && (
+                <SuperfileHero caption={block.caption} />
+              )}
+              {block.name === "superfile-ecosystem" && <SuperfileEcosystem />}
+              {block.name === "superfile-paycard" && <SuperfilePayCard />}
+              {block.name === "superfile-system-map" && <SuperfileSystemMap />}
+              {block.name === "superfile-lifecycle" && <SuperfileLifecycle />}
+              {block.name === "superfile-actor-map" && <SuperfileActorMap />}
+              {block.name === "superfile-sequence" && <SuperfileSequence />}
+              {block.name === "superfile-permissions" && <SuperfilePermissions />}
+              {block.name === "superfile-investor-loop" && <SuperfileInvestorLoop />}
+              {block.name === "superfile-reflection" && <SuperfileReflection />}
             </div>
           );
         }

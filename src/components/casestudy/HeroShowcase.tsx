@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import { useRef } from "react";
+import { useRef, type CSSProperties } from "react";
 import type { CaseImage } from "@/data/caseStudyContent";
 import { easeOut } from "@/components/motion/motion";
 import styles from "./HeroShowcase.module.css";
@@ -18,9 +18,11 @@ import styles from "./HeroShowcase.module.css";
 export default function HeroShowcase({
   image,
   wordmark,
+  band,
 }: {
   image: CaseImage;
   wordmark: string;
+  band?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.35 });
@@ -30,7 +32,11 @@ export default function HeroShowcase({
   const resting = { opacity: 0, y: 64, scale: 1.03 };
 
   return (
-    <div className={styles.band} data-cs-dark>
+    <div
+      className={styles.band}
+      data-cs-dark
+      style={band ? ({ ["--cs-band"]: band } as CSSProperties) : undefined}
+    >
       <span className={styles.wordmark} aria-hidden="true">
         {wordmark}
       </span>

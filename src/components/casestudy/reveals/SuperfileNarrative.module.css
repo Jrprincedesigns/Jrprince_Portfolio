@@ -1,0 +1,763 @@
+/* =============================================================
+   Superfile narrative visuals — lifecycle, actor map, sequence,
+   permission matrix, investor loop, reflection.
+
+   All of these speak one visual language layered on the case-study
+   tokens (--cs-ink / --cs-muted / --cs-rule / --cs-card / --cs-accent).
+   A single actor palette is shared across every diagram so a colour
+   always means the same thing:
+
+     user    → the buyer's own actions
+     pay      → Stripe / payment-system events
+     verify   → Superfile verification & authority
+     state    → entitlement states
+     owner    → file-owner controls
+   ============================================================= */
+.root {
+  /* Actor palette — same hues as the interactive system map so the two
+     diagrams reinforce each other rather than compete. */
+  --c-user: #cfcbc2;
+  --c-pay: #4fd0e6;
+  --c-verify: var(--cs-accent, #d0f010);
+  --c-state: #b9a3ff;
+  --c-owner: #ff9f8b;
+
+  margin: 0;
+}
+
+.caption {
+  margin: 18px auto 0;
+  max-width: 68ch;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--cs-muted);
+}
+.caption em {
+  font-style: normal;
+  color: var(--cs-ink);
+  font-weight: 600;
+}
+
+/* Shared surface for the framed diagrams. */
+.panel {
+  border: 1px solid var(--cs-rule);
+  border-radius: 20px;
+  background: var(--cs-card);
+  padding: clamp(20px, 2.6vw, 34px);
+}
+
+/* Shared actor legend (used by lifecycle + others). */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: clamp(18px, 2vw, 26px);
+  padding-top: clamp(16px, 1.8vw, 22px);
+  border-top: 1px solid var(--cs-rule);
+}
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--cs-muted);
+}
+.legendDot {
+  width: 11px;
+  height: 11px;
+  border-radius: 4px;
+  flex: none;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+.dUser { background: var(--c-user); }
+.dPay { background: var(--c-pay); }
+.dVerify { background: var(--c-verify); }
+.dState { background: var(--c-state); }
+.dOwner { background: var(--c-owner); }
+
+/* ============================ Hero: entitlement lifecycle ============================ */
+.lifeHead {
+  margin: 0 0 clamp(20px, 2.4vw, 30px);
+  max-width: 30ch;
+}
+.lifeTitle {
+  margin: 0;
+  font-size: clamp(26px, 3.6vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  color: var(--cs-ink);
+}
+.lifeSub {
+  margin: 14px 0 0;
+  max-width: 56ch;
+  font-size: clamp(14px, 1.3vw, 17px);
+  line-height: 1.5;
+  color: var(--cs-muted);
+}
+
+/* The primary track: numbered stages flowing left→right, wrapping on
+   narrow screens. Each stage carries an actor accent on its left edge. */
+.track {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(10px, 1.2vw, 16px);
+}
+.stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 14px 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--cs-rule);
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+}
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--stage-accent, var(--c-user));
+}
+.stageTerminal {
+  border-color: color-mix(in srgb, var(--c-verify) 55%, transparent);
+  background: color-mix(in srgb, var(--c-verify) 9%, var(--cs-card));
+}
+.stageStep {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cs-muted);
+}
+.stageTitle {
+  font-size: clamp(13px, 1.05vw, 15px);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--cs-ink);
+}
+.stageActor {
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--stage-accent, var(--c-user));
+  filter: brightness(1.05);
+}
+
+/* Branch shelf below the granted state. */
+.branchHead {
+  margin: clamp(22px, 2.6vw, 32px) 0 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.branchTitle {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cs-ink);
+  margin: 0;
+}
+.branchNote {
+  font-size: 12px;
+  color: var(--cs-muted);
+}
+.branches {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(10px, 1.2vw, 14px);
+}
+.branch {
+  position: relative;
+  padding: 12px 12px 12px 15px;
+  border-radius: 12px;
+  border: 1px dashed var(--cs-rule);
+  background: transparent;
+}
+.branch::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--branch-accent, var(--c-owner));
+}
+.branchLabel {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cs-ink);
+  margin-bottom: 3px;
+}
+.branchBody {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--cs-muted);
+}
+
+/* ============================ Actor / authority map ============================ */
+.actorGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr 1fr;
+  grid-template-areas:
+    "owner core stripe"
+    "recipient core superfileNote";
+  gap: clamp(12px, 1.6vw, 20px);
+  align-items: stretch;
+}
+.actorOwner { grid-area: owner; }
+.actorRecipient { grid-area: recipient; }
+.actorStripe { grid-area: stripe; }
+.actorCore { grid-area: core; }
+.actorNote { grid-area: superfileNote; }
+
+.actor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: clamp(16px, 1.8vw, 22px);
+  border-radius: 16px;
+  border: 1px solid var(--cs-rule);
+  background: rgba(255, 255, 255, 0.03);
+}
+.actor::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  border-radius: 4px 0 0 4px;
+  background: var(--actor-accent, var(--c-user));
+}
+.actorRole {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--actor-accent, var(--c-user));
+}
+.actorRole strong {
+  color: var(--cs-ink);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.actorList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.actorList li {
+  position: relative;
+  padding-left: 15px;
+  font-size: clamp(12px, 1vw, 13.5px);
+  line-height: 1.35;
+  color: var(--cs-ink);
+}
+.actorList li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--actor-accent, var(--c-user));
+}
+
+/* The centre authority — Superfile. */
+.actorCore {
+  border-color: color-mix(in srgb, var(--c-verify) 50%, transparent);
+  background: color-mix(in srgb, var(--c-verify) 8%, var(--cs-card));
+  justify-content: center;
+}
+.actorCore .actorRole { color: var(--c-verify); }
+.actorCore::before { background: var(--c-verify); }
+.coreKicker {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-verify);
+}
+.coreTitle {
+  font-size: clamp(18px, 1.9vw, 24px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--cs-ink);
+}
+.actorNote {
+  display: flex;
+  align-items: center;
+  border-radius: 16px;
+  border: 1px solid var(--cs-rule);
+  background: transparent;
+  padding: clamp(16px, 1.8vw, 22px);
+}
+.actorNoteText {
+  margin: 0;
+  font-size: clamp(13px, 1.15vw, 15px);
+  line-height: 1.45;
+  color: var(--cs-ink);
+}
+.actorNoteText b { color: var(--c-verify); font-weight: 600; }
+
+/* ============================ Pay-to-access sequence ============================ */
+.seqScroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.seq {
+  display: grid;
+  grid-template-columns: 150px repeat(6, minmax(120px, 1fr));
+  min-width: 720px;
+}
+.seqLaneLabel {
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cs-ink);
+  border-bottom: 1px solid var(--cs-rule);
+  position: sticky;
+  left: 0;
+  background: var(--cs-card);
+  z-index: 2;
+}
+.seqLaneAccent {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--lane-accent, var(--c-user));
+  margin-top: 2px;
+}
+.seqCell {
+  border-bottom: 1px solid var(--cs-rule);
+  padding: 10px 8px;
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.seqHeadCell {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cs-muted);
+  justify-content: center;
+  text-align: center;
+  min-height: 0;
+  padding: 8px;
+}
+.seqStep {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--cs-rule);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 9px 10px;
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--cs-ink);
+  text-align: center;
+  border-left: 3px solid var(--step-accent, var(--c-user));
+}
+.seqVisible {
+  border-color: color-mix(in srgb, var(--c-verify) 45%, transparent);
+  background: color-mix(in srgb, var(--c-verify) 10%, var(--cs-card));
+  font-weight: 600;
+}
+.seqVerify {
+  border-style: dashed;
+  color: var(--cs-muted);
+  font-size: 11px;
+}
+.seqBadge {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cs-muted);
+}
+.seqBadgeRow {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.seqBadgeRow .swatchVisible,
+.seqBadgeRow .swatchVerify {
+  width: 24px;
+  height: 12px;
+  border-radius: 3px;
+  flex: none;
+}
+.swatchVisible {
+  border: 1px solid color-mix(in srgb, var(--c-verify) 45%, transparent);
+  background: color-mix(in srgb, var(--c-verify) 22%, var(--cs-card));
+}
+.swatchVerify {
+  border: 1px dashed var(--cs-rule);
+  background: transparent;
+}
+
+/* ============================ Permission matrix ============================ */
+.matrixScroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--cs-rule);
+  border-radius: 16px;
+}
+.matrix {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 640px;
+}
+.matrix caption {
+  caption-side: top;
+  text-align: left;
+  padding: 16px 18px 4px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cs-muted);
+}
+.matrix th,
+.matrix td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--cs-rule);
+  text-align: center;
+  font-size: 13px;
+}
+.matrix thead th {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cs-ink);
+  vertical-align: bottom;
+  border-bottom: 1px solid var(--cs-rule);
+}
+.matrix tbody th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--cs-ink);
+  white-space: nowrap;
+}
+.matrix tbody tr:last-child th,
+.matrix tbody tr:last-child td {
+  border-bottom: none;
+}
+.colOwner { color: var(--c-owner); }
+.colSuperfile { color: var(--c-verify); }
+.colStripe { color: var(--c-pay); }
+.cellYes { color: var(--c-verify); font-weight: 600; }
+.cellOwnerYes { color: var(--c-owner); font-weight: 600; }
+.cellNo { color: var(--cs-muted); }
+.cellGlyph { font-size: 15px; line-height: 1; }
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.matrixKey {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--cs-muted);
+}
+.matrixKey span { display: inline-flex; gap: 6px; align-items: center; }
+
+/* ============================ Investor demonstration loop ============================ */
+.loop {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(8px, 1vw, 12px);
+  align-items: stretch;
+}
+.loopStep {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--cs-rule);
+  background: rgba(255, 255, 255, 0.03);
+}
+.loopStep:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: calc(clamp(8px, 1vw, 12px) / -2 - 6px);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--c-verify);
+  font-size: 15px;
+  z-index: 1;
+}
+.loopNum {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cs-bg);
+  background: var(--c-verify);
+}
+.loopLabel {
+  font-size: clamp(12px, 1vw, 14px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--cs-ink);
+}
+.loopBack {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--cs-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.loopBack::before {
+  content: "↺";
+  color: var(--c-verify);
+  font-size: 15px;
+}
+
+.boundary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(12px, 1.6vw, 20px);
+  margin-top: clamp(18px, 2vw, 26px);
+}
+.boundaryCol {
+  padding: clamp(16px, 1.8vw, 22px);
+  border-radius: 16px;
+  border: 1px solid var(--cs-rule);
+  background: rgba(255, 255, 255, 0.02);
+}
+.boundaryValidated {
+  border-color: color-mix(in srgb, var(--c-verify) 45%, transparent);
+  background: color-mix(in srgb, var(--c-verify) 7%, var(--cs-card));
+}
+.boundaryHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  color: var(--cs-muted);
+}
+.boundaryValidated .boundaryHead { color: var(--c-verify); }
+.boundaryList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.boundaryList li {
+  position: relative;
+  padding-left: 20px;
+  font-size: clamp(12px, 1vw, 14px);
+  line-height: 1.4;
+  color: var(--cs-ink);
+}
+.boundaryValidated .boundaryList li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--c-verify);
+  font-weight: 700;
+}
+.boundaryOpen .boundaryList li::before {
+  content: "○";
+  position: absolute;
+  left: 2px;
+  color: var(--cs-muted);
+}
+
+/* ============================ Reflection before/after ============================ */
+.reflect {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: clamp(12px, 1.6vw, 22px);
+  align-items: stretch;
+}
+.reflectCard {
+  padding: clamp(18px, 2vw, 26px);
+  border-radius: 16px;
+  border: 1px solid var(--cs-rule);
+  background: rgba(255, 255, 255, 0.02);
+}
+.reflectAfter {
+  border-color: color-mix(in srgb, var(--c-verify) 45%, transparent);
+  background: color-mix(in srgb, var(--c-verify) 8%, var(--cs-card));
+}
+.reflectTag {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cs-muted);
+}
+.reflectAfter .reflectTag { color: var(--c-verify); }
+.reflectText {
+  margin: 10px 0 0;
+  font-size: clamp(15px, 1.5vw, 19px);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--cs-ink);
+}
+.reflectArrow {
+  align-self: center;
+  color: var(--c-verify);
+  font-size: 22px;
+}
+
+/* ============================ Pay-card architecture ============================ */
+.payGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(14px, 2vw, 24px);
+  align-items: stretch;
+}
+.payStack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vw, 12px);
+}
+.payAxis {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cs-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.payAxis::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--cs-rule);
+}
+.payLayer {
+  position: relative;
+  padding: 13px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--cs-rule);
+  background: rgba(255, 255, 255, 0.03);
+}
+.payLayerTop {
+  border-color: color-mix(in srgb, var(--c-verify) 55%, transparent);
+  background: color-mix(in srgb, var(--c-verify) 9%, var(--cs-card));
+}
+.payLayerTag {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--cs-muted);
+  margin-bottom: 4px;
+}
+.payLayerTop .payLayerTag { color: var(--c-verify); }
+.payLayerBody {
+  margin: 0;
+  font-size: clamp(12.5px, 1vw, 14px);
+  line-height: 1.4;
+  color: var(--cs-ink);
+}
+.payCallouts {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.4vw, 16px);
+}
+.callout {
+  border-radius: 14px;
+  border: 1px solid var(--cs-rule);
+  padding: clamp(14px, 1.6vw, 18px);
+  background: rgba(255, 255, 255, 0.02);
+}
+.calloutIn { border-color: color-mix(in srgb, var(--c-verify) 40%, transparent); }
+.calloutHead {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: var(--cs-muted);
+}
+.calloutIn .calloutHead { color: var(--c-verify); }
+.calloutOut .calloutHead { color: var(--c-owner); }
+.calloutList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+}
+.calloutList li {
+  font-size: 12px;
+  line-height: 1.2;
+  padding: 5px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--cs-rule);
+  color: var(--cs-ink);
+  background: rgba(255, 255, 255, 0.03);
+}
+.calloutOut .calloutList li {
+  color: var(--cs-muted);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--c-owner) 60%, transparent);
+}
+
+@media (max-width: 720px) {
+  .payGrid { grid-template-columns: 1fr; }
+}
+
+/* ============================ Responsive collapse ============================ */
+@media (max-width: 900px) {
+  .track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .branches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .loop { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .loopStep:not(:last-child)::after { display: none; }
+}
+@media (max-width: 720px) {
+  .actorGrid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "core"
+      "owner"
+      "recipient"
+      "stripe"
+      "superfileNote";
+  }
+  .boundary { grid-template-columns: 1fr; }
+  .reflect {
+    grid-template-columns: 1fr;
+  }
+  .reflectArrow { transform: rotate(90deg); justify-self: center; }
+}
+@media (max-width: 560px) {
+  .track { grid-template-columns: 1fr; }
+  .branches { grid-template-columns: 1fr; }
+  .loop { grid-template-columns: 1fr; }
+}
