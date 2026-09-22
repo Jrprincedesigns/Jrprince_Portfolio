@@ -48,10 +48,22 @@
 .pageDark {
   --cs-bg: #1f1f1f;
   --cs-ink: #f1efe9;
-  --cs-muted: #9c988f;
+  /* Secondary text (labels, captions, eyebrows). Lifted from #9c988f so it
+     clears comfortably on the near-black field. */
+  --cs-muted: #b9b4a9;
   --cs-rule: rgba(255, 255, 255, 0.14);
   --cs-dark: #000;
   --cs-card: #292927;
+}
+/* On the dark field the greyish body copy read as low-contrast, so the actual
+   reading copy runs at the near-white ink; only true secondary text stays
+   muted. Scoped to dark studies — light studies keep their editorial grey. */
+.pageDark .sectionCopy,
+.pageDark .lead,
+.pageDark .overviewRow .lead,
+.pageDark .sectionLead,
+.pageDark .cardBody {
+  color: var(--cs-ink);
 }
 .pageDark .card,
 .pageDark .decisionInner,
@@ -721,6 +733,24 @@
   --rail-muted: var(--cs-muted);
   --rail-ink: var(--cs-ink);
   --rail-hover-bg: rgba(22, 22, 22, 0.05);
+}
+/* Dark studies (Superfile): the whole page is a dark field, so the rail's open
+   card must be dark too — otherwise the near-white ink lands on the default
+   white card and disappears. Give it a dark elevated surface and keep the
+   labels light whether or not the dark-detector has flipped it. */
+.pageDark .chapterNav:hover,
+.pageDark .chapterNav:focus-within {
+  background: var(--cs-card);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.5);
+}
+.pageDark .chapterNav:hover,
+.pageDark .chapterNav:focus-within,
+.pageDark .chapterNav.onDark:hover,
+.pageDark .chapterNav.onDark:focus-within {
+  --rail-muted: rgba(255, 255, 255, 0.6);
+  --rail-ink: #ffffff;
+  --rail-hover-bg: rgba(255, 255, 255, 0.12);
 }
 .chapterNav ul {
   list-style: none;

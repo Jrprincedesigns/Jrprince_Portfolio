@@ -20,6 +20,12 @@ import SuperfileHero from "./reveals/SuperfileHero";
 import SuperfileEcosystem from "./reveals/SuperfileEcosystem";
 import SuperfilePayCard from "./reveals/SuperfilePayCard";
 import SuperfileSystemMap from "./reveals/SuperfileSystemMap";
+import SuperfileLifecycle from "./reveals/SuperfileLifecycle";
+import SuperfileActorMap from "./reveals/SuperfileActorMap";
+import SuperfileSequence from "./reveals/SuperfileSequence";
+import SuperfilePermissions from "./reveals/SuperfilePermissions";
+import SuperfileInvestorLoop from "./reveals/SuperfileInvestorLoop";
+import SuperfileReflection from "./reveals/SuperfileReflection";
 import Reveal from "@/components/motion/Reveal";
 import styles from "./CaseStudy.module.css";
 
@@ -417,6 +423,12 @@ export default function CaseStudyView({
               {block.name === "superfile-ecosystem" && <SuperfileEcosystem />}
               {block.name === "superfile-paycard" && <SuperfilePayCard />}
               {block.name === "superfile-system-map" && <SuperfileSystemMap />}
+              {block.name === "superfile-lifecycle" && <SuperfileLifecycle />}
+              {block.name === "superfile-actor-map" && <SuperfileActorMap />}
+              {block.name === "superfile-sequence" && <SuperfileSequence />}
+              {block.name === "superfile-permissions" && <SuperfilePermissions />}
+              {block.name === "superfile-investor-loop" && <SuperfileInvestorLoop />}
+              {block.name === "superfile-reflection" && <SuperfileReflection />}
             </div>
           );
         }
