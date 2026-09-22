@@ -79,7 +79,9 @@
 /* ============================ Hero: entitlement lifecycle ============================ */
 .lifeHead {
   margin: 0 0 clamp(20px, 2.4vw, 30px);
-  max-width: 30ch;
+  /* rem, not ch: ch is measured against this element's inherited ~16px font,
+     which would squeeze the 44px title into a ~270px column. */
+  max-width: 40rem;
 }
 .lifeTitle {
   margin: 0;
