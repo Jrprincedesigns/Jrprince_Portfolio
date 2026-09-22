@@ -1,13 +1,12 @@
-import Image from "next/image";
-import Link from "next/link";
 import { caseStudies } from "@/data/home";
 import Crown from "@/components/ui/Crown";
+import CaseStudyCard from "@/components/CaseStudyCard/CaseStudyCard";
 import styles from "./CaseStudies.module.css";
 
 /**
  * Case Studies — a three-up grid of colour-themed project cards. Each card is
- * the composed design (title, tags, mockup) rendered as one artwork, wrapped in
- * an accessible link.
+ * the composed design rendered as one artwork; CaseStudyCard adds the hover
+ * notch carrying that study's headline result.
  */
 export default function CaseStudies() {
   return (
@@ -20,21 +19,7 @@ export default function CaseStudies() {
       <ul className={styles.grid}>
         {caseStudies.map((cs) => (
           <li key={cs.slug}>
-            <Link
-              href={`/work/${cs.slug}`}
-              className={styles.card}
-              aria-label={`${cs.title} — view case study`}
-            >
-              <Image
-                src={cs.image}
-                alt={`${cs.title}. ${cs.description}`}
-                width={848}
-                height={1206}
-                quality={95}
-                sizes="(max-width: 640px) 92vw, (max-width: 1000px) 46vw, 30vw"
-                className={styles.cardImg}
-              />
-            </Link>
+            <CaseStudyCard study={cs} />
           </li>
         ))}
       </ul>
