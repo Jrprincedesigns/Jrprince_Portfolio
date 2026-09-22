@@ -19,6 +19,7 @@ import LiveResearchStickies from "./reveals/LiveResearchStickies";
 import SuperfileHero from "./reveals/SuperfileHero";
 import SuperfileEcosystem from "./reveals/SuperfileEcosystem";
 import SuperfilePayCard from "./reveals/SuperfilePayCard";
+import SuperfileSystemMap from "./reveals/SuperfileSystemMap";
 import Reveal from "@/components/motion/Reveal";
 import styles from "./CaseStudy.module.css";
 
@@ -415,6 +416,7 @@ export default function CaseStudyView({
               )}
               {block.name === "superfile-ecosystem" && <SuperfileEcosystem />}
               {block.name === "superfile-paycard" && <SuperfilePayCard />}
+              {block.name === "superfile-system-map" && <SuperfileSystemMap />}
             </div>
           );
         }
