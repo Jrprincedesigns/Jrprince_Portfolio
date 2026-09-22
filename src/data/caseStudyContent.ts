@@ -493,9 +493,23 @@ const superfile: CaseStudyContent = {
       ],
     },
     {
+      kind: "group",
+      label: "Designing the access model",
+      id: "designing-the-access-model",
+      blocks: [
+        {
+          kind: "section",
+          title: "Payment was a prerequisite. Never permission.",
+          body: [
+            "I mapped how payment, identity, and entitlement had to work together before a file could open. That gave design and engineering a shared model for granting access—and handling failures without weakening protection.",
+          ],
+        },
+      ],
+    },
+    {
       kind: "reveal",
       name: "superfile-system-map",
-      width: "bleed",
+      width: "wide",
     },
     {
       kind: "group",
