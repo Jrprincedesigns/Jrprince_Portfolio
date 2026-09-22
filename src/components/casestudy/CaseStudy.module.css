@@ -7,7 +7,7 @@
 .page {
   --cs-bg: #e9e0d4;
   --cs-ink: #161616;
-  --cs-muted: #6d675f;
+  --cs-muted: #625b51; /* AA (>=4.5:1) on the beige field and on white cards */
   --cs-rule: rgba(22, 22, 22, 0.16);
   --cs-dark: #111;
   --cs-card: #f2eadf;
@@ -39,6 +39,18 @@
 .pageLight .card,
 .pageLight .decisionInner {
   border-color: rgba(22, 22, 22, 0.07);
+  box-shadow: 0 8px 26px rgba(20, 30, 60, 0.05);
+}
+
+/* Warm-field studies (Ambasdr): keep the warm beige page, but make cards,
+   panels, and decision logs white so they lift cleanly off the beige — like
+   pageLight without the near-white background. Borders stay at the default
+   strength so inner diagram cards remain legible on the white panels. */
+.pageWarm {
+  --cs-card: #ffffff;
+}
+.pageWarm .card,
+.pageWarm .decisionInner {
   box-shadow: 0 8px 26px rgba(20, 30, 60, 0.05);
 }
 

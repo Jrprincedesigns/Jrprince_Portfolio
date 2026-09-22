@@ -13,7 +13,11 @@ import ChapterNav from "./ChapterNav";
 import EmbedFrame from "./EmbedFrame";
 import HeroShowcase from "./HeroShowcase";
 import AmbasdrHero from "./reveals/AmbasdrHero";
-import AmbasdrScrollVideo from "./reveals/AmbasdrScrollVideo";
+import AmbasdrTrustModel from "./reveals/AmbasdrTrustModel";
+import AmbasdrOnboarding from "./reveals/AmbasdrOnboarding";
+import AmbasdrKnowledge from "./reveals/AmbasdrKnowledge";
+import AmbasdrLayers from "./reveals/AmbasdrLayers";
+import AmbasdrMotion from "./reveals/AmbasdrMotion";
 import DoorvestPanels from "./reveals/DoorvestPanels";
 import LiveResearchStickies from "./reveals/LiveResearchStickies";
 import SuperfileHero from "./reveals/SuperfileHero";
@@ -192,7 +196,13 @@ export default function CaseStudyView({
   return (
     <article
       className={`${styles.page} ${
-        dark ? styles.pageDark : showcase ? styles.pageLight : ""
+        dark
+          ? styles.pageDark
+          : showcase && showcase.warmField
+            ? styles.pageWarm
+            : showcase
+              ? styles.pageLight
+              : ""
       }`}
       data-cs-dark={dark ? "" : undefined}
       style={
@@ -208,6 +218,7 @@ export default function CaseStudyView({
           image={showcase.image}
           wordmark={showcase.wordmark ?? study.project}
           band={showcase.band}
+          cardMaxWidth={showcase.cardMaxWidth}
         />
       )}
 
@@ -408,9 +419,11 @@ export default function CaseStudyView({
               {block.name === "ambasdr-hero" && (
                 <AmbasdrHero caption={block.caption} />
               )}
-              {block.name === "ambasdr-scroll-video" && (
-                <AmbasdrScrollVideo caption={block.caption} />
-              )}
+              {block.name === "ambasdr-trust-model" && <AmbasdrTrustModel />}
+              {block.name === "ambasdr-onboarding" && <AmbasdrOnboarding />}
+              {block.name === "ambasdr-knowledge" && <AmbasdrKnowledge />}
+              {block.name === "ambasdr-three-layers" && <AmbasdrLayers />}
+              {block.name === "ambasdr-motion" && <AmbasdrMotion />}
               {block.name === "doorvest-panels" && (
                 <DoorvestPanels caption={block.caption} />
               )}
