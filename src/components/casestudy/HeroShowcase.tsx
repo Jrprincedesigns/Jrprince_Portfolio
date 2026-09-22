@@ -19,10 +19,12 @@ export default function HeroShowcase({
   image,
   wordmark,
   band,
+  cardMaxWidth,
 }: {
   image: CaseImage;
   wordmark: string;
   band?: string;
+  cardMaxWidth?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.35 });
@@ -44,6 +46,7 @@ export default function HeroShowcase({
         ref={ref}
         className={styles.card}
         data-reveal=""
+        style={cardMaxWidth ? { maxWidth: cardMaxWidth } : undefined}
         initial={reduce ? false : resting}
         animate={reduce ? settled : inView ? settled : resting}
         transition={{ duration: 0.9, ease: easeOut }}

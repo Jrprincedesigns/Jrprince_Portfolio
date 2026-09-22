@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./AmbasdrHero.module.css";
 
 /**
- * Ambasdr hero — a faithful port of the Figma composition (node 2449:12571).
+ * Ambasdr hero: a faithful port of the Figma composition (node 2449:12571).
  * A portrait sits on top of an empty room; four layers (two app screenshots,
  * a profile card + avatar, and the name/roles) are tucked behind her. On hover
  * (or keyboard focus) they fan out into place using the Figma translate
@@ -225,7 +225,7 @@ export default function AmbasdrHero({ caption }: { caption?: string }) {
             </div>
           </motion.div>
 
-          {/* Portrait cutout on top — the layers emerge from behind her */}
+          {/* Portrait cutout on top; the layers emerge from behind her */}
           <div
             className={styles.portrait}
             style={{ left: 240, top: 35, width: 960, height: 1286 }}

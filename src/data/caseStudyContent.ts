@@ -119,6 +119,13 @@ export interface CaseStudyContent {
     wordmark?: string;
     /** Brand-colour band behind the card (defaults to Doorvest green). */
     band?: string;
+    /** Cap the floating card's width in px (defaults to 560). Use a smaller
+     *  value for tall/portrait mockups (e.g. a phone) so they don't dominate. */
+    cardMaxWidth?: number;
+    /** Keep the study's warm default palette instead of the near-white showcase
+     *  field. Use when a study wants the Doorvest-style showcase hero + grouped
+     *  layout but its own original colours (e.g. Ambasdr's beige). */
+    warmField?: boolean;
   };
   /**
    * Page colour theme. "dark" flips the study onto a dark field (light text,
@@ -805,33 +812,44 @@ const synctera: CaseStudyContent = {
 const ambasdr: CaseStudyContent = {
   slug: "digital-identity",
   project: "Ambasdr",
+  liveUrl: "https://www.ambasdr.com",
+  liveLabel: "Visit ambasdr",
   title: "Designing the identity layer between people and AI.",
   lead:
     "An AI-powered identity layer for professionals, creators, and founders. One " +
     "place that explains who someone is, what they do, and why it matters, and can " +
     "answer for them even when they're not in the room.",
   meta: [
-    { label: "Role", value: "Co-founder · Product & AI UX" },
-    { label: "Timeline", value: "~1 year, concept → beta" },
+    { label: "Role", value: "Co-founder · Product Lead · AI Product Architecture" },
+    { label: "Timeline", value: "~1 year · early-stage, in refinement toward launch" },
     { label: "Team", value: "3-person founding team" },
     { label: "Platforms", value: "Web · iOS · Android" },
   ],
-  // Curated chapter rail; ids map to the slugified section titles the view generates.
-  chapters: [
-    { id: "first-principles", label: "First principles" },
-    { id: "research-validation", label: "Research & validation" },
-    { id: "designing-an-ai-that-represents-people", label: "Designing the AI" },
-    { id: "teaching-instead-of-uploading", label: "Teaching the AI" },
-    { id: "knowledge-architecture", label: "Knowledge architecture" },
-    { id: "outcome", label: "Outcome" },
-    { id: "reflection", label: "Reflection" },
+  heroShowcase: {
+    image: {
+      src: "/img/cases/ambasdr/identity-card.png",
+      w: 436,
+      h: 1012,
+      alt: "An Ambasdr profile: a person's photo, name, and roles above a conversational “Ask my ambasdr” interface with suggested questions.",
+    },
+    band: "#1c1c1a",
+    // A tall phone mockup: render it at phone width so it doesn't dominate.
+    cardMaxWidth: 300,
+    // Keep Ambasdr's original warm beige palette, not the near-white field.
+    warmField: true,
+  },
+  outcomes: [
+    { value: "0 → 1", label: "A working product built across web, iOS, and Android by a 3-person founding team" },
+    { value: "500", label: "Waitlist signups ahead of launch" },
+    { value: "450+", label: "Research and validation conversations" },
   ],
+  // Chapter rail derives from the group labels below (Doorvest-style layout).
   blocks: [
     {
-      kind: "reveal",
-      name: "ambasdr-hero",
-      caption: "The public Ambasdr profile beside the AI conversation interface",
-    },
+      kind: "group",
+      label: "First principles",
+      id: "first-principles",
+      blocks: [
     {
       kind: "section",
       title: "First principles",
@@ -846,26 +864,34 @@ const ambasdr: CaseStudyContent = {
       kind: "quote",
       text: "A resume documents what you have done. An Ambasdr explains why it matters.",
     },
-    {
-      kind: "stats",
-      items: [
-        { value: "500", label: "Waitlist signups" },
-        { value: "450+", label: "Research & validation conversations" },
-        { value: "20", label: "Beta users" },
-        { value: "15", label: "Onboarding iterations" },
-        { value: "3", label: "Person founding team" },
-        { value: "~1yr", label: "Concept to beta readiness" },
       ],
     },
     {
       kind: "reveal",
-      name: "ambasdr-scroll-video",
-      caption: "From business card → QR code → link page → conversational identity layer",
+      name: "ambasdr-hero",
+      caption: "The public Ambasdr profile beside the AI conversation interface",
     },
     {
       kind: "quote",
       text: "Don't replace the places people already use to represent themselves. Create the layer that explains how those places connect.",
     },
+    {
+      kind: "media",
+      variant: "wide",
+      images: [
+        {
+          src: "/img/cases/ambasdr/home-hero.png",
+          w: 2880,
+          h: 1800,
+          alt: "The live Ambasdr landing page, headline “Your work already speaks, now it can respond,” beside a phone showing a context-aware profile that answers a visitor's questions about its owner in real time.",
+        },
+      ],
+    },
+    {
+      kind: "group",
+      label: "Research & validation",
+      id: "research-validation",
+      blocks: [
     {
       kind: "section",
       title: "Research & validation",
@@ -929,7 +955,7 @@ const ambasdr: CaseStudyContent = {
         },
         {
           title: "Conversation is discovery",
-          body: "People get to know each other by asking questions. So questions became the interface. The profile acts less like a brochure and more like a conversation.",
+          body: "People get to know each other by asking questions. So Ambasdr makes discovery happen through conversation, rather than asking a visitor to scroll and interpret a static page.",
         },
         {
           title: "Users remain the source of truth",
@@ -937,6 +963,33 @@ const ambasdr: CaseStudyContent = {
         },
       ],
     },
+      ],
+    },
+    {
+      kind: "group",
+      label: "The product model",
+      id: "the-product-model",
+      blocks: [
+        {
+          kind: "section",
+          title: "From static identity to conversational identity",
+          kicker: "The design problem wasn't a chatbot on a profile. It was an identity system.",
+          body: [
+            "A résumé summarizes, a portfolio displays, a link-in-bio organizes, but each still leaves the visitor to interpret the person manually: open links, read documents, decide what matters. Ambasdr's job was to make an approved version of that information explorable through conversation.",
+            "That meant separating three things cleanly: the structured identity that establishes who someone is, the approved knowledge that gives the AI something real to represent, and the conversation through which a visitor explores it. Keeping those layers distinct is what let one product stay coherent across responsive web, iOS, and Android.",
+          ],
+        },
+      ],
+    },
+    {
+      kind: "reveal",
+      name: "ambasdr-three-layers",
+    },
+    {
+      kind: "group",
+      label: "Designing the AI",
+      id: "designing-an-ai-that-represents-people",
+      blocks: [
     {
       kind: "section",
       title: "Designing an AI that represents people",
@@ -944,75 +997,213 @@ const ambasdr: CaseStudyContent = {
       body: [
         "Most AI interfaces just answer prompts. Ambasdr had a touchier job: it was speaking for a real person, which raised the stakes on trust. Visitors had to trust the answers were useful. Owners had to trust the AI wasn't putting words in their mouth. And the product had to make clear the person always had the final say.",
         "Every major feature traces back to four questions: Can the AI represent me accurately? Can I control what it knows? Can visitors trust the answers? Can I keep improving how I come across?",
+        "The hardest part was never model selection. It was defining what the system should know and how it should ground an answer: ingest the identity, résumé, portfolio, files, and links; keep that source material attached to the right person; separate public from private; then answer from the owner's actual material, surfacing the supporting file, link, or highlight, rather than from generic model knowledge. I treated prompts, identity fields, content structure, retrieval surfaces, and response behavior as one product architecture, and directed the implementation through that spec.",
+      ],
+    },
+        {
+          kind: "decisionLog",
+          id: "designing-decisions",
+          title: "Key decisions",
+          rows: [
+            { label: "Public identity ≠ conversational identity", text: "The interface shows the chosen username (@jrprince); the AI refers to the person by full name or company inside an answer (“Lennox Prince specializes in…”). A small interface rule with broad reach: it touches data modeling, components, profile rendering, and AI context." },
+            { label: "Answer from the user's material, or not at all", text: "Responses had to draw on the owner's approved source material and surface the supporting file, link, or highlight, not generic model knowledge. Grounding, not fluency, was the bar." },
+            { label: "Admit uncertainty, gracefully", text: "In most AI products, an unanswered question feels like failure. For Ambasdr, a wrong answer was much worse. When it doesn't know, it says so, and nudges the owner to fill the gap, and empty states teach a visitor what the AI knows instead of dead-ending." },
+            { label: "Every file needs context", text: "Uploading isn't where the intelligence happens. One project might show leadership, taste, technical depth, or community pull; without context the AI summarizes a file without grasping what it means. So each resource carries a label, an intent, and a link to the person's identity." },
+            { label: "Mobile is the authoring tool", text: "Managing your Ambasdr should be as quick as sending a text. Mobile stopped being a companion app and became the fastest place to update information, manage resources, and tune how the AI represents you." },
+          ],
+        },
+      ],
+    },
+    {
+      kind: "reveal",
+      name: "ambasdr-trust-model",
+    },
+    {
+      kind: "group",
+      label: "How the AI learns & improves",
+      id: "how-the-ai-learns",
+      blocks: [
+        {
+          kind: "section",
+          title: "Teaching instead of uploading",
+          kicker: "Onboarding turned into a way to teach the AI, not just fill out a form.",
+          body: [
+            "Across roughly 15 versions of onboarding, tested with a community of 50 to 100 people, it became clear a setup flow wasn't enough. Ambasdr wasn't collecting information. It was learning how to represent someone.",
+            "So onboarding had to get at deeper questions: what does this person want to be known for, what topics should the AI understand, which resources matter most and why, what should it avoid saying, what tone should it strike, and what should visitors be prompted to ask. That's why Teach Your Ambasdr became one of the most important parts of the product.",
+          ],
+        },
+        {
+          kind: "section",
+          title: "A living knowledge system",
+          kicker: "Not a static page, but a system that improves the more it's used.",
+          body: [
+            "The toughest problem was working out how all these documents relate, and how each should shape the AI behind the scenes. Ambasdr ties together profile data, files, links, resource context, instructions, tone, visitor questions, AI responses, conversation summaries, and signals about what's missing.",
+            "A visitor asks a question. The AI answers if it has enough to go on. If it doesn't, that gap becomes feedback. The owner adds context, uploads a resource, or updates instructions, and the profile gets better the more it's used.",
+          ],
+        },
+        {
+          kind: "section",
+          title: "Conversation intelligence",
+          kicker: "Visitor questions became product feedback.",
+          body: [
+            "Those conversations are designed to run both ways. The most important product evolution was realizing conversations weren't only a visitor experience; they were owner intelligence. When visitors ask questions, they reveal what people want to know.",
+            "The same question asked repeatedly becomes a signal. A question the AI can't answer becomes a knowledge gap. Questions about collaboration, booking, hiring, press, or pricing become intent. Designed this way, the profile can tell its owner how they're being perceived and what context their audience needs most, a capability the model supports, not yet a loop proven at scale.",
+          ],
+        },
+      ],
+    },
+    {
+      kind: "reveal",
+      name: "ambasdr-onboarding",
+    },
+    {
+      kind: "media",
+      variant: "wide",
+      images: [
+        {
+          src: "/img/cases/ambasdr/onboarding-step.png",
+          w: 2880,
+          h: 1800,
+          alt: "The onboarding “Teach Your Ambasdr” flow, step one of five, with a live iPhone preview updating as the owner types, teaching the AI, not just filling out a form.",
+        },
+      ],
+    },
+    {
+      kind: "reveal",
+      name: "ambasdr-knowledge",
+    },
+    {
+      kind: "group",
+      label: "Public profile",
+      id: "public-profile",
+      blocks: [
+        {
+          kind: "section",
+          title: "Public profile and conversational identity",
+          kicker: "The profile had to balance familiarity with intelligence.",
+          body: [
+            "A surprising beta insight was that people still valued familiar, link-based behavior. They wanted to connect the platforms they'd already built, such as social profiles, a store, a channel, or a portfolio, so Ambasdr didn't reject that. It added context around it.",
+            "So the public profile carried two layers: a familiar surface of identity, links, and proof, and a conversational layer that helps a visitor understand what any of it means. Rather than search a resume, open five links, and guess, a visitor can just ask. Questions became the interface.",
+            "Chat couldn't become the entire product, though. Four modes (Chat, Highlights, Files, and Links) each serve a different visitor, and all four stay inside the same profile: selecting Files or Links switches the content beneath the tabs rather than throwing the visitor into an unrelated page.",
+          ],
+        },
+        {
+          kind: "cards",
+          label: "One profile, four ways to explore it",
+          items: [
+            { title: "Chat", body: "For visitors who arrive with a specific question." },
+            { title: "Highlights", body: "A curated overview of the person's most important work." },
+            { title: "Files", body: "Concrete artifacts: résumés, case studies, documents." },
+            { title: "Links", body: "Onward to external destinations, with context around them." },
+          ],
+        },
       ],
     },
     {
       kind: "media",
       variant: "wide",
-      labels: ["The trust model: owner control, knowledge sources, AI response, visitor question, and feedback loop"],
-    },
-    {
-      kind: "cards",
-      label: "Decision log",
-      items: [
+      images: [
         {
-          title: "The AI should admit uncertainty",
-          body: "In most AI products, an unanswered question feels like failure. For Ambasdr, a wrong answer was much worse. When it doesn't know, it says so, and nudges the owner to fill the gap in their profile.",
-        },
-        {
-          title: "Every file needed context",
-          body: "Uploading isn't where the intelligence happens. One project might show leadership, taste, technical depth, or community pull, but without context the AI can summarize a file without grasping what it means. So each resource carries a label, an intent, and a link to the person's identity.",
-        },
-        {
-          title: "Mobile became the authoring tool",
-          body: "Managing your Ambasdr should be as quick as sending a text. Mobile stopped being a companion app and became the fastest place to update information, manage resources, and tune how the AI represents you.",
-        },
-        {
-          title: "Plan management stayed on the web",
-          body: "Free, Pro, and Premium tiers were kept on the web to sidestep App Store and Play Store payment cuts. It wasn't only a pricing call. It shaped where parts of the product could live.",
+          src: "/img/cases/ambasdr/profile-chat.png",
+          w: 2560,
+          h: 1680,
+          alt: "An Ambasdr public profile (sample profile · demo data): a founder's identity, highlights, and featured work on the left, beside a live “Talk to my Ambasdr” chat panel where visitors ask questions and get context-aware answers.",
         },
       ],
     },
     {
-      kind: "section",
-      title: "Teaching instead of uploading",
-      kicker: "Onboarding turned into a way to teach the AI, not just fill out a form.",
-      body: [
-        "Across roughly 15 versions of onboarding, tested with a community of 50 to 100 people, it became clear a setup flow wasn't enough. Ambasdr wasn't collecting information. It was learning how to represent someone.",
-        "So onboarding had to get at deeper questions: what does this person want to be known for, what topics should the AI understand, which resources matter most and why, what should it avoid saying, what tone should it strike, and what should visitors be prompted to ask. That's why Teach Your Ambasdr became one of the most important parts of the product.",
+      kind: "group",
+      label: "Mobile & motion",
+      id: "mobile-and-motion",
+      blocks: [
+        {
+          kind: "section",
+          title: "Refining the mobile experience",
+          kicker: "The senior move was often deciding what not to build.",
+          body: [
+            "The mobile redesign spanned two technically distinct surfaces: the native iOS and Android app, and the responsive public-profile website opened from a shared URL. Treating them as related but different mattered. A responsive site has different constraints from a native screen, even when the final feel should be cohesive.",
+            "Rather than treat every request as a new component, I ran an audit first: existing code, Storybook, the design system, Figma direction, and engineering conventions, to identify the approved source of truth, then reuse, restyle, or repair. For the main cards, the updated web app was the source of truth; the mobile task was parity, not a second design language. Work was prioritized by product risk: functional and identity integrity first, consistency next, polish last.",
+          ],
+        },
+        {
+          kind: "decisionLog",
+          id: "mobile-decisions",
+          title: "Refinement decisions",
+          rows: [
+            { label: "Repair navigation, don't add routes", text: "Links and Files switched the content beneath the tabs while preserving the visitor's profile context, a fix to existing navigation, not a new page." },
+            { label: "Decode filenames in the presentation layer", text: "Uploads showing “Lennox%20Prince%20Jr%20Resume” were rendered as “Lennox Prince Jr Resume” without touching storage keys or URLs, so infrastructure details stay out of the interface." },
+            { label: "Compact success, prominent action", text: "An oversized “Profile up to date” banner shrank to a quiet check; a large card is reserved for something the user must actually address." },
+            { label: "Reuse the approved subscription & card system", text: "The Pro card and account status were brought back into parity with the approved components instead of duplicated, and stopped selling a plan the user already owned." },
+          ],
+        },
       ],
     },
     {
-      kind: "media",
-      variant: "wide",
-      labels: [
-        "Onboarding flow: Purpose → Profile → Resources → Context → Teach Your Ambasdr → Preview → Publish → Pricing",
+      kind: "reveal",
+      name: "ambasdr-motion",
+    },
+    {
+      kind: "group",
+      label: "Commercial strategy",
+      id: "commercial-strategy",
+      blocks: [
+        {
+          kind: "section",
+          title: "Positioning and business model",
+          kicker: "Calling it an “AI business card” would shrink it. It's an identity and knowledge layer.",
+          body: [
+            "The most important strategic call was how to describe the product. Framed as an AI business card, Ambasdr competes with NFC-card and link apps. Framed as an AI identity and knowledge layer that turns a static profile into an interactive representation of a person, it becomes infrastructure, a partner to distribution platforms rather than a competitor, with several routes to market.",
+            "Pricing followed the same logic. The product had to stay accessible for individuals while being valuable enough for creators, professionals, and founders building a serious personal brand. We explored Free, Pro, and Premium tiers with a trial, so people could experience being represented before paying for depth.",
+            "The architecture call mattered as much as the price: keep plan management primarily on the web to sidestep App Store and Play Store payment cuts. Where money changed hands shaped where parts of the product could live.",
+          ],
+        },
+        {
+          kind: "cards",
+          label: "What shaped the model",
+          items: [
+            { title: "Accessible, but valuable", body: "Free enough for individuals to be represented; valuable enough for people building a serious brand." },
+            { title: "Free, Pro, Premium + trial", body: "Three tiers with a trial, so value came before payment, not the other way around." },
+          ],
+        },
       ],
     },
     {
-      kind: "section",
-      title: "Knowledge architecture",
-      kicker: "A living system, not a static page.",
-      body: [
-        "The toughest problem was working out how all these documents relate, and how each should shape the AI behind the scenes. Ambasdr ties together profile data, files, links, resource context, instructions, tone, visitor questions, AI responses, conversation summaries, and signals about what's missing.",
-        "A visitor asks a question. The AI answers if it has enough to go on. If it doesn't, that gap becomes feedback. The owner adds context, uploads a resource, or updates instructions, and the profile gets better the more it's used.",
-        "Those conversations run both ways. For the owner they become analytics, top questions, recurring topics, and prompts about what's missing, a read on how they're coming across and what their audience wants most.",
+      kind: "group",
+      label: "Building with AI",
+      id: "building-with-ai",
+      blocks: [
+        {
+          kind: "section",
+          title: "Building with AI",
+          kicker: "Designing Ambasdr also changed how it got built.",
+          body: [
+            "Ambasdr wasn't only an AI product. It was designed and prototyped through an AI-assisted workflow. Across web and mobile I moved between Figma and Figma Make for design; v0, Claude Code, Codex, and Cursor for prototyping and implementation; and React Native with Expo/EAS for mobile, letting a three-person team explore more directions and ship across platforms faster than a team that size normally could.",
+            "The operating model mattered more than any single tool: prototype quickly, validate direction, translate patterns into implementation, and keep learning. We even ran automated flow walkthroughs (Playwright-style click-throughs of real product flows) to catch broken states during rapid iteration.",
+          ],
+        },
       ],
     },
     {
-      kind: "media",
-      variant: "wide",
-      labels: ["How knowledge comes together: resources, context, instructions, visitor questions, and conversation insights"],
-    },
+      kind: "group",
+      label: "Role & ownership",
+      id: "role-ownership",
+      blocks: [
     {
       kind: "section",
       title: "Role & ownership",
       kicker: "From product design into founder-level product ownership.",
       body: [
-        "As a co-founder on a three-person team, I owned product and AI UX end to end, from research and information architecture through onboarding, mobile, and prompt and context design, while sharing strategy, pricing, and go-to-market with my co-founders.",
-        "On a team that small, design, business, and engineering decisions were tightly linked. The work was less about handing off screens and more about shaping the product with the team, continuously.",
+        "As a co-founder on a three-person team, I became the connective layer between the business idea, the product experience, and the team's ability to ship, carrying work usually split across a product, design, and technology lead. Engineering was a shared, founding-team effort; my lane was the product model, the AI's behavior spec, and cross-platform UX, which I drove into implementation through detailed technical and design specs and by auditing what already existed before proposing anything new, while sharing strategy, pricing, and go-to-market with my co-founders.",
+        "The defining founder skill wasn't producing more screens. It was repeatedly reducing ambiguity so design, engineering, and business decisions could move in the same direction, and, often, deciding what not to build. The clearest example was voice: users liked it, but a structured profile proved more useful day to day, so we pulled voice back from a core interaction to an enhancement instead of building the product around it.",
       ],
     },
+      ],
+    },
+    {
+      kind: "group",
+      label: "Outcome",
+      id: "outcome",
+      blocks: [
     {
       kind: "section",
       title: "Outcome",
@@ -1022,16 +1213,35 @@ const ambasdr: CaseStudyContent = {
         "The direction is sharper now. Ambasdr isn't about making another profile. It's about giving people a living representation of who they are, what they do, and why it matters.",
       ],
     },
-    {
-      kind: "quote",
-      text: "Designing an AI product taught me that representation is a trust problem.",
+        {
+          kind: "cards",
+          label: "The honest read",
+          items: [
+            { title: "What's real", body: "A coherent product model and a working cross-platform experience, with early demand: 500 waitlist, 450+ research conversations, ~20 beta users, and 15 onboarding iterations." },
+            { title: "What isn't proven yet", body: "Conversion, retention, paid uptake, response accuracy, and partnership adoption. The record doesn't establish those numbers, so this study doesn't claim them." },
+            { title: "What we'd measure next", body: "A visitor funnel (viewed → question → answer → supporting action → return), an owner funnel (created → published → first conversation → retained), and AI quality (source coverage, unsupported-answer rate, latency)." },
+          ],
+        },
+      ],
     },
     {
-      kind: "section",
-      title: "Reflection",
-      body: [
-        "The hardest part of Ambasdr wasn't getting the AI to respond. It was making sure each response felt accurate, controlled, and true to the person behind it. AI usually gets talked about in terms of speed and automation. But once it's speaking for someone, the real question is trust.",
-        "If Ambasdr works ten years from now, the proof won't be that everyone uses AI. It'll be that people can show up as their full professional, creative, and entrepreneurial selves in one place, instead of being boxed in by LinkedIn, Linktree, resumes, portfolios, or a pile of context-free links.",
+      kind: "group",
+      label: "Reflection",
+      id: "reflection",
+      blocks: [
+        {
+          kind: "section",
+          title: "Reflection",
+          body: [
+            "The hardest part of Ambasdr wasn't getting the AI to respond. It was making sure each response felt accurate, controlled, and true to the person behind it. AI usually gets talked about in terms of speed and automation. But once it's speaking for someone, the real question is trust.",
+            "If Ambasdr works ten years from now, the proof won't be that everyone uses AI. It'll be that people can show up as their full professional, creative, and entrepreneurial selves in one place, instead of being boxed in by LinkedIn, Linktree, resumes, portfolios, or a pile of context-free links.",
+            "The bigger lesson: AI product design isn't primarily about adding a chat interface. It's about defining what the system knows, where that knowledge comes from, who controls it, how identity is represented, and how one product stays coherent across platforms. My job was to connect those decisions across strategy, architecture, interface, and implementation, because the product couldn't be solved inside a single discipline.",
+          ],
+        },
+        {
+          kind: "quote",
+          text: "A profile lists what you've done. Presence answers for you when you're not in the room. Ambasdr was built to close that gap.",
+        },
       ],
     },
   ],
