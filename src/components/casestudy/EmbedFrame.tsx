@@ -16,8 +16,8 @@ const EMBEDS: Record<string, string> = {
 export default function EmbedFrame({
   embed,
   title,
-  minHeight = 860,
-  maxHeight = 1400,
+  minHeight = 940,
+  maxHeight = 1480,
 }: {
   embed: string;
   title: string;
@@ -53,7 +53,7 @@ export default function EmbedFrame({
       style={{
         display: "block",
         width: "100%",
-        maxWidth: 900,
+        maxWidth: 1040,
         height,
         margin: "0 auto",
         border: 0,

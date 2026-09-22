@@ -1,0 +1,56 @@
+/* =============================================================
+   Product-showcase hero band (Doorvest)
+   A framed screenshot on the brand green, faded wordmark behind.
+   Full-bleed; sits above the editorial text hero.
+   ============================================================= */
+.band {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #4ea37c; /* Doorvest green (DV Green token) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Extra top padding clears the fixed site nav that floats over the hero. */
+  padding-top: clamp(64px, 6vw, 92px);
+  padding-bottom: clamp(24px, 3vw, 44px);
+  padding-inline: var(--cs-gutter);
+  isolation: isolate;
+}
+
+/* Oversized brand mark bleeding out behind the card. Clipped by the band. */
+.wordmark {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(120px, 24vw, 360px);
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.16);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* The floating screenshot card. */
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 60px rgba(0, 0, 0, 0.25);
+  will-change: transform;
+}
+
+.cardImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
