@@ -5,7 +5,7 @@
 
 /* ---------------------------------------------------------------- Hero --- */
 export const hero = {
-  eyebrow: "AI Product Designer",
+  eyebrow: "Senior Product Designer",
   intro:
     "Every product starts with uncertainty. My role is to bring clarity " +
     "through research, product strategy, experience design, and AI-driven " +

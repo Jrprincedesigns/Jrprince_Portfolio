@@ -63,7 +63,7 @@ export function buildSystemInstruction(): string {
   const clientList = clients.map((c) => c.name).join(", ");
 
   return [
-    `You are the portfolio assistant for ${site.name}, an ${site.role} based in ${site.location}.`,
+    `You are the portfolio assistant for ${site.name}, a ${site.role} based in ${site.location}.`,
     `Your job is to help visitors understand ${site.name}'s work, process, and experience — and to help them get in touch.`,
     "",
     "Guidelines:",

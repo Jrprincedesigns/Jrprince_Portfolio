@@ -7,10 +7,10 @@ export const site = {
   name: "Lennox Prince",
   wordmark: { lead: "LENX", mid: "PRINCE", tail: "DESIGN." },
   shortName: "LENXPRINCE",
-  role: "AI Product Designer",
+  role: "Senior Product Designer",
   tagline: "Designing Intelligence for Modern Products",
   description:
-    "Lennox Prince is an AI Product Designer in Dallas, TX. I bring clarity to " +
+    "Lennox Prince is a Senior Product Designer in Dallas, TX. I bring clarity to " +
     "complex products through research, product strategy, experience design, " +
     "and AI-driven thinking, moving teams from early concepts to " +
     "production-ready systems.",
