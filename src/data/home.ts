@@ -7,11 +7,11 @@
 export const hero = {
   eyebrow: "Senior Product Designer",
   intro:
-    "Every product starts with uncertainty. My role is to bring clarity " +
-    "through research, product strategy, experience design, and AI-driven " +
-    "thinking. I help teams move from early concepts to production-ready " +
-    "systems that balance business goals, technical realities, and " +
-    "exceptional user experiences.",
+    "Every product starts with uncertainty. My work is deciding how the " +
+    "system underneath should behave, then shaping the surface until it " +
+    "feels obvious to use. Working across UX, AI, and development lets me " +
+    "carry a product from the first hard questions through to working " +
+    "software.",
   sideLabel: "/Selected Work",
   portrait: "/img/portrait.jpg",
 };

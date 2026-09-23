@@ -12,10 +12,9 @@ export const site = {
   role: "Senior Product Designer",
   tagline: "Designing Intelligence for Modern Products",
   description:
-    "Lennox Prince is a Senior Product Designer in Dallas, TX. I bring clarity to " +
-    "complex products through research, product strategy, experience design, " +
-    "and AI-driven thinking, moving teams from early concepts to " +
-    "production-ready systems.",
+    "Lennox Prince is a Senior Product Designer and founder in Dallas, TX, " +
+    "working across UX, AI, and development in fintech, healthcare, and " +
+    "creator platforms.",
   url: "https://www.jrprince.design",
   email: "lennoxprincejr1@gmail.com",
   location: "Dallas, TX",
