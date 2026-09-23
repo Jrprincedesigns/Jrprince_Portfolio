@@ -12,7 +12,7 @@ export const site = {
   description:
     "Lennox Prince is an AI Product Designer in Dallas, TX. I bring clarity to " +
     "complex products through research, product strategy, experience design, " +
-    "and AI-driven thinking — moving teams from early concepts to " +
+    "and AI-driven thinking, moving teams from early concepts to " +
     "production-ready systems.",
   url: "https://www.jrprince.design",
   email: "lennoxprincejr1@gmail.com",

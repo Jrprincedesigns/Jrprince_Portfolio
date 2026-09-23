@@ -1,7 +1,7 @@
 /**
  * Full content for the case-study detail pages (/work/[slug]).
  *
- * Separate from `data/caseStudies.ts` (which powers the Gemini assistant).
+ * This is also what grounds the Gemini assistant (see `lib/gemini.ts`).
  * Order + card copy come from `home.ts`. Doorvest is the real published
  * case study (jrprince.design/work/doorvests-marketplace); the rest are drafts
  * from the card copy until their write-ups land (`draft: true`).
@@ -171,7 +171,7 @@ const doorvest: CaseStudyContent = {
       src: "/img/cases/doorvest/hero-home.png",
       w: 1531,
       h: 887,
-      alt: "The Doorvest marketplace homepage — buy, manage and sell investment properties in one place",
+      alt: "The Doorvest marketplace homepage: buy, manage and sell investment properties in one place",
     },
   },
   title: "Turning a high-touch service into a scalable investment marketplace.",
@@ -263,7 +263,7 @@ const doorvest: CaseStudyContent = {
           title: "One funnel was never going to fit both",
           rows: [
             { label: "New investors", text: "Needed education and reassurance before they would act." },
-            { label: "Experienced investors", text: "Wanted the opposite — fast access to the numbers, and sharper filters so they could move quickly." },
+            { label: "Experienced investors", text: "Wanted the opposite: fast access to the numbers, and sharper filters so they could move quickly." },
             { label: "The call", text: "The product flexes to how confident and how decisive someone is in the moment, rather than walking everyone through one fixed sequence." },
           ],
         },
@@ -469,7 +469,7 @@ const superfile: CaseStudyContent = {
       kind: "reveal",
       name: "superfile-hero-video",
       caption:
-        "Context: the Superfile product I was designing monetization into: one identity and one set of guarantees across every audience.",
+        "Context: the Superfile product I was designing monetization into, with one identity and one set of guarantees across every audience.",
     },
     {
       kind: "group",
@@ -589,7 +589,7 @@ const superfile: CaseStudyContent = {
           kind: "section",
           title: "Access is not ownership",
           body: [
-            "The payment surface stopped at intent; the entitlement carried authority. The clearest way to see the difference is to lay every capability against every actor. What a buyer received was a scoped, revocable right to view — not the owner's standing control, and never anything Stripe could touch.",
+            "The payment surface stopped at intent; the entitlement carried authority. The clearest way to see the difference is to lay every capability against every actor. What a buyer received was a scoped, revocable right to view, not the owner's standing control, and never anything Stripe could touch.",
           ],
         },
       ],
@@ -1489,7 +1489,7 @@ const pareto: CaseStudyContent = {
     {
       kind: "banner",
       eyebrow: "Reconciliation dashboards",
-      text: "Help teams catch discrepancies faster and more accurately, the reconciliation work that recovers millions for payers.",
+      text: "Helping teams catch discrepancies faster and more accurately: the reconciliation work that recovers millions for payers.",
     },
     {
       kind: "group",

@@ -11,7 +11,7 @@ import styles from "./SuperfileNarrative.module.css";
 const LAYERS = [
   {
     tag: "Entitlement result",
-    body: "A confirmed, matched charge activates the entitlement — the only thing that opens the file.",
+    body: "A confirmed, matched charge activates the entitlement, the only thing that opens the file.",
     top: true,
   },
   {

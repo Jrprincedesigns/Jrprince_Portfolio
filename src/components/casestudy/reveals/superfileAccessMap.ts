@@ -116,7 +116,7 @@ export const MAP_META = {
   subtitle:
     "How payment, identity, authorization, controlled file delivery, and lifecycle management connect.",
   intro:
-    "A service blueprint of Superfile's paid file-access experience. The core principle it encodes: payment establishes an entitlement, the entitlement determines access, and access produces a controlled in-app file session — payment alone never grants access. Drag to pan, scroll to zoom, or use the controls; hover or focus any node for what it does, who owns it, and what's still an open policy decision.",
+    "A service blueprint of Superfile's paid file-access experience. The core principle it encodes: payment establishes an entitlement, the entitlement determines access, and access produces a controlled in-app file session; payment alone never grants access. Drag to pan, scroll to zoom, or use the controls; hover or focus any node for what it does, who owns it, and what's still an open policy decision.",
   principle:
     "Payment establishes an entitlement. The entitlement determines access. Access produces a controlled file session.",
 };
@@ -203,7 +203,7 @@ export const NODES: AccessNode[] = [
     title: "Guest → account creation",
     actor: "Identity system",
     what: "A guest purchase begins account creation using the purchaser's email.",
-    why: "A purchase is tied to an account + email; you cannot buy access for someone else — gifting is not supported.",
+    why: "A purchase is tied to an account + email; you cannot buy access for someone else; gifting is not supported.",
     next: "Requires email verification before access.",
     cats: ["primary", "authz"],
   },
@@ -289,7 +289,7 @@ export const NODES: AccessNode[] = [
     actor: "Stripe billing",
     what: "The Stripe billing email may differ from the account email.",
     why: "A mismatch does not block payment, but access still attaches to the intended verified account.",
-    next: "Related to — but distinct from — account identity.",
+    next: "Related to, but distinct from, account identity.",
     cats: ["payment", "authz"],
   },
   {
@@ -300,7 +300,7 @@ export const NODES: AccessNode[] = [
     title: "Create / activate entitlement",
     actor: "Entitlement & authorization service",
     what: "A valid payment creates or activates the entitlement for a file, version, or collection.",
-    why: "Payment establishes an entitlement — it does not grant access by itself.",
+    why: "Payment establishes an entitlement; it does not grant access by itself.",
     next: "The entitlement is checked before any file session.",
     cats: ["primary", "payment", "authz"],
   },
@@ -527,7 +527,7 @@ export const NODES: AccessNode[] = [
     dy: -30,
     title: "Grant complimentary access",
     actor: "Platform administrator",
-    what: "Admins grant complimentary access through a separate entitlement-creation path — no payment occurs.",
+    what: "Admins grant complimentary access through a separate entitlement-creation path; no payment occurs.",
     next: "Enters the same authorization and delivery checks as a paid entitlement.",
     cats: ["authz", "exception"],
   },
@@ -567,7 +567,7 @@ export const NODES: AccessNode[] = [
     title: "Replace/archive/delete ↔ refund",
     actor: "Policy",
     what: "The relationship between owner replacement/archival/deletion and the paid-revocation-refund rule is unresolved.",
-    next: "Policy decision required — do not assume every change triggers a refund.",
+    next: "Policy decision required: do not assume every change triggers a refund.",
     tbd: true,
     cats: ["lifecycle"],
   },
@@ -643,7 +643,7 @@ export const NODES: AccessNode[] = [
     title: "Revoked",
     actor: "Authorization service",
     what: "Access is invalidated; previously issued access no longer works.",
-    next: "Cannot be simply restored — needs a new purchase or complimentary grant.",
+    next: "Cannot be simply restored; it needs a new purchase or complimentary grant.",
     cats: ["lifecycle", "payment"],
   },
   {
@@ -742,7 +742,7 @@ export const NODES: AccessNode[] = [
     title: "Audit-log retention policy: TBD",
     actor: "TBD",
     what: "The retention duration is not defined.",
-    next: "TBD — no compliance claims.",
+    next: "TBD: no compliance claims.",
     tbd: true,
     cats: ["exception"],
   },
@@ -751,7 +751,7 @@ export const NODES: AccessNode[] = [
 export const EDGES: AccessEdge[] = [
   // primary happy path
   { from: "request", to: "accessCheck", kind: "success" },
-  { from: "sharedLink", to: "accessCheck", kind: "security", label: "gated — no bypass" },
+  { from: "sharedLink", to: "accessCheck", kind: "security", label: "gated, no bypass" },
   { from: "accessCheck", to: "hasEntitlement", kind: "success" },
   { from: "hasEntitlement", to: "gated", kind: "neutral", label: "No entitlement" },
   { from: "hasEntitlement", to: "entitlementCheck", kind: "success", label: "Active entitlement", bow: -70 },
