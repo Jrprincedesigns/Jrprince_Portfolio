@@ -206,8 +206,11 @@ export default function CaseStudyView({
       }`}
       data-cs-dark={dark ? "" : undefined}
       style={
-        study.accent
-          ? ({ ["--cs-accent"]: study.accent } as CSSProperties)
+        study.accent || study.darkField
+          ? ({
+              ...(study.accent ? { ["--cs-accent"]: study.accent } : null),
+              ...(study.darkField ? { ["--cs-dark"]: study.darkField } : null),
+            } as CSSProperties)
           : undefined
       }
     >
@@ -591,7 +594,19 @@ export default function CaseStudyView({
             );
           }
           return (
-            <Reveal as="div" className={`${styles.block} ${widthOf(block, width)}`} key={i} amount={0.15}>
+            <Reveal
+              as="div"
+              className={`${styles.block} ${widthOf(block, width)}`}
+              key={i}
+              amount={0.15}
+              // The width classes pad by the gutter, so add it back to keep the
+              // figure itself at exactly the requested pixel width.
+              style={
+                block.maxWidth
+                  ? { maxWidth: `calc(${block.maxWidth}px + 2 * var(--cs-gutter))` }
+                  : undefined
+              }
+            >
               <Figure img={block.images[0]} />
             </Reveal>
           );

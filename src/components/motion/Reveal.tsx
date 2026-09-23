@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, type CSSProperties } from "react";
 import { riseIn } from "./motion";
 
 interface RevealProps {
@@ -17,6 +17,8 @@ interface RevealProps {
   amount?: number;
   /** Animate only once (default) or every time it enters the viewport. */
   once?: boolean;
+  /** Inline style forwarded to the rendered element (e.g. a per-block width). */
+  style?: CSSProperties;
 }
 
 /**
@@ -32,6 +34,7 @@ export default function Reveal({
   id,
   amount = 0.3,
   once = true,
+  style,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once, amount });
@@ -48,6 +51,7 @@ export default function Reveal({
       ref={ref}
       className={className}
       id={id}
+      style={style}
       data-reveal=""
       variants={riseIn}
       initial="hidden"
