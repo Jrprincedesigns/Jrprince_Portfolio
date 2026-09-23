@@ -29,8 +29,8 @@ export default function AboutPage() {
           <p>
             I&apos;m {site.fullName}, a senior product designer and founder
             based in {site.location.split(",")[0]}. I work across UX, AI, and
-            development, turning complex problems into experiences people can
-            understand and use with confidence.
+            development, which usually means designing the logic underneath a
+            product as much as the screens on top of it.
           </p>
           <p>
             My experience spans fintech, healthcare, and platforms for
