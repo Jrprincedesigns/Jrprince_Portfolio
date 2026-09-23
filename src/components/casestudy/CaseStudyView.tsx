@@ -18,6 +18,8 @@ import AmbasdrOnboarding from "./reveals/AmbasdrOnboarding";
 import AmbasdrKnowledge from "./reveals/AmbasdrKnowledge";
 import AmbasdrLayers from "./reveals/AmbasdrLayers";
 import AmbasdrMotion from "./reveals/AmbasdrMotion";
+import ParetoRecapture from "./reveals/ParetoRecapture";
+import ParetoRiskDistribution from "./reveals/ParetoRiskDistribution";
 import DoorvestPanels from "./reveals/DoorvestPanels";
 import LiveResearchStickies from "./reveals/LiveResearchStickies";
 import SuperfileHero from "./reveals/SuperfileHero";
@@ -427,6 +429,8 @@ export default function CaseStudyView({
               {block.name === "ambasdr-knowledge" && <AmbasdrKnowledge />}
               {block.name === "ambasdr-three-layers" && <AmbasdrLayers />}
               {block.name === "ambasdr-motion" && <AmbasdrMotion />}
+              {block.name === "pareto-recapture" && <ParetoRecapture />}
+              {block.name === "pareto-risk-distribution" && <ParetoRiskDistribution />}
               {block.name === "doorvest-panels" && (
                 <DoorvestPanels caption={block.caption} />
               )}

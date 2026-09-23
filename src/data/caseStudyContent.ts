@@ -1495,6 +1495,14 @@ const pareto: CaseStudyContent = {
       text: "Helping teams catch discrepancies faster and more accurately: the reconciliation work that recovers millions for payers.",
     },
     {
+      kind: "reveal",
+      name: "pareto-recapture",
+    },
+    {
+      kind: "reveal",
+      name: "pareto-risk-distribution",
+    },
+    {
       kind: "group",
       label: "The Migration Reality",
       id: "the-migration-reality",
