@@ -33,10 +33,10 @@ export const scrollVideo = {
 /* -------------------------------------------------------- Introduction --- */
 export const introduction = {
   eyebrow: "Introduction",
-  /** Rendered as one block; `lead` shown in ink, the rest lighter. */
-  lead: "Growing up in N",
+  /** `lead` + `body` are concatenated and filled word-by-word by IntroFill. */
+  lead: "Growing up in New York ",
   body:
-    "ew York taught me to appreciate different cultures, perspectives, and " +
+    "taught me to appreciate different cultures, perspectives, and " +
     "the stories people carry with them. Moving across the country taught me " +
     "to embrace those differences rather than assume them away. That mindset " +
     "shapes every product I design, helping me connect complex systems, " +
@@ -69,7 +69,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "real-estate-investing",
     outcome: { value: "+40%", label: "Increase in home reservations" },
-    title: "Real Estate Investing Feel Simple",
+    title: "Making Real Estate Investing Feel Simple",
     theme: "green",
     tags: ["Marketplace Design", "End 2 End Experience", "Design System"],
     description:
@@ -149,7 +149,7 @@ export const approach: ApproachItem[] = [
   },
   {
     n: "02",
-    title: "Simplify.",
+    title: "Simplify",
     body: "I break complex systems into clear, approachable experiences.",
   },
   {
@@ -159,7 +159,7 @@ export const approach: ApproachItem[] = [
   },
   {
     n: "04",
-    title: "Align.",
+    title: "Align",
     body: "The best products emerge when engineering, design, and business move together.",
   },
   {
@@ -169,8 +169,8 @@ export const approach: ApproachItem[] = [
   },
   {
     n: "06",
-    title: "Refine.",
-    body: "Great products aren't finished, they evolve with the people who use them.",
+    title: "Refine",
+    body: "Great products aren't finished; they evolve with the people who use them.",
   },
 ];
 

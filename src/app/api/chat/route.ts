@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
 
     const reply =
       result.text?.trim() ||
-      "Sorry — I couldn't generate a response just now. Please try again.";
+      "Sorry, I couldn't generate a response just now. Please try again.";
 
     return NextResponse.json({ reply });
   } catch (err) {

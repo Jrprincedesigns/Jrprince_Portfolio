@@ -31,7 +31,7 @@ const LANES: Lane[] = [
   {
     label: "Stripe",
     accent: "var(--c-pay)",
-    cells: { 2: { text: "Processes, then confirms server-side — the browser screen isn’t proof", kind: "verify" } },
+    cells: { 2: { text: "Processes, then confirms server-side; the browser screen isn't proof", kind: "verify" } },
   },
   {
     label: "Superfile entitlement service",
