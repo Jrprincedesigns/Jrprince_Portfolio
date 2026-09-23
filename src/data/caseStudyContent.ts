@@ -57,6 +57,9 @@ export type CaseBlock = (
       variant: "wide" | "panel" | "tall" | "grid";
       images?: CaseImage[];
       labels?: string[];
+      /** Cap the figure's rendered width in px, overriding the container width.
+       *  Use when a composition reads too large at the block's default measure. */
+      maxWidth?: number;
     }
   | { kind: "embed"; embed: string; caption?: string }
   | { kind: "reveal"; name: string; caption?: string }
@@ -134,6 +137,12 @@ export interface CaseStudyContent {
   theme?: "light" | "dark";
   /** Accent colour for metric values etc. (defaults to Doorvest green). */
   accent?: string;
+  /**
+   * Colour of the study's dark fields — the full-bleed statement banner and the
+   * page footer. Defaults to near-black (`#111`); set it to a brand colour when
+   * a study's palette carries its own dark tone.
+   */
+  darkField?: string;
   /** When present, renders a sticky chapter rail + enables scroll reveal. */
   chapters?: CaseChapter[];
   blocks: CaseBlock[];
@@ -674,6 +683,17 @@ const superfile: CaseStudyContent = {
 const synctera: CaseStudyContent = {
   slug: "trust-at-scale",
   project: "Synctera",
+  heroShowcase: {
+    image: {
+      src: "/img/cases/synctera/hero-cases.png",
+      w: 1800,
+      h: 1280,
+      alt: "Synctera fraud operations: the redesigned Cases dashboard, with priority, ownership and blocked work visible at a glance",
+    },
+    // Synctera's product indigo, at band weight.
+    band: "#1b2470",
+  },
+  accent: "#3c50e0",
   title: "Redesigning fraud operations for trust at scale.",
   lead:
     "I redesigned fraud operations at Synctera, helping analysts cut wrongful " +
@@ -690,31 +710,33 @@ const synctera: CaseStudyContent = {
     { value: "3→1", label: "Fragmented tools unified into one in-context flow" },
     { value: "1", label: "Source of truth for every case decision" },
   ],
-  heroImage: {
-    src: "/img/cases/synctera/hero-cases.png",
-    w: 1800,
-    h: 1280,
-    alt: "Synctera fraud operations: the redesigned Cases dashboard",
-  },
+  // Chapter rail derives from the group labels below (Doorvest-style layout).
   blocks: [
     {
-      kind: "section",
-      title: "About Synctera",
-      body: [
-        "Synctera is the infrastructure banks and fintechs use to launch and run regulated financial products. Inside that world, fraud teams review alerts, investigate risky activity, and make calls that affect customers, partner banks, and the company's standing with regulators.",
-        "As the company grew, fraud work got harder. Analysts were handling more alerts across KYC, transaction monitoring, and compliance while coordinating with several outside partners. Every decision was time-sensitive, auditable, and hard to walk back.",
-        "The goal wasn't just speed. It was trusting that a case reflected what was actually true right now, especially when the work was blocked, half-finished, or waiting on someone else.",
-      ],
-    },
-    {
-      kind: "section",
-      title: "What was Broken",
-      kicker:
-        "With plenty of tools and alerts, analysts still couldn't reliably tell a case's status, priority, or owner. The result was premature closures, stuck work, and risk no one could see.",
-      body: [
-        "A case's status didn't match reality. There was no clear sense of where a case sat in its lifecycle. In some workflows the only way to advance a case was to mark it complete, even when work was still going. So active investigations looked resolved, and stalled ones disappeared.",
-        "Ownership was murky. Nothing reliably showed who was working a case or whether it was blocked. Two analysts could pick up the same investigation without realizing it, duplicating work and reaching conflicting decisions.",
-        "A lot of the real work happened off-platform. Blocked cases got sorted out over Slack, email, or a phone call. If a document came in by email and never got uploaded, the case quietly stalled, and none of it made it back into the record.",
+      kind: "group",
+      label: "The Problem Space",
+      id: "the-problem-space",
+      blocks: [
+        {
+          kind: "section",
+          title: "About Synctera",
+          body: [
+            "Synctera is the infrastructure banks and fintechs use to launch and run regulated financial products. Inside that world, fraud teams review alerts, investigate risky activity, and make calls that affect customers, partner banks, and the company's standing with regulators.",
+            "As the company grew, fraud work got harder. Analysts were handling more alerts across KYC, transaction monitoring, and compliance while coordinating with several outside partners. Every decision was time-sensitive, auditable, and hard to walk back.",
+            "The goal wasn't just speed. It was trusting that a case reflected what was actually true right now, especially when the work was blocked, half-finished, or waiting on someone else.",
+          ],
+        },
+        {
+          kind: "section",
+          title: "What was Broken",
+          kicker:
+            "With plenty of tools and alerts, analysts still couldn't reliably tell a case's status, priority, or owner. The result was premature closures, stuck work, and risk no one could see.",
+          body: [
+            "A case's status didn't match reality. There was no clear sense of where a case sat in its lifecycle. In some workflows the only way to advance a case was to mark it complete, even when work was still going. So active investigations looked resolved, and stalled ones disappeared.",
+            "Ownership was murky. Nothing reliably showed who was working a case or whether it was blocked. Two analysts could pick up the same investigation without realizing it, duplicating work and reaching conflicting decisions.",
+            "A lot of the real work happened off-platform. Blocked cases got sorted out over Slack, email, or a phone call. If a document came in by email and never got uploaded, the case quietly stalled, and none of it made it back into the record.",
+          ],
+        },
       ],
     },
     {
@@ -730,21 +752,35 @@ const synctera: CaseStudyContent = {
       ],
     },
     {
-      kind: "section",
-      title: "How I Changed the System",
-      kicker:
-        "The system must always reflect the current truth of work, even when progress is blocked.",
-      body: [
-        "I anchored the redesign to one principle: the record should always reflect the current truth of the work. From there I focused on three moves: pulling the scattered tools together, cutting the coordination noise, and making case visibility hold up as volume grew.",
+      kind: "group",
+      label: "How I Changed the System",
+      id: "how-i-changed-the-system",
+      blocks: [
+        {
+          kind: "section",
+          title: "How I Changed the System",
+          kicker:
+            "The system must always reflect the current truth of work, even when progress is blocked.",
+          body: [
+            "I anchored the redesign to one principle: the record should always reflect the current truth of the work. From there I focused on three moves: pulling the scattered tools together, cutting the coordination noise, and making case visibility hold up as volume grew.",
+          ],
+        },
       ],
     },
     {
-      kind: "section",
-      title: "The harder problem: adoption",
-      kicker: "The risk wasn't the interface. It was whether a trained team would trust a new way of working.",
-      body: [
-        "Analysts were fluent in Hawk AI, Onfido, and Dotfile and trained on specific patterns. Pulling everything into one flow, on a tight timeline, made some of them wary that consolidation would complicate their work rather than simplify it. They were open to working better, but nervous about a system they hadn't used and didn't yet fully understand.",
-        "So the goal wasn't only a cleaner workflow. It was a change that felt like less risk to the people doing the work, which is exactly what shaped how I approached consolidation next.",
+      kind: "group",
+      label: "The harder problem: adoption",
+      id: "the-harder-problem-adoption",
+      blocks: [
+        {
+          kind: "section",
+          title: "The harder problem: adoption",
+          kicker: "The risk wasn't the interface. It was whether a trained team would trust a new way of working.",
+          body: [
+            "Analysts were fluent in Hawk AI, Onfido, and Dotfile and trained on specific patterns. Pulling everything into one flow, on a tight timeline, made some of them wary that consolidation would complicate their work rather than simplify it. They were open to working better, but nervous about a system they hadn't used and didn't yet fully understand.",
+            "So the goal wasn't only a cleaner workflow. It was a change that felt like less risk to the people doing the work, which is exactly what shaped how I approached consolidation next.",
+          ],
+        },
       ],
     },
     {
@@ -760,49 +796,82 @@ const synctera: CaseStudyContent = {
       ],
     },
     {
-      kind: "section",
-      title: "Consolidate Fragmented Tooling",
-      kicker: "Creating a single source of truth without replacing core tools.",
-      body: [
-        "Investigations used to make analysts bounce between Hawk AI, Onfido, and Dotfile, stitching together identity checks, risk signals, and decisions as they went. I mapped how those tools were actually used, then rebuilt the workflow into one internal experience that kept the whole investigation in a single place.",
-        "Rather than replace those tools, I gave analysts a simple way to open them in context, then come right back to the case to record findings and notes without losing their place. That cut the back-and-forth, removed manual reconciliation, and gave everyone a more reliable picture of each case.",
+      kind: "group",
+      label: "The System",
+      id: "the-system",
+      blocks: [
+        {
+          kind: "section",
+          title: "Consolidate Fragmented Tooling",
+          kicker: "Creating a single source of truth without replacing core tools.",
+          body: [
+            "Investigations used to make analysts bounce between Hawk AI, Onfido, and Dotfile, stitching together identity checks, risk signals, and decisions as they went. I mapped how those tools were actually used, then rebuilt the workflow into one internal experience that kept the whole investigation in a single place.",
+            "Rather than replace those tools, I gave analysts a simple way to open them in context, then come right back to the case to record findings and notes without losing their place. That cut the back-and-forth, removed manual reconciliation, and gave everyone a more reliable picture of each case.",
+          ],
+        },
+        {
+          kind: "section",
+          title: "Reduced Coordination Noise",
+          body: [
+            "Analysts needed to stay informed without being interrupted constantly. So instead of broadcasting every notification, alerts only fired on a clear signal, like a mention or a case someone was actively watching.",
+            "For teams that lived in Slack, case notifications flowed into shared channels, pulling coordination back to the record without pulling people out of their work.",
+          ],
+        },
+        {
+          kind: "section",
+          title: "Rebuilt Case Visibility at Scale",
+          kicker:
+            "The dashboard made priority, ownership, and workload obvious at a glance, so analysts didn't have to guess urgency from a table or from memory.",
+          body: [
+            "Before the redesign, urgency was a social guess. Anything more than a few days old was assumed urgent, and people carried their workload in their heads instead of the tool.",
+            "The new dashboard put priority right into the interface. Cases were ranked by risk signals and manager assignment, so analysts could go straight to the highest-risk work instead of sorting it themselves.",
+            "At a glance it answered three questions: what needs attention now, who's working on what, and where things are stuck. That replaced tribal knowledge with a picture everyone shared.",
+          ],
+        },
       ],
     },
     {
-      kind: "section",
-      title: "Reduced Coordination Noise",
-      body: [
-        "Analysts needed to stay informed without being interrupted constantly. So instead of broadcasting every notification, alerts only fired on a clear signal, like a mention or a case someone was actively watching.",
-        "For teams that lived in Slack, case notifications flowed into shared channels, pulling coordination back to the record without pulling people out of their work.",
+      kind: "evolution",
+      label: "What changed for an analyst",
+      beforeLabel: "Before",
+      afterLabel: "After",
+      rows: [
+        { before: "Status only advanced by marking a case complete", after: "A case state that stays true while work is blocked" },
+        { before: "No reliable signal of who owned a case", after: "Ownership and blocked state visible on the record" },
+        { before: "Blocked work resolved over Slack, email and calls", after: "Coordination pulled back into the case record" },
+        { before: "Urgency guessed from a case's age", after: "Priority ranked by risk signals and assignment" },
       ],
     },
     {
-      kind: "section",
-      title: "Rebuilt Case Visibility at Scale",
-      kicker:
-        "The dashboard made priority, ownership, and workload obvious at a glance, so analysts didn't have to guess urgency from a table or from memory.",
-      body: [
-        "Before the redesign, urgency was a social guess. Anything more than a few days old was assumed urgent, and people carried their workload in their heads instead of the tool.",
-        "The new dashboard put priority right into the interface. Cases were ranked by risk signals and manager assignment, so analysts could go straight to the highest-risk work instead of sorting it themselves.",
-        "At a glance it answered three questions: what needs attention now, who's working on what, and where things are stuck. That replaced tribal knowledge with a picture everyone shared.",
-      ],
-    },
-{
-      kind: "section",
-      title: "Impact & Validation",
-      body: [
-        "I measured impact by watching how cases moved before and after launch, mainly the time spent in active investigation and the drop in stalled or prematurely closed cases. Working closely with Operations and interviewing analysts afterward confirmed the gains were real changes in how people worked, even as case volume climbed.",
+      kind: "group",
+      label: "Impact & Validation",
+      id: "impact-validation",
+      blocks: [
+        {
+          kind: "section",
+          title: "Impact & Validation",
+          body: [
+            "I measured impact by watching how cases moved before and after launch, mainly the time spent in active investigation and the drop in stalled or prematurely closed cases. Working closely with Operations and interviewing analysts afterward confirmed the gains were real changes in how people worked, even as case volume climbed.",
+          ],
+        },
       ],
     },
     {
-      kind: "section",
-      title: "What I'd Protect Going Forward",
-      kicker:
-        "The dashboard was a workload stabilizer for the fraud team, not a reporting screen.",
-      body: [
-        "If another designer picked this up, I'd tell them to be careful with the dashboard. It wasn't only a task list. It was how analysts understood their workload, their progress, and how much they could take on.",
-        "By showing assignment, priority, and active work at both the personal and team level, it helped analysts plan their day, set expectations, and shake the feeling of always being behind. It didn't just move more cases. It eased burnout by trading uncertainty for a clear picture.",
-        "Across the team, that shared view let work move around before pressure boiled over. The dashboard shaped how people behaved, how they felt, and how much they trusted the tool. Any future change should be tested against real operational behavior and judged by what it does to workload balance and team health.",
+      kind: "group",
+      label: "What I'd Protect Going Forward",
+      id: "what-id-protect-going-forward",
+      blocks: [
+        {
+          kind: "section",
+          title: "What I'd Protect Going Forward",
+          kicker:
+            "The dashboard was a workload stabilizer for the fraud team, not a reporting screen.",
+          body: [
+            "If another designer picked this up, I'd tell them to be careful with the dashboard. It wasn't only a task list. It was how analysts understood their workload, their progress, and how much they could take on.",
+            "By showing assignment, priority, and active work at both the personal and team level, it helped analysts plan their day, set expectations, and shake the feeling of always being behind. It didn't just move more cases. It eased burnout by trading uncertainty for a clear picture.",
+            "Across the team, that shared view let work move around before pressure boiled over. The dashboard shaped how people behaved, how they felt, and how much they trusted the tool. Any future change should be tested against real operational behavior and judged by what it does to workload balance and team health.",
+          ],
+        },
       ],
     },
   ],
@@ -1251,6 +1320,22 @@ const ambasdr: CaseStudyContent = {
 const pareto: CaseStudyContent = {
   slug: "healthcare-data",
   project: "Pareto Intelligence",
+  heroShowcase: {
+    image: {
+      src: "/img/cases/pareto/hero-dashboard.png",
+      w: 1800,
+      h: 1012,
+      alt: "Pareto Intelligence: the redesigned analytics portal, with reconciliation KPIs and claims detail on one screen",
+    },
+    // Secondary 900 from Pareto's own colour scale.
+    band: "#003f6b",
+    // "Pareto Intelligence" is too long for the oversized wordmark; the
+    // short form is how the product is referred to internally anyway.
+    wordmark: "Pareto",
+  },
+  accent: "#4e61f6",
+  // Banner + footer carry the brand navy instead of near-black.
+  darkField: "#003f6b",
   title: "Bringing clarity to enterprise healthcare analytics.",
   lead:
     "I turned Pareto Intelligence's data platform into something built around its " +
@@ -1267,38 +1352,58 @@ const pareto: CaseStudyContent = {
     { value: "30%", label: "Decrease in user error rates" },
     { value: "20%", label: "Increase in new subscriptions" },
   ],
-  heroImage: {
-    src: "/img/cases/pareto/hero-dashboard.png",
-    w: 1800,
-    h: 1012,
-    alt: "Pareto Intelligence: the redesigned analytics portal on macOS",
-  },
-  heroFramed: true,
+  // Chapter rail derives from the group labels below (Doorvest-style layout).
   blocks: [
-{
-      kind: "section",
-      title: "About Pareto",
-      body: [
-        "Pareto Intelligence builds data products for some of the largest healthcare payers in the U.S., including Cigna, Blue Cross Blue Shield, and Humana. Its tools help these organizations reconcile millions in financial discrepancies, dig into complex claims data, and run more efficiently.",
-        "When I joined, the analytics underneath were strong, but the experience on top was a patchwork. Dashboards didn't match each other, workflows were confusing, and dense datasets made it hard for analysts to read a screen and act on it. My job was to bring order and usability to a set of enterprise tools handling huge volumes of sensitive financial and clinical data.",
+    {
+      kind: "group",
+      label: "The Problem Space",
+      id: "the-problem-space",
+      blocks: [
+        {
+          kind: "section",
+          title: "About Pareto",
+          body: [
+            "Pareto Intelligence builds data products for some of the largest healthcare payers in the U.S., including Cigna, Blue Cross Blue Shield, and Humana. Its tools help these organizations reconcile millions in financial discrepancies, dig into complex claims data, and run more efficiently.",
+            "When I joined, the analytics underneath were strong, but the experience on top was a patchwork. Dashboards didn't match each other, workflows were confusing, and dense datasets made it hard for analysts to read a screen and act on it. My job was to bring order and usability to a set of enterprise tools handling huge volumes of sensitive financial and clinical data.",
+          ],
+        },
+        {
+          kind: "section",
+          title: "The Challenge",
+          body: [
+            "There was no shared design system, so teams built components on their own and the same UI element behaved differently from one product to the next. The mismatches in color, spacing, type, and interaction piled up design and engineering debt, slowed onboarding, made errors more likely in financial workflows, and pushed maintenance costs up over time.",
+            "At the same time, the platform had to handle dense healthcare data: claims, diagnoses, risk scoring, audits, payments, RAF charts, and compliance triggers. But the underlying structure was weak, so it was hard to spot anomalies, decide what to fix first, or compare trends. Everything leaned on Tableau dashboards that worked but didn't scale, with no clear hierarchy, clumsy cross-filtering, and little support for how specific people worked.",
+            "The company was moving to Looker and needed a UX lead to shape that transition. There was a bigger problem underneath it too: navigation, filtering, and insight patterns changed from tool to tool, so analysts had to keep relearning how to work as they moved between products.",
+          ],
+        },
+        {
+          kind: "cards",
+          label: "Where it broke down",
+          items: [
+            { title: "No shared system", body: "Every team built its own components, so the same UI element behaved differently from one product to the next." },
+            { title: "Debt on both sides", body: "Mismatched color, spacing, type and interaction piled up design and engineering debt, and pushed maintenance cost up over time." },
+            { title: "Data without structure", body: "Claims, risk scoring, audits and compliance triggers had no clear hierarchy, so anomalies were hard to spot and trends hard to compare." },
+            { title: "Dashboards that didn't scale", body: "Tableau worked, but with clumsy cross-filtering and little support for how specific people actually worked." },
+            { title: "Relearning the tools", body: "Navigation, filtering and insight patterns changed between products, so analysts re-learned how to work every time they switched." },
+            { title: "A migration with no owner", body: "The company was moving to Looker and needed someone to shape the transition, not just restyle it." },
+          ],
+        },
       ],
     },
     {
-      kind: "section",
-      title: "The Challenge",
-      body: [
-        "There was no shared design system, so teams built components on their own and the same UI element behaved differently from one product to the next. The mismatches in color, spacing, type, and interaction piled up design and engineering debt, slowed onboarding, made errors more likely in financial workflows, and pushed maintenance costs up over time.",
-        "At the same time, the platform had to handle dense healthcare data: claims, diagnoses, risk scoring, audits, payments, RAF charts, and compliance triggers. But the underlying structure was weak, so it was hard to spot anomalies, decide what to fix first, or compare trends. Everything leaned on Tableau dashboards that worked but didn't scale, with no clear hierarchy, clumsy cross-filtering, and little support for how specific people worked.",
-        "The company was moving to Looker and needed a UX lead to shape that transition. There was a bigger problem underneath it too: navigation, filtering, and insight patterns changed from tool to tool, so analysts had to keep relearning how to work as they moved between products.",
-      ],
-    },
-    {
-      kind: "section",
-      title: "Research & Insights",
-      kicker: "Users weren't asking for more data. They wanted to trust what they were already looking at.",
-      body: [
-        "I audited the portal end to end, pairing heuristic and task-time analysis with interviews and shadowing across analysts, claims auditors, actuarial teams, and compliance partners. The same issues surfaced everywhere: insights weren't prioritized, filtering was inconsistent, tables were overbuilt, too many clicks stood between analysts and the detail they needed, and visual noise buried the metrics that mattered.",
-        "From there, I restructured the information around a simple flow: insight, then context, then action, then audit. I standardized filtering, simplified navigation, and added reusable data groupings and priority-based layouts for the metrics that mattered most. I designed and built Pareto's first design system, then led the vision for moving dozens of Tableau dashboards into Looker: rebuilding the visuals with consistent logic, clearer drill paths, shared charting rules, better comparison views, and stronger performance under load. I validated it with interactive Figma prototypes tested with analysts across teams.",
+      kind: "group",
+      label: "Research & Insights",
+      id: "research-insights",
+      blocks: [
+        {
+          kind: "section",
+          title: "Research & Insights",
+          kicker: "Users weren't asking for more data. They wanted to trust what they were already looking at.",
+          body: [
+            "I audited the portal end to end, pairing heuristic and task-time analysis with interviews and shadowing across analysts, claims auditors, actuarial teams, and compliance partners. The same issues surfaced everywhere: insights weren't prioritized, filtering was inconsistent, tables were overbuilt, too many clicks stood between analysts and the detail they needed, and visual noise buried the metrics that mattered.",
+            "From there, I restructured the information around a simple flow: insight, then context, then action, then audit. I standardized filtering, simplified navigation, and added reusable data groupings and priority-based layouts for the metrics that mattered most. I validated it with interactive Figma prototypes tested with analysts across teams.",
+          ],
+        },
       ],
     },
     {
@@ -1307,39 +1412,78 @@ const pareto: CaseStudyContent = {
       images: [
         {
           src: "/img/cases/pareto/research-board.png",
-          w: 940,
-          h: 1217,
+          w: 1600,
+          h: 1435,
           alt: "Design Jam: auditing every dashboard's charts, downloads, and insight naming across markets",
         },
       ],
     },
     {
-      kind: "section",
-      title: "System Design & Architecture",
-      kicker: "The real breakthrough was a design system that could scale across enterprise healthcare analytics.",
-      body: [
-        "I built a single design system that every product adopted. It standardized the type hierarchy; color coding for statuses, risk states, and data confidence; and reusable dashboard pieces like cards, KPIs, comparison tables, and filters. It also set navigation patterns, spacing, grids, composition rules, and interaction behaviors like hover, expand, drilldown, sort, and compare.",
-        "It cleared our worst internal bottlenecks: quicker, clearer specs for engineering, consistent layouts for analysts, and more predictable timelines for leadership on new features. It was easier to maintain too, and it became the foundation for every product update over the next two years.",
+      kind: "group",
+      label: "System Design & Architecture",
+      id: "system-design-architecture",
+      blocks: [
+        {
+          kind: "section",
+          title: "System Design & Architecture",
+          kicker: "The real breakthrough was a design system that could scale across enterprise healthcare analytics.",
+          body: [
+            "I built a single design system that every product adopted. It standardized the type hierarchy; color coding for statuses, risk states, and data confidence; and reusable dashboard pieces like cards, KPIs, comparison tables, and filters. It also set navigation patterns, spacing, grids, composition rules, and interaction behaviors like hover, expand, drilldown, sort, and compare.",
+            "It cleared our worst internal bottlenecks: quicker, clearer specs for engineering, consistent layouts for analysts, and more predictable timelines for leadership on new features. It was easier to maintain too, and it became the foundation for every product update over the next two years.",
+          ],
+        },
       ],
     },
     {
       kind: "media",
       variant: "wide",
+      // 704px = 55% of the 1280px wide measure: the sheet is a tall portrait
+      // composition and reads better small than blown up past its native width.
+      maxWidth: 704,
       images: [
         {
           src: "/img/cases/pareto/design-system.png",
-          w: 1600,
-          h: 1435,
+          w: 940,
+          h: 1217,
           alt: "Pareto's design system: typography, color scales, components, buttons, and badges",
         },
       ],
     },
     {
-      kind: "section",
-      title: "Dashboard Redesigns",
-      kicker: "From cluttered screens to intuitive analytics.",
-      body: [
-        "I redesigned several of the key dashboards so scattered data turned into something people could act on. They didn't just look better. They were measurably faster to use, easier to read, and closer to how analysts actually think, which led to sharper decisions.",
+      kind: "group",
+      label: "Dashboard Redesigns",
+      id: "dashboard-redesigns",
+      blocks: [
+        {
+          kind: "section",
+          title: "Dashboard Redesigns",
+          kicker: "From cluttered screens to intuitive analytics.",
+          body: [
+            "I redesigned several of the key dashboards so scattered data turned into something people could act on. They didn't just look better. They were measurably faster to use, easier to read, and closer to how analysts actually think, which led to sharper decisions.",
+          ],
+        },
+        {
+          kind: "cards",
+          label: "What the redesign focused on",
+          items: [
+            {
+              title: "KPI visibility",
+              body: "Reordered top-level metrics so analysts understand health, risk, and revenue position at a glance.",
+            },
+            {
+              title: "Drilldown flows",
+              body: "Streamlined filter-to-insight pathways move users from “what happened?” to “why?” with fewer clicks.",
+            },
+            {
+              title: "Visual hierarchy",
+              body: "Removed low-value charts, clarified comparison views, and surfaced anomalies earlier.",
+            },
+            {
+              title: "Membership & risk views",
+              body: "Added contextual tooltips, confidence markers, and forecast indicators to support better decisions.",
+            },
+          ],
+        },
       ],
     },
     {
@@ -1348,64 +1492,54 @@ const pareto: CaseStudyContent = {
       text: "Help teams catch discrepancies faster and more accurately, the reconciliation work that recovers millions for payers.",
     },
     {
-      kind: "media",
-      variant: "wide",
-      labels: [
-        "The redesigned reconciliation dashboard, with discrepancies and recovered-revenue signals surfaced at a glance",
-      ],
-    },
-    {
-      kind: "cards",
-      label: "What the redesign focused on",
-      items: [
+      kind: "group",
+      label: "The Migration Reality",
+      id: "the-migration-reality",
+      blocks: [
         {
-          title: "KPI visibility",
-          body: "Reordered top-level metrics so analysts understand health, risk, and revenue position at a glance.",
-        },
-        {
-          title: "Drilldown flows",
-          body: "Streamlined filter-to-insight pathways move users from “what happened?” to “why?” with fewer clicks.",
-        },
-        {
-          title: "Visual hierarchy",
-          body: "Removed low-value charts, clarified comparison views, and surfaced anomalies earlier.",
-        },
-        {
-          title: "Membership & risk views",
-          body: "Added contextual tooltips, confidence markers, and forecast indicators to support better decisions.",
+          kind: "section",
+          title: "The migration reality",
+          kicker: "Moving to Looker was less a redesign than a careful transplant.",
+          body: [
+            "I led the vision for moving dozens of Tableau dashboards into Looker: rebuilding the visuals with consistent logic, clearer drill paths, shared charting rules, better comparison views, and stronger performance under load.",
+            "Two things made this harder than a visual refresh. Legacy data didn't map cleanly from Tableau to Looker, so reaching parity took careful reconciliation before anything could be made better. And analysts fluent in the old dashboards had to adopt new patterns, so the work had to earn trust, not just ship. The design system and prototype testing carried much of that weight, keeping the transition legible and giving people something concrete to react to before it went live.",
+          ],
         },
       ],
     },
     {
-      kind: "media",
-      variant: "grid",
-      labels: [
-        "Redesigned KPI & reconciliation views",
-        "Drilldown, comparison, and membership / risk views",
+      kind: "evolution",
+      label: "What changed in the move",
+      beforeLabel: "Tableau",
+      afterLabel: "Looker",
+      rows: [
+        { before: "Each dashboard styled on its own", after: "Shared charting rules across every product" },
+        { before: "Cross-filtering that fought the analyst", after: "Clear drill paths from insight to detail" },
+        { before: "No hierarchy between metrics", after: "Priority-based layouts for what mattered most" },
+        { before: "Slow under load", after: "Rebuilt for performance at enterprise data volume" },
       ],
     },
     {
-      kind: "section",
-      title: "The migration reality",
-      kicker: "Moving to Looker was less a redesign than a careful transplant.",
-      body: [
-        "Two things made this harder than a visual refresh. Legacy data didn't map cleanly from Tableau to Looker, so reaching parity took careful reconciliation before anything could be made better. And analysts fluent in the old dashboards had to adopt new patterns, so the work had to earn trust, not just ship. The design system and prototype testing carried much of that weight, keeping the transition legible and giving people something concrete to react to before it went live.",
-      ],
-    },
-    {
-      kind: "section",
-      title: "Impact",
-      body: [
-        "Measured in usability testing and product analytics, the redesign cut task-completion time by 25% and error rates by 30%. New subscriptions rose 20% over the two years that followed; design was one contributor there, alongside sales, pricing, and product changes, not the sole cause.",
-        "Just as important operationally, the design system gave engineering a single, consistent foundation for every release that came after.",
-      ],
-    },
-    {
-      kind: "section",
-      title: "Reflection",
-      body: [
-        "The lasting lesson wasn't about any one dashboard. It was that in enterprise analytics the interface is only as trustworthy as the system beneath it, and a design system is what makes that trust repeatable across products, teams, and years.",
-        "If I ran it again, I'd bring analysts into the migration earlier. The redesign landed, but adoption is its own design problem, and the people living in the old dashboards needed more runway to trust the new ones.",
+      kind: "group",
+      label: "Impact & Reflection",
+      id: "impact-reflection",
+      blocks: [
+        {
+          kind: "section",
+          title: "Impact",
+          body: [
+            "Measured in usability testing and product analytics, the redesign cut task-completion time by 25% and error rates by 30%. New subscriptions rose 20% over the two years that followed; design was one contributor there, alongside sales, pricing, and product changes, not the sole cause.",
+            "Just as important operationally, the design system gave engineering a single, consistent foundation for every release that came after.",
+          ],
+        },
+        {
+          kind: "section",
+          title: "Reflection",
+          body: [
+            "The lasting lesson wasn't about any one dashboard. It was that in enterprise analytics the interface is only as trustworthy as the system beneath it, and a design system is what makes that trust repeatable across products, teams, and years.",
+            "If I ran it again, I'd bring analysts into the migration earlier. The redesign landed, but adoption is its own design problem, and the people living in the old dashboards needed more runway to trust the new ones.",
+          ],
+        },
       ],
     },
     {
