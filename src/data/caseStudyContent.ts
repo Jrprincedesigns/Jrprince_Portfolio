@@ -1409,6 +1409,9 @@ const pareto: CaseStudyContent = {
     {
       kind: "media",
       variant: "wide",
+      // Matches the design-system sheet below, so the study's two figures
+      // read as a pair rather than two different sizes.
+      maxWidth: 704,
       images: [
         {
           src: "/img/cases/pareto/research-board.png",
