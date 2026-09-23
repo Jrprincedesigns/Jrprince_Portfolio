@@ -5,6 +5,8 @@
 
 export const site = {
   name: "Lennox Prince",
+  /** Full name as he introduces himself in prose (the About bio). */
+  fullName: "Lennox Prince Jr.",
   wordmark: { lead: "LENX", mid: "PRINCE", tail: "DESIGN." },
   shortName: "LENXPRINCE",
   role: "Senior Product Designer",
