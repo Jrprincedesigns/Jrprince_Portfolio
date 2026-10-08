@@ -21,6 +21,8 @@ export interface VisitInfo {
   device: string;
   returning: boolean;
   screen: string;
+  /** Cloud provider name when the IP is in a datacenter range, else undefined. */
+  datacenter?: string;
 }
 
 /** Obvious crawlers and preview bots — never worth a Slack ping. */
@@ -152,6 +154,9 @@ export function buildVisitMessage(info: VisitInfo) {
   if (info.screen) {
     fields.push({ type: "mrkdwn", text: `*Screen*\n${info.screen}` });
   }
+  if (info.datacenter) {
+    fields.push({ type: "mrkdwn", text: `*Network*\n🤖 ${info.datacenter} (datacenter)` });
+  }
 
   const when = new Date().toLocaleString("en-US", {
     timeZone: "America/Chicago",
@@ -161,7 +166,9 @@ export function buildVisitMessage(info: VisitInfo) {
 
   return {
     // Fallback text drives the mobile/desktop notification preview.
-    text: `${emoji} ${label} on ${info.path} — ${location}, via ${source}`,
+    text: `${info.datacenter ? "🤖 " : ""}${emoji} ${label}${
+      info.datacenter ? ` (${info.datacenter})` : ""
+    } on ${info.path} — ${location}, via ${source}`,
     blocks: [
       {
         type: "header",
