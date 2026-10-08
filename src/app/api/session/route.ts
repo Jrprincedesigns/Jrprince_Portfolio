@@ -3,6 +3,7 @@ import { postToSlack, slackConfigured } from "@/lib/slack";
 import { isBot, parseUserAgent } from "@/lib/visitor";
 import { buildDigestMessage, type SessionSummary } from "@/lib/sessionDigest";
 import { notifyMode } from "@/lib/notifyMode";
+import { lookupDatacenter } from "@/lib/datacenter";
 
 /**
  * POST /api/session
@@ -100,6 +101,11 @@ export async function POST(req: NextRequest) {
     if (value) utm[key] = value;
   }
 
+  const ip =
+    req.headers.get("x-vercel-forwarded-for") ??
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    "unknown";
+
   const summary: SessionSummary = {
     durationMs: num(body.durationMs, MAX_DURATION_MS),
     entryPath: str(body.entryPath, 300) || "/",
@@ -121,6 +127,7 @@ export async function POST(req: NextRequest) {
       country: req.headers.get("x-vercel-ip-country") ?? "",
     },
     device: parseUserAgent(userAgent),
+    datacenter: lookupDatacenter(ip) ?? undefined,
   };
 
   await postToSlack(buildDigestMessage(summary));

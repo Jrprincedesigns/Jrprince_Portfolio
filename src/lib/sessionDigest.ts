@@ -46,6 +46,8 @@ export interface SessionSummary {
   continued: boolean;
   geo: Pick<VisitInfo, "city" | "region" | "country">;
   device: Pick<VisitInfo, "browser" | "os" | "device">;
+  /** Cloud provider name when the IP is in a datacenter range, else undefined. */
+  datacenter?: string;
 }
 
 /** `6m 42s`, or `48s` under a minute. */
@@ -163,7 +165,11 @@ export function buildDigestMessage(summary: SessionSummary) {
   const blocks: unknown[] = [
     {
       type: "header",
-      text: { type: "plain_text", text: `${emoji} ${label} — ${duration}`, emoji: true },
+      text: {
+        type: "plain_text",
+        text: `${summary.datacenter ? "🤖 " : ""}${emoji} ${label} — ${duration}`,
+        emoji: true,
+      },
     },
     {
       type: "section",
@@ -271,6 +277,7 @@ export function buildDigestMessage(summary: SessionSummary) {
           `exit \`${summary.exitPath}\``,
           summary.screen,
           campaign,
+          summary.datacenter ? `🤖 ${summary.datacenter}` : "",
         ]
           .filter(Boolean)
           .join(" · "),
@@ -287,7 +294,7 @@ export function buildDigestMessage(summary: SessionSummary) {
     .join(" · ");
 
   return {
-    text: `${emoji} ${label} — ${duration} · ${headline} · ${location} via ${source}`,
+    text: `${summary.datacenter ? "🤖 " : ""}${emoji} ${label} — ${duration} · ${headline} · ${location} via ${source}`,
     blocks,
   };
 }
