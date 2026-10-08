@@ -20,3 +20,15 @@ export function ipToInt(ip: string): number | null {
   }
   return n >>> 0;
 }
+
+/**
+ * Normalize a raw IP header value for IPv4 parsing: trim, strip an
+ * `::ffff:` IPv6-mapped-IPv4 prefix, and strip a trailing `:port`.
+ * A genuine IPv6 address (no embedded dot) is returned unchanged.
+ */
+export function normalizeIp(ip: string): string {
+  let s = ip.trim();
+  if (s.startsWith("::ffff:")) s = s.slice("::ffff:".length);
+  if (s.includes(".") && s.includes(":")) s = s.split(":")[0];
+  return s;
+}

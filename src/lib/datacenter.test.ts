@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { ipToInt } from "./datacenter";
+import { ipToInt, normalizeIp } from "./datacenter";
 
 describe("ipToInt", () => {
   it("parses a dotted quad to uint32", () => {
@@ -15,5 +15,23 @@ describe("ipToInt", () => {
     expect(ipToInt("a.b.c.d")).toBeNull();
     expect(ipToInt("")).toBeNull();
     expect(ipToInt("2001:db8::1")).toBeNull();
+  });
+});
+
+describe("normalizeIp", () => {
+  it("trims whitespace", () => {
+    expect(normalizeIp("  1.2.3.4  ")).toBe("1.2.3.4");
+  });
+
+  it("strips an IPv6-mapped IPv4 prefix", () => {
+    expect(normalizeIp("::ffff:1.2.3.4")).toBe("1.2.3.4");
+  });
+
+  it("strips a trailing port from an IPv4 address", () => {
+    expect(normalizeIp("1.2.3.4:5678")).toBe("1.2.3.4");
+  });
+
+  it("leaves a plain IPv6 address untouched", () => {
+    expect(normalizeIp("2001:db8::1")).toBe("2001:db8::1");
   });
 });
