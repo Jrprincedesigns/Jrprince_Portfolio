@@ -32,3 +32,46 @@ export function normalizeIp(ip: string): string {
   if (s.includes(".") && s.includes(":")) s = s.split(":")[0];
   return s;
 }
+
+export interface RangeTable {
+  providers: string[];
+  starts: number[];
+  ends: number[];
+  providerIdx: number[];
+}
+
+/**
+ * Binary-search a sorted range table for the IPv4 integer. Finds the range
+ * with the greatest start <= ip and returns its provider if ip is within the
+ * inclusive end; otherwise null. Assumes ranges do not overlap across
+ * providers (true for published cloud ranges).
+ */
+export function findProviderIn(table: RangeTable, ip: number): string | null {
+  const { starts, ends, providerIdx, providers } = table;
+  let lo = 0;
+  let hi = starts.length - 1;
+  let ans = -1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (starts[mid] <= ip) {
+      ans = mid;
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  if (ans >= 0 && ip <= ends[ans]) return providers[providerIdx[ans]];
+  return null;
+}
+
+const GENERATED_TABLE: RangeTable = {
+  providers: PROVIDERS,
+  starts: STARTS,
+  ends: ENDS,
+  providerIdx: PROVIDER_IDX,
+};
+
+/** Look up a provider for an already-parsed IPv4 integer in the generated table. */
+export function findProvider(ip: number): string | null {
+  return findProviderIn(GENERATED_TABLE, ip);
+}
