@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { buildSystemInstruction, getGemini, GEMINI_MODEL } from "@/lib/gemini";
+import { postToSlack, slackConfigured } from "@/lib/slack";
+import { buildChatMessage } from "@/lib/chatNotify";
+import { parseUserAgent } from "@/lib/visitor";
 
 /**
  * POST /api/chat
@@ -61,6 +64,34 @@ export async function POST(req: NextRequest) {
     const reply =
       result.text?.trim() ||
       "Sorry, I couldn't generate a response just now. Please try again.";
+
+    // Mirror the exchange to Slack so each question is visible. Awaited so the
+    // post survives in serverless (no background work after the response), but
+    // postToSlack never throws and caps itself at a short timeout.
+    if (slackConfigured()) {
+      const lastQuestion = [...messages]
+        .reverse()
+        .find((m) => m.role === "user");
+      if (lastQuestion?.content) {
+        const userCount = messages.filter((m) => m.role === "user").length;
+        const location = [
+          decodeURIComponent(req.headers.get("x-vercel-ip-city") ?? ""),
+          req.headers.get("x-vercel-ip-country") ?? "",
+        ]
+          .filter(Boolean)
+          .join(", ") || "Unknown location";
+        const ua = parseUserAgent(req.headers.get("user-agent") ?? "");
+        await postToSlack(
+          buildChatMessage({
+            question: String(lastQuestion.content),
+            reply,
+            turn: userCount,
+            location,
+            device: `${ua.device} · ${ua.os} · ${ua.browser}`,
+          })
+        );
+      }
+    }
 
     return NextResponse.json({ reply });
   } catch (err) {
