@@ -8,6 +8,7 @@ import {
   parseUserAgent,
   type VisitInfo,
 } from "@/lib/visitor";
+import { lookupDatacenter } from "@/lib/datacenter";
 
 /**
  * POST /api/visit
@@ -109,6 +110,7 @@ export async function POST(req: NextRequest) {
     returning: body.returning === true,
     screen: str(body.screen, 40),
     ...parseUserAgent(userAgent),
+    datacenter: lookupDatacenter(ip) ?? undefined,
   };
 
   await postToSlack(buildVisitMessage(info));
