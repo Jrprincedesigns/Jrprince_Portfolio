@@ -75,3 +75,14 @@ const GENERATED_TABLE: RangeTable = {
 export function findProvider(ip: number): string | null {
   return findProviderIn(GENERATED_TABLE, ip);
 }
+
+/**
+ * Resolve a raw IP header value to a cloud-provider name, or null if it isn't
+ * in a known datacenter range (or isn't parseable IPv4). Never throws.
+ */
+export function lookupDatacenter(ip: string): string | null {
+  if (!ip) return null;
+  const n = ipToInt(normalizeIp(ip));
+  if (n === null) return null;
+  return findProvider(n);
+}

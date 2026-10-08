@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { ipToInt, normalizeIp, findProviderIn, type RangeTable } from "./datacenter";
+import {
+  ipToInt,
+  normalizeIp,
+  findProviderIn,
+  lookupDatacenter,
+  type RangeTable,
+} from "./datacenter";
 
 describe("ipToInt", () => {
   it("parses a dotted quad to uint32", () => {
@@ -66,5 +72,20 @@ describe("findProviderIn", () => {
     expect(
       findProviderIn({ providers: [], starts: [], ends: [], providerIdx: [] }, 15)
     ).toBeNull();
+  });
+});
+
+describe("lookupDatacenter", () => {
+  it("returns null for bad / empty / IPv6 / private input without throwing", () => {
+    expect(lookupDatacenter("")).toBeNull();
+    expect(lookupDatacenter("unknown")).toBeNull();
+    expect(lookupDatacenter("2001:db8::1")).toBeNull();
+    // Private/residential IP: never in the generated cloud table.
+    expect(lookupDatacenter("192.168.1.10")).toBeNull();
+  });
+
+  it("normalizes before lookup (no throw on port / mapped forms)", () => {
+    expect(() => lookupDatacenter("1.2.3.4:5678")).not.toThrow();
+    expect(() => lookupDatacenter("::ffff:1.2.3.4")).not.toThrow();
   });
 });
