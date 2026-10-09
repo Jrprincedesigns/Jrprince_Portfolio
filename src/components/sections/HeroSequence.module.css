@@ -22,6 +22,9 @@
   height: 100%;
   z-index: 0;
   display: block;
+  /* The canvas is decorative; without this it swallows clicks on the splash
+     and visitors dead-click it expecting the hero to be interactive. */
+  pointer-events: none;
 }
 
 .scrim {
@@ -125,6 +128,104 @@
   width: 34px;
   height: 1px;
   background: #444;
+}
+
+/* ---- First-frame identity (recruiter-legible splash) ---- */
+.splashIdentity {
+  margin-top: 0.1rem;
+  font-size: clamp(0.92rem, 0.8rem + 0.6vw, 1.15rem);
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  color: #0a0a0a;
+  animation: settle 0.9s var(--ease-out) 0.1s both;
+}
+
+.splashPositioning {
+  max-width: 24ch;
+  font-size: clamp(0.72rem, 0.68rem + 0.2vw, 0.85rem);
+  font-weight: 300;
+  color: #555;
+  animation: settle 0.9s var(--ease-out) 0.18s both;
+}
+
+.splashBadges {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.1rem;
+  font-size: clamp(0.64rem, 0.61rem + 0.15vw, 0.72rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+  animation: settle 0.9s var(--ease-out) 0.24s both;
+}
+.splashBadgeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--live);
+  animation: pulse 2.4s var(--ease-out) infinite;
+}
+
+.splashCTA {
+  /* The only interactive element on the splash (which is pointer-events:none). */
+  pointer-events: auto;
+  margin-top: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.15rem;
+  border: 1px solid #0a0a0a;
+  border-radius: 999px;
+  font-size: clamp(0.72rem, 0.68rem + 0.2vw, 0.82rem);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  text-decoration: none;
+  transition:
+    background-color 0.2s var(--ease-out),
+    color 0.2s var(--ease-out);
+  animation: settle 0.9s var(--ease-out) 0.32s both;
+}
+.splashCTA:hover {
+  background: #0a0a0a;
+  color: #fff;
+}
+.splashCTA:focus-visible {
+  outline: 2px solid #0a0a0a;
+  outline-offset: 3px;
+}
+
+/* View-work CTA on the reduced-motion static hero (dark background). */
+.staticCTA {
+  position: absolute;
+  z-index: 3;
+  right: clamp(1.5rem, 4vw, 3rem);
+  bottom: clamp(1.75rem, 5vh, 3rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  transition:
+    background-color 0.2s var(--ease-out),
+    color 0.2s var(--ease-out);
+}
+.staticCTA:hover {
+  background: #fff;
+  color: #0a0a0a;
+}
+.staticCTA:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
 }
 
 .scrollCue {
@@ -322,5 +423,13 @@
   }
   .introBlock {
     width: calc(100vw - 3rem);
+  }
+  /* Keep the static CTA clear of the full-width intro block on small screens. */
+  .staticCTA {
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    top: clamp(1.25rem, 5vw, 2rem);
+    transform: translateX(-50%);
   }
 }
