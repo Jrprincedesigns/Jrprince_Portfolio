@@ -202,7 +202,12 @@ export default function HeroSequence() {
           />
           <div className={styles.scrim} aria-hidden="true" />
         </div>
-        <div className={styles.staticComp}>{composition}</div>
+        <div className={styles.staticComp}>
+          {composition}
+          <a className={styles.staticCTA} href="#case-studies">
+            View work ↓
+          </a>
+        </div>
       </section>
     );
   }
@@ -237,10 +242,18 @@ export default function HeroSequence() {
             <sup className={styles.sReg}>®</sup>
             <span className={styles.sTail}>&nbsp;DESIGN.</span>
           </p>
-          <p className={styles.splashSub}>
-            Design thought with aesthetics
-            <span className={styles.subLine} />
+          <p className={styles.splashIdentity}>
+            {site.name} — {site.role}
           </p>
+          <p className={styles.splashPositioning}>{site.tagline}</p>
+          <p className={styles.splashBadges}>
+            <span>{site.location}</span>
+            <span className={styles.splashBadgeDot} aria-hidden="true" />
+            <span>{site.availability}</span>
+          </p>
+          <a className={styles.splashCTA} href="#case-studies">
+            View work ↓
+          </a>
         </motion.div>
 
         <motion.div
